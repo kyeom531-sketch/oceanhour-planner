@@ -184,6 +184,15 @@ main{flex:1;overflow:auto}
 .daybar button{color:var(--d70);font-size:15px;padding:1px 6px;border-radius:6px;line-height:1.3}
 .daybar button:hover{background:var(--hov);color:var(--ink)}
 .daybar .today{font-size:12px;margin-left:4px;color:var(--c4)}
+/* 늘 보이는 단추는 다섯까지(규칙 13) — 나머지는 「⋯」를 누르면 편다 */
+.daybar .xtra{display:none}
+.daybar.more-on .xtra{display:inline-block}
+.daybar .dmore{font-size:14px;padding:1px 7px;letter-spacing:.05em}
+.daybar.more-on .dmore{background:var(--hov);color:var(--ink)}
+.daybar .dseg{background:transparent;padding:0;margin-left:4px}
+.daybar .dseg button.on{display:none}
+.daybar .seg.dseg button{font-size:12px;color:var(--c4);padding:1px 6px;border-radius:6px}
+.daybar .seg.dseg button:hover{background:var(--hov)}
 .daybar .gdot{width:10px;height:10px}
 .daybar .gn{cursor:text;border-radius:4px;padding:0 2px;margin:0 -2px}
 .daybar .gn:hover{background:var(--hov)}
@@ -258,6 +267,9 @@ li.row:has(.edit) .tools{display:none}
 body.cool .tools{pointer-events:none!important}   /* 도구를 누른 직후 0.5초 — 줄이 밀려 다른 단추가 손 밑에 와도 두 번 눌리지 않게 */
 .tools button{font-size:11.5px;color:var(--d70);padding:2px 5px;border-radius:5px;white-space:nowrap}
 .tools button:hover{background:var(--hov);color:var(--ink)}
+.tools .xtra{display:none}                     /* 늘 보이는 도구는 여덟까지(규칙 13) — 나머지는 「더」 */
+li.row.tools-more .tools .xtra{display:inline-block}
+li.row.tools-more .tools .tmore{display:none}
 .tools .rep{position:relative;display:inline-flex}
 .tools .rep select{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer}
 .tools .rep:hover button{background:var(--hov);color:var(--ink)}
@@ -265,6 +277,10 @@ body.cool .tools{pointer-events:none!important}   /* 도구를 누른 직후 0.5
 .edit.big{font-size:19px;font-weight:700;width:auto;min-width:240px}
 .box > .edit{display:block;margin:4px 0 8px;padding:3px 4px}
 .empty{color:var(--d32);font-size:13px;padding:7px 0 11px}
+.first{border-top:1px solid var(--line);padding:11px 0 4px;font-size:13px;color:var(--d70);line-height:1.6}
+.first p{margin:0 0 10px}
+.first .ex{background:var(--hov);border-radius:8px;padding:7px 10px 1px;margin:0 0 10px}
+.first .exl{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;margin:0 0 5px}
 /* 메모 — 줄 아래에 펼친다. 적는 대로 저장한다 */
 .meta .nm-mark{cursor:pointer}
 /* 하위 할 일 — 줄 아래로 펼친다. 한 겹만 */
@@ -448,6 +464,9 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .topbar .tb-t{font-weight:700;font-size:14.5px;letter-spacing:-.02em}
   .wrap{padding:4px 12px calc(96px + env(safe-area-inset-bottom))}
   .daybar{flex-wrap:wrap;row-gap:6px}
+  .daybar.dayb{flex-wrap:nowrap;gap:4px}        /* 날짜 줄은 한 줄로 — 날짜 글자가 길면 줄여서 ⋯ 까지 한 줄에 */
+  .daybar.dayb .wd{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .daybar.dayb.more-on{flex-wrap:wrap}
   .daybar h1{white-space:nowrap}
   .daybar .ics{margin-left:0}
   input,select,textarea{font-size:16px}          /* 16px 보다 작으면 아이폰이 누를 때마다 화면을 확대한다 */
@@ -1134,6 +1153,8 @@ const editing = () => !!document.querySelector('input.edit')
 let openNotes = new Set();                      // 메모를 펼친 할 일
 let openSubs  = new Set();                      // 하위 할 일을 펼친 할 일
 let toolsOn   = null;                           // 폰 — 「⋯」로 도구를 편 줄 하나
+let toolsMore = null;                           // 도구의 「더」를 편 줄 하나 — 늘 보이는 도구는 여덟까지(규칙 13)
+let dayMore   = false;                          // 날짜 줄의 「⋯」를 폈나
 let copyFor   = null, copyPick = new Set();     // 복사 — 할 일 id 또는 'day:날짜' · 고른 날들
 let picking   = false, picked = new Set();      // 여러 개 골라 한꺼번에
 const stopPick = () => { picking = false; picked = new Set(); };
@@ -1228,6 +1249,7 @@ function drawSide(){
 
 function drawDay(){
   const T = DB.today();
+  $('#daybar').classList.remove('more-on', 'dayb');
   if (q){ $('#daybar').innerHTML = `<h1>찾기</h1><span class="wd">「${esc(q)}」</span>`; return; }
   if (open){
     const l = DB.listOf(open);
@@ -1261,16 +1283,20 @@ function drawDay(){
          ${calWeek !== DB.monday(T) ? `<button class="today" data-cm="0">이번 주</button>` : ''}${seg}${noHoli}${ics}`
       : `<button data-cm="-1">‹</button><h1>${y}년 ${m}월</h1><button data-cm="1">›</button>
          ${calMonth !== T.slice(0, 7) ? `<button class="today" data-cm="0">이번 달</button>` : ''}${seg}${noHoli}${ics}`; return; }
+  // 늘 보이는 단추는 다섯까지(규칙 13) — 나머지는 「⋯」 안에. 계획 · 마무리는 때에 맞는 하나만 앞에 둔다(오후 세 시부터 마무리)
+  const pmNow = new Date().getHours() >= 15;
+  $('#daybar').classList.toggle('more-on', dayMore); $('#daybar').classList.add('dayb');
   $('#daybar').innerHTML =
       `<button data-go="-1">‹</button>
        <h1>${day===T ? '오늘' : dOnly(day)}</h1>
        <span class="wd">${dOnly(day)} ${weekday(day)}${DB.holiday(day) ? ` · <span class="hol">${DB.holiday(day)}</span>` : DB.jeolgi(day) ? ` · ${DB.jeolgi(day)}` : ''}</span>
        <button data-go="1">›</button>
        ${day!==T ? `<button class="today" data-go="0">오늘로</button>` : ''}
-       ${DB.todosOn(day).length ? `<button class="today" data-daycopy title="이 날의 할 일을 다른 날에도">이 날 복사</button>` : ''}
-       <button class="today" data-pickon title="여러 개를 골라 한꺼번에 옮기기 · 끝내기 · 지우기">고르기</button>
-       ${day === T ? `<button class="today" data-flow="am" title="아침 계획 — 남은 일과 날짜 없는 일에서 오늘 할 것 고르기">계획</button><button class="today" data-flow="pm" title="저녁 마무리 — 오늘 한 것 · 남은 것 · 한 줄">마무리</button>` : ''}
-       <span class="seg"><button data-daymode="list" class="${dayMode === 'list' ? 'on' : ''}">목록</button><button data-daymode="time" class="${dayMode === 'time' ? 'on' : ''}" title="그날 하루를 시간 띠로">시간</button></span>`;
+       ${day === T ? `<button class="today ${pmNow ? 'xtra' : ''}" data-flow="am" title="아침 계획 — 남은 일과 날짜 없는 일에서 오늘 할 것 고르기">계획</button><button class="today ${pmNow ? '' : 'xtra'}" data-flow="pm" title="저녁 마무리 — 오늘 한 것 · 남은 것 · 한 줄">마무리</button>` : ''}
+       <span class="seg dseg"><button data-daymode="list" class="${dayMode === 'list' ? 'on' : ''}" title="할 일 목록으로">목록</button><button data-daymode="time" class="${dayMode === 'time' ? 'on' : ''}" title="그날 하루를 시간 띠로">시간 띠</button></span>
+       ${DB.todosOn(day).length ? `<button class="today xtra" data-daycopy title="이 날의 할 일을 다른 날에도">이 날 복사</button>` : ''}
+       <button class="today xtra" data-pickon title="여러 개를 골라 한꺼번에 옮기기 · 끝내기 · 지우기">고르기</button>
+       <button class="dmore" data-daymore title="${dayMore ? '접기' : '더 — ' + (day === T ? (pmNow ? '계획' : '마무리') + ' · ' : '') + (DB.todosOn(day).length ? '이 날 복사 · ' : '') + '고르기'}" aria-label="더 보기">⋯</button>`;
 }
 
 function row(t){
@@ -1294,7 +1320,7 @@ function row(t){
       <option value="days" ${r&&r.every==='days'?'selected':''}>${r&&r.every==='days' ? r.n + '일마다' : '며칠마다…'}</option>
       <option value="times" ${r&&r.every==='times'?'selected':''}>${r&&r.every==='times' ? '주 ' + r.n + '회' : '주 몇 회…'}</option>
       ${r ? `<option value="${r.paused ? 'resume' : 'pause'}">${r.paused ? '다시 하기' : '잠시 멈춤'}</option>` : ''}</select></span>`;
-  return `<li class="row ${t.done?'done':''} ${toolsOn === t.id ? 'tools-on' : ''} ${picked.has(t.id) ? 'picked' : ''}" data-t="${esc(t.id)}" tabindex="-1">
+  return `<li class="row ${t.done?'done':''} ${toolsOn === t.id ? 'tools-on' : ''} ${toolsMore === t.id ? 'tools-more' : ''} ${picked.has(t.id) ? 'picked' : ''}" data-t="${esc(t.id)}" tabindex="-1">
     ${picking ? `<span class="pk"></span>` : ''}
     ${m === 'day' || m === 'goal' ? `<span class="grip" draggable="true" title="끌어서 순서 바꾸기">⋮⋮</span>` : ''}
     <span class="ck ${t.done?'on':''}" data-do="toggle"></span>
@@ -1304,17 +1330,18 @@ function row(t){
         ${t.run ? `<button data-do="stop">멈춤</button>` : !t.done && !inLog ? `<button data-do="start" title="시간 재기">시작</button>` : ''}
         ${!inLog && t.date ? `<button data-do="tomorrow">${t.date > T ? '하루 뒤로' : '내일로'}</button>` : ''}
         ${!inLog && t.date !== T ? `<button data-do="toToday">오늘로</button>` : ''}
-        ${!inLog && r && !t.done ? `<button data-do="skip" title="끝낸 것으로 세지 않고 다음 날로">건너뛰기</button>` : ''}
-        ${!inLog && r && !t.done && !t.run ? `<button data-do="detach" title="이번 것만 따로 떼어 고칩니다 — 반복은 다음 날부터 그대로">이번만 따로</button>` : ''}
         ${!inLog && !t.done ? repSel : ''}
         ${!inLog && !t.done ? (t.time ? `<button data-do="cleartime">시각 빼기</button>` : `<button data-do="timepick">시각</button>`) : ''}
-        ${!inLog && !t.done && t.date && !r ? (t.endDate ? `<button data-do="clearend">기간 빼기</button>` : `<button data-do="endpick" title="며칠에 걸친 일 — 끝나는 날 고르기">기간</button>`) : ''}
-        ${!inLog && !t.done ? (t.deadline ? `<button data-do="cleardl">마감 빼기</button>` : `<button data-do="dlpick" title="언제까지 — 할 날과 따로">마감</button>`) : ''}
         ${!hasNote ? `<button data-do="note">메모</button>` : ''}
         ${!subs.length && !inLog ? `<button data-do="subs" title="잘게 나눠 적기">하위 할 일</button>` : ''}
-        ${!inLog ? `<button data-do="copy" title="같은 일을 다른 날에도">복사</button>` : ''}
-        ${!inLog && !t.done ? (t.goal ? `<button data-do="countdown" title="하나 빼기">한 번 빼기</button><button data-do="nogoal">세기 빼기</button>` : `<button data-do="setgoal" title="물 8잔처럼 하루에 여러 번">세기</button>`) : ''}
         <button data-do="del">지움</button>
+        ${!inLog && r && !t.done ? `<button class="xtra" data-do="skip" title="끝낸 것으로 세지 않고 다음 날로">건너뛰기</button>` : ''}
+        ${!inLog && r && !t.done && !t.run ? `<button class="xtra" data-do="detach" title="이번 것만 따로 떼어 고칩니다 — 반복은 다음 날부터 그대로">이번만 따로</button>` : ''}
+        ${!inLog && !t.done && t.date && !r ? (t.endDate ? `<button class="xtra" data-do="clearend">기간 빼기</button>` : `<button class="xtra" data-do="endpick" title="며칠에 걸친 일 — 끝나는 날 고르기">기간</button>`) : ''}
+        ${!inLog && !t.done ? (t.deadline ? `<button class="xtra" data-do="cleardl">마감 빼기</button>` : `<button class="xtra" data-do="dlpick" title="언제까지 — 할 날과 따로">마감</button>`) : ''}
+        ${!inLog ? `<button class="xtra" data-do="copy" title="같은 일을 다른 날에도">복사</button>` : ''}
+        ${!inLog && !t.done ? (t.goal ? `<button class="xtra" data-do="countdown" title="하나 빼기">한 번 빼기</button><button class="xtra" data-do="nogoal">세기 빼기</button>` : `<button class="xtra" data-do="setgoal" title="물 8잔처럼 하루에 여러 번">세기</button>`) : ''}
+        ${!inLog ? `<button class="tmore" data-do="toolmore" title="더 — 건너뛰기 · 기간 · 마감 · 복사 · 세기">더</button>` : ''}
       </span>
       <button class="more" data-do="more" aria-label="도구 펼치기">⋯</button>
       ${t.run ? `<span class="d run" data-run="${esc(t.id)}">● ${fmtClock(DB.runSecs(t))}</span>`
@@ -1609,14 +1636,24 @@ function drawBody(){
         + (showPast ? `<div class="box"><ul>${p.map(row).join('')}</ul></div>` : '');
     }
     const ts = DB.todosOn(day).sort(DB.byWhen), rt = ts.filter(t => t.repeat);   // 루틴(반복하는 일)은 맨 위 한 칸에 따로
+    const first = day === T && !DB.todos().length && !DB.lists().length;   // 처음 온 사람 — 설명 창 없이 빈 칸에서 차이를 보여 준다(규칙 9)
     html += ts.length ? (rt.length ? `<div class="box routine"><h2>루틴${cnt(rt)}</h2>${rows(rt)}</div>` : '') + group(ts.filter(t => !t.repeat), true)
       : `<div class="box"><div class="empty">${day===T
-          ? '오늘 할 일이 없습니다. 위에 적어 보세요.' : '이 날은 비어 있습니다.'}</div></div>`;
+          ? '오늘 할 일이 없습니다. 위에 적어 보세요.' : '이 날은 비어 있습니다.'}</div>${first ? firstHint() : ''}</div>`;
     const un = DB.undated().sort(DB.byWhen);
     if (un.length && day === T)
       html += `<div class="box"><h2>날짜 없음${cnt(un)}</h2>${rows(un)}</div>`;
+    const sp = DB.timeByDay()[day];               // 이 날 쓴 시간 — 정한 곳 · 그 밖을 오늘 화면에서도(규칙 9). 잰 게 있을 때만, 맨 아래에
+    if (sp && sp.on + sp.off) html += `<div class="box dsum"><h2>${day === T ? '오늘' : '이 날'} 쓴 시간</h2>${timeLine(sp)}</div>`;
   }
   $('#body').innerHTML = html;
+}
+
+function firstHint(){                           // 처음 온 사람에게 — 두 줄과 예시 막대 하나. 할 일이나 목표가 하나라도 생기면 사라진다
+  return `<div class="first"><p>「+ 새 분류」로 목표를 만들고(폰은 ☰ 안), 그 목표의 일에 시간을 쓰면 하루가 둘로 나뉘어 보입니다.
+      정한 곳은 목표에 이어 둔 일, 그 밖은 나머지입니다.</p>
+    <div class="ex"><span class="exl">예시</span>${timeLine({ on:7200, off:3600 })}</div>
+    <p>시간은 할 일 줄의 「시작」으로 재거나, 「3시 공부」처럼 시각을 적어 두고 끝내면 들어갑니다.</p></div>`;
 }
 
 /* ── 제자리 고치기 ── */
@@ -1906,6 +1943,10 @@ document.addEventListener('click', e => {
 
 /* ── 누르기 ── */
 let coolT;
+document.addEventListener('click', e => {         // 날짜 줄 「⋯」 — 펴고 접는다. 편 것 중 하나를 누르면 접는다(먼저 돈다)
+  if (e.target.closest('[data-daymore]')){ dayMore = !dayMore; e.stopImmediatePropagation(); return render(); }
+  if (dayMore && e.target.closest('#daybar .xtra')) dayMore = false;
+}, true);
 document.addEventListener('click', e => {
   if (swallowClick){ swallowClick = false; return; }
   if (e.target.closest('[data-pickon]')){ picking = !picking; picked = new Set(); toolsOn = null; return render(); }
@@ -2050,17 +2091,18 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-do]'); if (!el) return;
   const t = DB.todo(el.closest('[data-t]').dataset.t); if (!t) return;
   const a = el.dataset.do;
-  if (a === 'more'){ toolsOn = toolsOn === t.id ? null : t.id; return render(); }
-  if (a === 'copy'){ toolsOn = null; copyFor = copyFor === t.id ? null : t.id; copyPick = new Set(); return render(); }
+  if (a === 'more'){ toolsOn = toolsOn === t.id ? null : t.id; toolsMore = null; return render(); }
+  if (a === 'toolmore'){ toolsMore = toolsMore === t.id ? null : t.id; return render(); }
+  if (a === 'copy'){ toolsOn = null; toolsMore = null; copyFor = copyFor === t.id ? null : t.id; copyPick = new Set(); return render(); }
   if (a === 'countup' || a === 'countdown'){ const r = DB.countUp(t.id, a === 'countup' ? 1 : -1); if (!r) return; render();
     if (r.full) toast(`다 채웠습니다 · 「${t.text}」 ${r.n}/${t.goal}`, () => { DB.toggleTodo(t.id); DB.countUp(t.id, -1); });
     return; }
   if (a === 'setgoal'){ const n = parseInt(prompt('하루에 몇 번 할까요? (2~99)', 3), 10);
     if (n >= 2 && n <= 99) DB.editTodo(t.id, { goal:n }); return render(); }
   if (a === 'nogoal'){ const was = t.goal; DB.editTodo(t.id, { goal:null }); render(); return toast(`세기를 뺐습니다 · 「${t.text}」`, () => DB.editTodo(t.id, { goal:was })); }
-  if (a === 'detach'){ toolsOn = null; const r = DB.detachOnce(t.id); if (!r) return;
+  if (a === 'detach'){ toolsOn = null; toolsMore = null; const r = DB.detachOnce(t.id); if (!r) return;
     render(); return toast(`이번 것만 떼어 냈습니다 · 반복은 ${dOnly(DB.todo(t.id).date)}부터`, () => DB.undetach(r)); }
-  if (el.closest('.tools')) toolsOn = null;       // 도구를 하나 쓰면 접는다
+  if (el.closest('.tools')){ toolsOn = null; toolsMore = null; }   // 도구를 하나 쓰면 접는다
   if (el.closest('.tools')){ document.body.classList.add('cool'); clearTimeout(coolT);
     coolT = setTimeout(() => document.body.classList.remove('cool'), 500); }
 
