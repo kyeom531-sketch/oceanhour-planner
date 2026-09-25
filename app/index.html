@@ -275,6 +275,21 @@ li.row:focus-visible{background:var(--hov);border-radius:4px;box-shadow:inset 2p
   border-radius:4px;flex:none;display:flex;align-items:center;justify-content:center}
 .ck:hover{border-color:var(--ink)}
 .ck.on{background:var(--c3);border-color:var(--c3)}
+.play{flex:none;position:relative;width:20px;height:20px;border-radius:50%;font-size:8.5px;line-height:20px;text-align:center;padding-left:1px;
+  color:var(--c4);box-shadow:inset 0 0 0 1.2px color-mix(in srgb,var(--c4) 45%,transparent)}
+.play:hover{background:color-mix(in srgb,var(--c4) 12%,transparent)}
+.tabs{display:none}
+/* 손가락으로 쓸 때(폰 · 태블릿) — 누르는 자리 44px(애플) · 입력칸 16px(아이폰은 작으면 확대한다). 보이는 크기는 거의 그대로 */
+@media (pointer:coarse){
+  input,select,textarea{font-size:16px!important}
+  li.row{padding-top:10px;padding-bottom:10px;min-height:44px}
+  .ck{position:relative}
+  .ck::before{content:'';position:absolute;inset:-14px -10px -14px -14px}
+  .cdot select{inset:-18px -10px -18px -12px;width:auto;height:auto}
+  .play::before{content:'';position:absolute;inset:-12px}
+  .daybar.dayb > button,.daybar.dayb .seg button{min-height:40px}
+  .daybar [data-go],.daybar .dmore{min-width:32px}
+}
 @keyframes ckpop{0%{transform:scale(.7)}55%{transform:scale(1.2)}100%{transform:scale(1)}}
 .ck.pop{animation:ckpop .24s ease-out}
 @media (prefers-reduced-motion:reduce){.ck.pop{animation:none}}
@@ -497,7 +512,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .topbar button{font-size:19px;line-height:1;padding:6px 9px;border-radius:8px;color:var(--ink)}
   .topbar button:active{background:var(--hov)}
   .topbar .tb-t{font-weight:700;font-size:14.5px;letter-spacing:-.02em}
-  .wrap{padding:4px 12px calc(96px + env(safe-area-inset-bottom))}
+  .wrap{padding:4px 12px calc(96px + var(--tabh))}
   .daybar{flex-wrap:wrap;row-gap:6px}
   .daybar.dayb{flex-wrap:nowrap;gap:4px}        /* 날짜 줄은 한 줄로 — 날짜 글자가 길면 줄여서 ⋯ 까지 한 줄에 */
   .daybar.dayb .wd{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -505,12 +520,19 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .daybar.dayb.more-on{flex-wrap:wrap}
   .daybar h1{white-space:nowrap}
   .daybar .ics{margin-left:0}
-  input,select,textarea{font-size:16px}          /* 16px 보다 작으면 아이폰이 누를 때마다 화면을 확대한다 */
+  input,select,textarea{font-size:16px!important}   /* 16px 보다 작으면 아이폰이 누를 때마다 화면을 확대한다 — .entry input 같은 규칙에 밀려 안 먹던 것을 09-26 고쳤다 */
+  :root{--tabh:calc(52px + env(safe-area-inset-bottom))}
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:32;height:var(--tabh);
+    padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--line)}
+  .tabs button{font-size:13px;color:var(--d70);min-height:52px}
+  .tabs button.on{color:var(--ink);font-weight:700;box-shadow:inset 0 2px 0 var(--ink)}
+  aside [data-view=today],aside [data-view=cal],aside [data-view=week],aside [data-view=log]{display:none}   /* 아래 탭에 있다 */
+  li.row .tx{font-size:15px}
   .entry select{max-width:92px}
   .li{padding:9px 8px;font-size:15px}
   .li .del{opacity:.5}
   /* 줄 도구 */
-  .meta .more{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:26px;margin:-3px -4px -3px 0;
+  .meta .more{display:inline-flex;align-items:center;justify-content:center;min-width:36px;height:36px;margin:-8px -4px -8px 0;
     color:var(--d70);font-size:16px;letter-spacing:1px;border-radius:6px}
   li.row.tools-on .meta .more{background:var(--hov);color:var(--ink)}
   .tools,li.row:hover .tools,li.row:focus-within .tools{position:static;transform:none;opacity:1;pointer-events:auto;display:none;
@@ -532,11 +554,12 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .wc{min-height:0}
   .tt{overflow-x:auto}
   .tt:not(.one) .tt-grid{min-width:640px}
-  #runbar:not(.hide){position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);
-    box-shadow:0 -2px 12px rgba(40,38,35,.1);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+  #runbar:not(.hide){position:fixed;left:0;right:0;bottom:var(--tabh);z-index:30;background:var(--card);
+    box-shadow:0 -2px 12px rgba(40,38,35,.1);padding:10px 14px}
   body.side-on #runbar:not(.hide){position:static;box-shadow:none;padding:8px 12px}   /* 서랍을 열면 제자리 — 내보내기 단추를 가리지 않게 */
   aside .keep{padding-bottom:calc(9px + env(safe-area-inset-bottom))}
-  #toast{bottom:calc(72px + env(safe-area-inset-bottom))}
+  #toast{bottom:calc(var(--tabh) + 64px)}
+  #pickbar{bottom:calc(var(--tabh) + 10px)}
 }
 </style>
 </head>
@@ -579,6 +602,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
 </div>
 </main>
 
+<nav class="tabs" id="tabs" aria-label="화면 옮기기"><button data-view="today">오늘</button><button data-view="cal">달력</button><button data-view="week">한 주</button><button data-view="log">기록</button></nav>
 <div id="pickbar" class="hide"></div>
 <div id="big" class="hide"></div>
 <div id="one" class="hide"></div>
@@ -1254,12 +1278,17 @@ function copyPanel(key, base){                  // 앞으로 두 주를 칩으�
 let trashMore = 100;                            // 휴지통 — 한 번에 그리는 수
 const cnt = ts => { const n = ts.filter(t => !t.done).length; return n ? ' · ' + n : ''; };
 
+function drawTabs(){                            // 폰 아래 탭(옆 칸의 네 곳과 같다) — 엄지가 닿는 곳. 컴퓨터에서는 안 보인다
+  const m = mode() === 'day' ? 'today' : mode();
+  document.querySelectorAll('#tabs [data-view]').forEach(b => { const on = b.dataset.view === m;
+    b.classList.toggle('on', on); on ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'); });
+}
 function render(){
   if (open){ const l = DB.listOf(open); if (!l || l.deletedAt) open = null; }
   if (page === 'arch' && !DB.archive().length) page = 'day';   // 다 되살렸으면 오늘로
   if (page === 'trash'){ const tr = DB.trash(); if (!tr.todos.length && !tr.lists.length) page = 'day'; }
   prevMap = null;
-  drawSide(); drawDay(); drawBody(); drawPickbar(); drawBig(); drawOne();
+  drawSide(); drawTabs(); drawDay(); drawBody(); drawPickbar(); drawBig(); drawOne();
   document.querySelectorAll('textarea[data-note], textarea[data-rev]').forEach(fitNote);
   const r = DB.running(), bl = !r ? brkLeft() : null;
   $('#runbar').classList.toggle('hide', !r && !bl);
@@ -1341,7 +1370,7 @@ function drawDay(){
     return;
   }
   if (page === 'week'){ const cur = DB.monday(T);
-    $('#daybar').innerHTML = `<button data-wk="-1">‹</button><h1>${dOnly(weekStart)} – ${dOnly(DB.shift(weekStart, 6))}</h1><button data-wk="1">›</button><span class="wd wkno">${weekNo(weekStart)}</span>
+    $('#daybar').innerHTML = `<button data-wk="-1" aria-label="지난주">‹</button><h1>${dOnly(weekStart)} – ${dOnly(DB.shift(weekStart, 6))}</h1><button data-wk="1" aria-label="다음 주">›</button><span class="wd wkno">${weekNo(weekStart)}</span>
       ${weekStart !== cur ? `<button class="today" data-wk="0">이번 주</button>` : `<span class="wd">이번 주</span>`}
       <button class="today" data-card="${cardOn ? 'close' : 'open'}" title="이 주를 그림 한 장으로 — 목표 이름과 쓴 시간만">그림으로</button>`; return; }
   if (page === 'trash'){ $('#daybar').innerHTML = `<h1>휴지통</h1><span class="wd">지운 것 — 되살리면 제자리로 돌아갑니다</span>`; return; }
@@ -1354,18 +1383,18 @@ function drawDay(){
     const ics = `<span class="ics"><button data-ics="out" title="오늘부터의 할 일을 캘린더 파일(.ics)로 — 폰 캘린더에 넣으면 시각 알림을 폰이 울려 줍니다">캘린더로 내보내기</button><button data-ics="in" title="다른 캘린더에서 내보낸 .ics 파일의 일정을 할 일로 가져옵니다">캘린더 가져오기</button></span>`;
     const seg = `<span class="seg"><button data-calmode="month" class="${calMode === 'month' ? 'on' : ''}">월</button><button data-calmode="week" class="${calMode === 'week' ? 'on' : ''}">주</button><button data-calmode="time" class="${calMode === 'time' ? 'on' : ''}">시간표</button></span>`;
     $('#daybar').innerHTML = calMode !== 'month'
-      ? `<button data-cm="-1">‹</button><h1>${dOnly(calWeek)} – ${dOnly(DB.shift(calWeek, 6))}</h1><button data-cm="1">›</button><span class="wd wkno">${weekNo(calWeek)}</span>
+      ? `<button data-cm="-1" aria-label="지난주">‹</button><h1>${dOnly(calWeek)} – ${dOnly(DB.shift(calWeek, 6))}</h1><button data-cm="1" aria-label="다음 주">›</button><span class="wd wkno">${weekNo(calWeek)}</span>
          ${calWeek !== DB.monday(T) ? `<button class="today" data-cm="0">이번 주</button>` : ''}${seg}${noHoli}${ics}`
-      : `<button data-cm="-1">‹</button><h1>${y}년 ${m}월</h1><button data-cm="1">›</button>
+      : `<button data-cm="-1" aria-label="지난달">‹</button><h1>${y}년 ${m}월</h1><button data-cm="1" aria-label="다음 달">›</button>
          ${calMonth !== T.slice(0, 7) ? `<button class="today" data-cm="0">이번 달</button>` : ''}${seg}${noHoli}${ics}`; return; }
   // 늘 보이는 단추는 다섯까지(규칙 3) — 나머지는 「⋯」 안에. 계획 · 마무리는 때에 맞는 하나만 앞에 둔다(오후 세 시부터 마무리)
   const pmNow = new Date().getHours() >= 15;
   $('#daybar').classList.toggle('more-on', dayMore); $('#daybar').classList.add('dayb');
   $('#daybar').innerHTML =
-      `<button data-go="-1">‹</button>
+      `<button data-go="-1" aria-label="전날">‹</button>
        <h1>${day===T ? '오늘' : dOnly(day)}</h1>
        <span class="wd">${dOnly(day)} ${weekday(day)}${DB.holiday(day) ? ` · <span class="hol">${DB.holiday(day)}</span>` : DB.jeolgi(day) ? ` · ${DB.jeolgi(day)}` : ''}</span>
-       <button data-go="1">›</button>
+       <button data-go="1" aria-label="다음 날">›</button>
        ${day!==T ? `<button class="today" data-go="0">오늘로</button>` : ''}
        ${day === T ? `<button class="today ${pmNow ? 'xtra' : ''}" data-flow="am" title="아침 계획 — 남은 일과 날짜 없는 일에서 오늘 할 것 고르기">계획</button><button class="today ${pmNow ? '' : 'xtra'}" data-flow="pm" title="저녁 마무리 — 오늘 한 것 · 남은 것 · 한 줄">마무리</button>` : ''}
        <span class="seg dseg"><button data-daymode="list" class="${dayMode === 'list' ? 'on' : ''}" title="할 일 목록으로">목록</button><button data-daymode="time" class="${dayMode === 'time' ? 'on' : ''}" title="그날 하루를 시간 띠로">시간 띠</button></span>
@@ -1382,6 +1411,7 @@ function row(t){
   const opts = DB.lists().filter(x => !x.done || (l && x.id === l.id));
   const hasNote = !!(t.note && t.note.trim()), noteOn = openNotes.has(t.id);
   const subs = DB.subsOf(t), subOn = openSubs.has(t.id), subDone = subs.filter(x => x.done).length;
+  const play = !t.done && !t.run && !inLog && !!l && (m === 'day' || m === 'goal');   // 목표의 일은 「시작」을 늘 보이게 — 정한 곳 / 그 밖을 만드는 단추(규칙 10). 줄 도구에서는 뺀다(규칙 3)
   const r = t.repeat, rb = new Date((t.date || T) + 'T00:00:00');
   const repSel = `<span class="rep"><button tabindex="-1">반복</button><select data-do="setrepeat" title="반복">
       <option value="" ${!r?'selected':''}>반복 안 함</option>
@@ -1398,11 +1428,11 @@ function row(t){
   return `<li class="row ${t.done?'done':''} ${toolsOn === t.id ? 'tools-on' : ''} ${toolsMore === t.id ? 'tools-more' : ''} ${picked.has(t.id) ? 'picked' : ''}" data-t="${esc(t.id)}" tabindex="-1">
     ${picking ? `<span class="pk"></span>` : ''}
     ${m === 'day' || m === 'goal' ? `<span class="grip" draggable="true" title="끌어서 순서 바꾸기">⋮⋮</span>` : ''}
-    <span class="ck ${t.done?'on':''}" data-do="toggle"></span>
+    <span class="ck ${t.done?'on':''}" data-do="toggle" role="checkbox" aria-checked="${t.done}" aria-label="${esc(t.text)}"></span>
     <span class="tx" data-do="edit">${esc(t.text)}</span>
     <span class="meta">
       <span class="tools">
-        ${t.run ? `<button data-do="stop">멈춤</button>` : !t.done && !inLog ? `<button data-do="start" title="시간 재기">시작</button>` : ''}
+        ${t.run ? `<button data-do="stop">멈춤</button>` : !t.done && !inLog && !play ? `<button data-do="start" title="시간 재기">시작</button>` : ''}
         ${!inLog && t.date ? `<button data-do="tomorrow">${t.date > T ? '하루 뒤로' : '내일로'}</button>` : ''}
         ${!inLog && t.date !== T ? `<button data-do="toToday">오늘로</button>` : ''}
         ${!inLog && !t.done ? repSel : ''}
@@ -1418,6 +1448,7 @@ function row(t){
         ${!inLog && !t.done ? (t.goal ? `<button class="xtra" data-do="countdown" title="하나 빼기">한 번 빼기</button><button class="xtra" data-do="nogoal">세기 빼기</button>` : `<button class="xtra" data-do="setgoal" title="물 8잔처럼 하루에 여러 번">세기</button>`) : ''}
         ${!inLog ? `<button class="tmore" data-do="toolmore" title="더 — 건너뛰기 · 기간 · 마감 · 복사 · 세기">더</button>` : ''}
       </span>
+      ${play ? `<button class="play" data-do="start" title="시간 재기 — 정한 곳에 쌓입니다" aria-label="시간 재기 · ${esc(t.text)}">▶</button>` : ''}
       <button class="more" data-do="more" aria-label="도구 펼치기">⋯</button>
       ${t.run ? `<span class="d run" data-run="${esc(t.id)}">● ${fmtClock(DB.runSecs(t))}</span>`
         : DB.totalSecs(t) ? `<span class="d" title="${DB.plannedSecs(t) ? '쓴 시간 — ≈ 는 시간표로 적은 몫이 들어 있다는 뜻' : '쓴 시간'}">${DB.plannedSecs(t) ? '≈' : ''}${fmtDur(DB.totalSecs(t))}</span>` : ''}
