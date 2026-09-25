@@ -42,6 +42,15 @@ p{margin:0 0 12px}
   padding:12px 20px;border-radius:var(--r);font-size:15px}
 .go:hover{background:#000}
 .go.sm{padding:7px 13px;font-size:13.5px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 10px}
+.pcard{margin:0;background:var(--card);border-radius:14px;padding:16px 14px 12px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+.pcard h3{font-size:17px;margin:0 0 10px;letter-spacing:-.02em}
+.pcard img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
+.pcard figcaption{font-size:12.5px;color:var(--d70);padding:8px 2px 0;line-height:1.5}
+.feats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.feats div{background:var(--card);border-radius:var(--r);padding:14px 16px}
+.feats h3{font-size:14px;margin:0 0 6px}
+.feats p{font-size:13.5px;color:var(--d70);margin:0;line-height:1.6}
 .inapp{background:#FAF0DC;color:#8E6524;font-size:13.5px;line-height:1.6;padding:10px 16px}
 .inapp button{font:inherit;font-size:12.5px;color:#8E6524;border:1px solid rgba(142,101,36,.35);border-radius:6px;padding:1px 8px;background:transparent;cursor:pointer}
 .cardrow{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:24px;align-items:start}
@@ -87,7 +96,7 @@ footer a{color:var(--d70)}
   .sub{font-size:17px}
   .hero{padding:32px 0 28px}
   section{padding:34px 0}
-  .two,.steps,.cardrow{grid-template-columns:1fr}
+  .two,.steps,.cardrow,.cards,.feats{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -119,6 +128,17 @@ footer a{color:var(--d70)}
 </figure>
 
 <section>
+  <p class="lbl">Phone</p>
+  <h2>폰에서 이렇게 씁니다</h2>
+  <div class="cards">
+    <figure class="pcard"><h3>열면 바로 적는다</h3><img src="today-phone.png" width="600" height="1200" alt="폰 오늘 화면 — 목표별 할 일, ▶, 오늘 쓴 시간" loading="lazy"><figcaption>「내일 치과 3시」처럼 적으면 날짜 · 시각까지 알아듣습니다</figcaption></figure>
+    <figure class="pcard"><h3>한 주가 둘로 나뉜다</h3><img src="week-phone.png" width="600" height="1200" alt="폰 한 주 화면 — 정한 곳과 그 밖이 막대 하나로" loading="lazy"><figcaption>정한 곳 / 그 밖 — 점수 없이 막대 하나로</figcaption></figure>
+    <figure class="pcard"><h3>틀 하나로 바로 시작</h3><img src="start-phone.png" width="600" height="1200" alt="폰 처음 화면 — 예시 막대와 틀로 바로 시작" loading="lazy"><figcaption>시험 준비 · 갓생 아침 — 목표와 루틴이 한 번에 들어옵니다</figcaption></figure>
+  </div>
+  <p class="note">실제 앱 화면입니다. 할 일은 예시로 넣었습니다.</p>
+</section>
+
+<section>
   <p class="lbl">What</p>
   <h2>보여 주는 건 두 가지입니다</h2>
   <div class="two">
@@ -142,6 +162,19 @@ footer a{color:var(--d70)}
     <img src="shot-today.png" width="1600" height="900" alt="오션아워 오늘 화면. 맨 위가 바로 적는 칸이고, 할 일이 목표별로 묶여 있고, 맨 아래에 오늘 쓴 시간이 정한 곳과 그 밖으로 나뉘어 있다">
     <figcaption>열면 바로 적는 칸입니다. 시간을 쓴 날은 맨 아래에 그날 쓴 시간이 정한 곳과 그 밖으로 나뉩니다.</figcaption>
   </figure>
+</section>
+
+<section>
+  <p class="lbl">Features</p>
+  <h2>할 수 있는 것</h2>
+  <div class="feats">
+    <div><h3>적는 말</h3><p>날짜 · 시각 · 길이 · 여러 날 · 마감 · 반복(매일 · 평일 · 매주 · 격주 · 매달 · 매년 · 며칠마다 · 주 N회) · 하루 N번 세기</p></div>
+    <div><h3>할 일</h3><p>메모 · 하위 할 일 · 복사 · 여러 개 한꺼번에 · 끌어서 순서 · 이번만 따로 · 건너뛰기 · 휴지통</p></div>
+    <div><h3>시간</h3><p>▶로 재기 · 25분 · 50분 집중과 5분 쉬기 · 시간표(끌어서 옮기기) · 하루 시간 띠 · 계획이 넘치면 한 줄</p></div>
+    <div><h3>하루 · 한 주</h3><p>아침 계획 · 저녁 마무리 · 오늘 메모 · 한 주를 읽어 주는 문장 · 돌아보기 세 칸 · 한 주 그림</p></div>
+    <div><h3>목표</h3><p>단계 · 마감(D-) · 영역 · 목표 메모 · 틀로 한 번에</p></div>
+    <div><h3>달력 · 자료</h3><p>월 · 주 달력 · 공휴일 · 절기 · 캘린더 파일(.ics) · 내보내기 · 가져오기 · 메모까지 찾기 · 어두운 화면 · 앱으로 설치</p></div>
+  </div>
 </section>
 
 <section>
