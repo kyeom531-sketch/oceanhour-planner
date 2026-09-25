@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>오션아워 — 하루를 정한 곳에 썼는지 보여 주는 플래너</title>
+<meta name="description" content="하루를 정한 곳에 썼는지 보여 주는 플래너. 나무도, 순위도, 연속 기록도 없이.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="오션아워">
+<meta property="og:description" content="하루를 정한 곳에 썼는지 보여 주는 플래너. 나무도, 순위도, 연속 기록도 없이.">
+<meta property="og:image" content="https://kyeom531-sketch.github.io/oceanhour-planner/shot-week.png">
+<meta name="theme-color" content="#F6F4F1">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="app/icons/icon-192.png">
+<link rel="apple-touch-icon" href="app/icons/apple-180.png">
+<style>
+/* 파는 페이지 — 디자인-기준.md: 아주 연한 바탕 · 색은 칩과 면으로만 · 글자는 검정 하나 · 굵기 둘(400 · 700). 밝은 판 하나 */
+:root{
+  --bg:#F6F4F1; --card:#FFF; --line:rgba(40,38,35,.09);
+  --ink:#2E2C29; --d70:rgba(46,44,41,.7);
+  --blue:#2C5B88; --blue-bg:#E6EFF7; --gray:#6B6762; --gray-bg:#EFEDEB;
+  --pink:#A8415A; --pink-bg:#FBE9EC; --r:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Segoe UI",sans-serif;
+  font-size:16px;line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;
+  word-break:keep-all;overflow-wrap:anywhere}
+a{color:inherit}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{font-weight:700;font-size:16px;letter-spacing:-.02em}
+.lbl{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--d70);margin:0 0 10px}
+h1{font-size:44px;line-height:1.25;letter-spacing:-.03em;font-weight:700;margin:0 0 14px}
+h2{font-size:26px;line-height:1.35;letter-spacing:-.02em;font-weight:700;margin:0 0 16px}
+h3{font-size:16px;font-weight:700;margin:0 0 4px}
+p{margin:0 0 12px}
+.sub{font-size:19px;color:var(--d70);margin:0 0 28px}
+.go{display:inline-block;background:var(--ink);color:#FFF;text-decoration:none;font-weight:700;
+  padding:12px 20px;border-radius:var(--r);font-size:15px}
+.go:hover{background:#000}
+.go.sm{padding:7px 13px;font-size:13.5px}
+.cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.note{font-size:13.5px;color:var(--d70)}
+.hero{padding:56px 0 36px}
+section{padding:44px 0;border-top:1px solid var(--line)}
+figure{margin:0}
+.shot img{display:block;width:100%;height:auto;border-radius:var(--r);border:1px solid var(--line);
+  box-shadow:0 1px 2px rgba(40,38,35,.04),0 12px 32px rgba(40,38,35,.06);background:var(--card)}
+.shot figcaption{font-size:13px;color:var(--d70);padding:10px 2px 0}
+.hero + .shot{margin-bottom:44px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 16px}
+.card{background:var(--card);border-radius:var(--r);padding:18px 18px 16px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+.card p:last-child{margin:0}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin:0 0 10px}
+.chip.blue{background:var(--blue-bg);color:var(--blue)}
+.chip.gray{background:var(--gray-bg);color:var(--gray)}
+.chip.pink{background:var(--pink-bg);color:var(--pink)}
+.bar{display:flex;height:6px;border-radius:999px;overflow:hidden;margin:4px 0 18px}
+.bar i{background:var(--blue);flex:47}
+.bar b{background:#CFC8BF;flex:22}
+.steps{list-style:none;counter-reset:s;padding:0;margin:0 0 28px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.steps li{counter-increment:s;background:var(--card);border-radius:var(--r);padding:16px 18px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+.steps li::before{content:counter(s);display:inline-block;font-size:11px;font-weight:700;color:var(--d70);
+  letter-spacing:.14em;margin:0 0 6px}
+.steps h3{margin:0 0 4px}
+.steps p{font-size:14.5px;color:var(--d70);margin:0}
+.nos{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.nos .chip{margin:0;font-size:13px;padding:5px 12px;text-decoration:line-through;text-decoration-thickness:1px}
+ul.facts{padding:0 0 0 18px;margin:0}
+ul.facts li{margin:0 0 8px}
+.price{font-size:22px;font-weight:700;margin:6px 0 8px}
+.card .go{margin-top:14px}
+.card.later{background:transparent;border:1px dashed rgba(46,44,41,.22);box-shadow:none}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13px;color:var(--d70)}
+@media (max-width:640px){
+  h1{font-size:31px}
+  h2{font-size:22px}
+  .sub{font-size:17px}
+  .hero{padding:32px 0 28px}
+  section{padding:34px 0}
+  .two,.steps{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <span class="brand">오션아워</span>
+  <a class="go sm" href="./app/">웹에서 쓰기</a>
+</header>
+
+<div class="hero">
+  <p class="lbl">Planner</p>
+  <h1>하루를 정한 곳에<br>썼는지 보여 주는 플래너</h1>
+  <p class="sub">나무도, 순위도, 연속 기록도 없이.</p>
+  <div class="cta">
+    <a class="go" href="./app/">지금 웹에서 쓰기</a>
+    <span class="note">무료 · 가입 없음 · 설치 없이 바로 열립니다</span>
+  </div>
+</div>
+
+<figure class="shot">
+  <img src="shot-week.png" width="1600" height="1228" alt="오션아워 한 주 화면. 정한 곳 7시간 50분, 그 밖 3시간 40분이 막대 하나로 보이고, 목표별로 끝낸 일과 쓴 시간이 적혀 있다">
+  <figcaption>실제 앱 화면입니다. 할 일과 시간은 예시로 넣었습니다.</figcaption>
+</figure>
+
+<section>
+  <p class="lbl">What</p>
+  <h2>보여 주는 건 두 가지입니다</h2>
+  <div class="two">
+    <div class="card"><span class="chip blue">정한 곳</span><p>목표에 이어 둔 일에 쓴 시간.</p></div>
+    <div class="card"><span class="chip gray">그 밖</span><p>그 밖의 일에 쓴 시간.</p></div>
+  </div>
+  <div class="bar" aria-hidden="true"><i></i><b></b></div>
+  <p>둘을 막대 하나에 나란히 놓습니다. 점수나 %는 없습니다.<br>이번 주가 괜찮았는지는 쓰는 사람이 판단합니다.</p>
+</section>
+
+<section>
+  <p class="lbl">How</p>
+  <h2>쓰는 법</h2>
+  <ol class="steps">
+    <li><h3>목표를 정합니다</h3><p>목표 하나에 단계 몇 개. 할 일은 목표에 이어 둡니다.</p></li>
+    <li><h3>아침에 고릅니다</h3><p>밀린 일과 날짜 없는 일에서 오늘 할 것을 고릅니다. 평소보다 한참 많으면 한 줄로 알려 줍니다.</p></li>
+    <li><h3>저녁에 한 줄 남깁니다</h3><p>한 것을 보고, 남은 것은 내일로 넘기고, 오늘을 한 줄로 적습니다.</p></li>
+    <li><h3>주말에 돌아봅니다</h3><p>잘 된 것, 걸린 것, 다음 주 한 가지. 세 칸이면 끝입니다.</p></li>
+  </ol>
+  <figure class="shot">
+    <img src="shot-today.png" width="1600" height="828" alt="오션아워 오늘 화면. 맨 위가 바로 적는 칸이고, 할 일이 목표별로 묶여 있다">
+    <figcaption>열면 바로 적는 칸입니다. 「내일 치과 3시」처럼 날짜와 시각을 같이 적어도 알아듣습니다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <p class="lbl">Not here</p>
+  <h2>없는 것</h2>
+  <div class="nos">
+    <span class="chip gray">나무 키우기</span><span class="chip gray">순위표</span><span class="chip gray">연속 기록</span>
+    <span class="chip gray">광고</span><span class="chip gray">가입</span>
+  </div>
+  <p>사람을 붙잡아 두는 장치는 넣지 않습니다.<br>덜 열어도 정한 곳에 시간이 갔다면 그걸로 된 겁니다.</p>
+</section>
+
+<section>
+  <p class="lbl">Your data</p>
+  <h2>적은 것은 쓰는 사람 것입니다</h2>
+  <ul class="facts">
+    <li>이 기기의 브라우저에만 저장됩니다. 서버로 보내지 않습니다.</li>
+    <li>파일 하나로 내보내고 다시 가져올 수 있습니다. 캘린더 파일(.ics)로도 주고받습니다.</li>
+    <li>브라우저 자료를 지우면 같이 지워집니다. 그래서 내보낸 지 일주일이 지나면 알려 드립니다.</li>
+  </ul>
+</section>
+
+<section>
+  <p class="lbl">Price</p>
+  <h2>값</h2>
+  <div class="two">
+    <div class="card">
+      <h3>웹판</h3>
+      <p class="price">무료</p>
+      <p>지금 있는 기능 전부. 앞으로도 무료입니다.</p>
+      <a class="go" href="./app/">웹에서 쓰기</a>
+    </div>
+    <div class="card later">
+      <h3>폰 앱</h3>
+      <p class="price">준비 중</p>
+      <p>위젯, 잠금화면, 앱을 닫아도 오는 알림. 한 번 사면 끝이고 구독은 없습니다. 값은 앱이 나오는 날 알려 드립니다.</p>
+    </div>
+  </div>
+</section>
+
+<footer>오션아워 · 2026</footer>
+</div>
+</body>
+</html>

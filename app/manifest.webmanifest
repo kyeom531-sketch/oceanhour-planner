@@ -1,0 +1,16 @@
+{
+  "name": "오션아워",
+  "short_name": "오션아워",
+  "description": "하루를 정한 곳에 썼는지 보여 주는 플래너. 나무도, 순위도, 연속 기록도 없이.",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F6F4F1",
+  "theme_color": "#F6F4F1",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
