@@ -8,6 +8,10 @@
   "display": "standalone",
   "background_color": "#F6F4F1",
   "theme_color": "#F6F4F1",
+  "screenshots": [
+    { "src": "shots/wide.png", "sizes": "1600x900", "type": "image/png", "form_factor": "wide", "label": "오늘 화면 — 목표별 할 일과 오늘 쓴 시간" },
+    { "src": "shots/narrow.png", "sizes": "750x1500", "type": "image/png", "form_factor": "narrow", "label": "폰에서 본 오늘 화면" }
+  ],
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },

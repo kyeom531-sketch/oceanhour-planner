@@ -198,7 +198,7 @@ main{flex:1;overflow:auto}
 .daybar button{color:var(--d70);font-size:15px;padding:1px 6px;border-radius:6px;line-height:1.3}
 .daybar button:hover{background:var(--hov);color:var(--ink)}
 .daybar .today{font-size:12px;margin-left:4px;color:var(--c4)}
-/* 늘 보이는 단추는 다섯까지(규칙 13) — 나머지는 「⋯」를 누르면 편다 */
+/* 늘 보이는 단추는 다섯까지(규칙 3) — 나머지는 「⋯」를 누르면 편다 */
 .daybar .xtra{display:none}
 .daybar.more-on .xtra{display:inline-block}
 .daybar .dmore{font-size:14px;padding:1px 7px;letter-spacing:.05em}
@@ -281,7 +281,7 @@ li.row:has(.edit) .tools{display:none}
 body.cool .tools{pointer-events:none!important}   /* 도구를 누른 직후 0.5초 — 줄이 밀려 다른 단추가 손 밑에 와도 두 번 눌리지 않게 */
 .tools button{font-size:11.5px;color:var(--d70);padding:2px 5px;border-radius:5px;white-space:nowrap}
 .tools button:hover{background:var(--hov);color:var(--ink)}
-.tools .xtra{display:none}                     /* 늘 보이는 도구는 여덟까지(규칙 13) — 나머지는 「더」 */
+.tools .xtra{display:none}                     /* 늘 보이는 도구는 여덟까지(규칙 3) — 나머지는 「더」 */
 li.row.tools-more .tools .xtra{display:inline-block}
 li.row.tools-more .tools .tmore{display:none}
 .tools .rep{position:relative;display:inline-flex}
@@ -295,6 +295,10 @@ li.row.tools-more .tools .tmore{display:none}
 .first p{margin:0 0 10px}
 .first .ex{background:var(--hov);border-radius:8px;padding:7px 10px 1px;margin:0 0 10px}
 .first .exl{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;margin:0 0 5px}
+.fstart{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:2px 0 8px}
+.fstart span{font-size:12px;color:var(--d70);margin-right:2px}
+.fstart button{font-size:13px;color:var(--c4);border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px}
+.fstart button:hover{background:var(--hov)}
 /* 메모 — 줄 아래에 펼친다. 적는 대로 저장한다 */
 .meta .nm-mark{cursor:pointer}
 /* 하위 할 일 — 줄 아래로 펼친다. 한 겹만 */
@@ -479,7 +483,8 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .wrap{padding:4px 12px calc(96px + env(safe-area-inset-bottom))}
   .daybar{flex-wrap:wrap;row-gap:6px}
   .daybar.dayb{flex-wrap:nowrap;gap:4px}        /* 날짜 줄은 한 줄로 — 날짜 글자가 길면 줄여서 ⋯ 까지 한 줄에 */
-  .daybar.dayb .wd{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .daybar.dayb .wd{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .daybar.dayb > button,.daybar.dayb .seg,.daybar.dayb h1{flex:none;white-space:nowrap}   /* 단추는 안 줄인다 — 줄어드는 건 날짜 글자만(09-26 「추석 연휴」에서 단추가 두 줄로 접혔다) */
   .daybar.dayb.more-on{flex-wrap:wrap}
   .daybar h1{white-space:nowrap}
   .daybar .ics{margin-left:0}
@@ -1202,7 +1207,7 @@ const editing = () => !!document.querySelector('input.edit')
 let openNotes = new Set();                      // 메모를 펼친 할 일
 let openSubs  = new Set();                      // 하위 할 일을 펼친 할 일
 let toolsOn   = null;                           // 폰 — 「⋯」로 도구를 편 줄 하나
-let toolsMore = null;                           // 도구의 「더」를 편 줄 하나 — 늘 보이는 도구는 여덟까지(규칙 13)
+let toolsMore = null;                           // 도구의 「더」를 편 줄 하나 — 늘 보이는 도구는 여덟까지(규칙 3)
 let dayMore   = false;                          // 날짜 줄의 「⋯」를 폈나
 let copyFor   = null, copyPick = new Set();     // 복사 — 할 일 id 또는 'day:날짜' · 고른 날들
 let picking   = false, picked = new Set();      // 여러 개 골라 한꺼번에
@@ -1215,7 +1220,7 @@ function drawPickbar(){
     <button data-pk="today" ${dis}>오늘로</button><button data-pk="tomorrow" ${dis}>내일로</button>
     <label class="pksel pkd">날짜…<input type="date" data-pkdate ${dis}></label>
     <button data-pk="done" ${dis}>끝내기</button>
-    <select class="pksel" data-pklist ${dis}><option value="">분류 ▾</option><option value="-">분류 없음</option>${DB.lists().filter(l => !l.done).map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('')}</select>
+    <select class="pksel" data-pklist ${dis}><option value="">목표 ▾</option><option value="-">목표 없음</option>${DB.lists().filter(l => !l.done).map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('')}</select>
     <button class="del" data-pk="del" ${dis}>지우기</button>
     <button data-pk="all">보이는 것 모두</button><button data-pk="stop">그만</button>`;
 }
@@ -1285,15 +1290,15 @@ function drawSide(){
     + (nTrash ? `<button class="li ${mode() === 'trash' ? 'on' : ''}" data-view="trash" title="지운 것 — 되살리면 제자리로 돌아갑니다">
          <span class="dot ring"></span><span class="nm">휴지통</span><span class="n">${nTrash}</span></button>` : '')
     + (() => { const ar = [...new Set(going.map(l => l.area).filter(Boolean))], none = going.filter(l => !l.area);
-        if (!ar.length) return `<div class="sec">분류</div>` + going.map(item).join('');   // 영역을 안 쓰면 전과 같다
+        if (!ar.length) return `<div class="sec">목표</div>` + going.map(item).join('');   // 영역을 안 쓰면 전과 같다
         return ar.map(a => `<div class="sec area"><span data-area="${esc(a)}" title="누르면 영역 이름 고치기">${esc(a)}</span></div>`
                           + going.filter(l => l.area === a).map(item).join('')).join('')
           + (none.length ? `<div class="sec">영역 없음</div>` + none.map(item).join('') : ''); })()
-    + `<button class="newlist" id="newlist">+ 새 분류</button>`
+    + `<button class="newlist" id="newlist">+ 새 목표</button>`
     + (fin.length ? `<button class="newlist" data-finfold>${showFin ? '마친 목표 접기' : '마친 목표 ' + fin.length}</button>`
                     + (showFin ? fin : fin.filter(l => l.id === open)).map(item).join('') : '');   // 열어 둔 것은 접혀도 보인다
   const sel = $('#addList'), keep = sel.value;
-  sel.innerHTML = `<option value="">분류 없음</option>`
+  sel.innerHTML = `<option value="">목표 없음</option>`
     + going.map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('');
   if ([...sel.options].some(o => o.value === keep)) sel.value = keep;
 }
@@ -1335,7 +1340,7 @@ function drawDay(){
          ${calWeek !== DB.monday(T) ? `<button class="today" data-cm="0">이번 주</button>` : ''}${seg}${noHoli}${ics}`
       : `<button data-cm="-1">‹</button><h1>${y}년 ${m}월</h1><button data-cm="1">›</button>
          ${calMonth !== T.slice(0, 7) ? `<button class="today" data-cm="0">이번 달</button>` : ''}${seg}${noHoli}${ics}`; return; }
-  // 늘 보이는 단추는 다섯까지(규칙 13) — 나머지는 「⋯」 안에. 계획 · 마무리는 때에 맞는 하나만 앞에 둔다(오후 세 시부터 마무리)
+  // 늘 보이는 단추는 다섯까지(규칙 3) — 나머지는 「⋯」 안에. 계획 · 마무리는 때에 맞는 하나만 앞에 둔다(오후 세 시부터 마무리)
   const pmNow = new Date().getHours() >= 15;
   $('#daybar').classList.toggle('more-on', dayMore); $('#daybar').classList.add('dayb');
   $('#daybar').innerHTML =
@@ -1412,9 +1417,9 @@ function row(t){
         : inLog ? (l ? `<span class="d">${esc(l.name)}</span>` : '')
         : showDate ? `<span class="d">${t.date?dOnly(t.date):'날짜 없음'}</span>`
         : (t.movedFrom && t.movedFrom !== t.date ? `<span class="d">${dOnly(t.movedFrom)}부터</span>` : '')}
-      <span class="cdot ${l?'':'none'}" style="${l?`background:${l.color}`:''}" title="분류">
+      <span class="cdot ${l?'':'none'}" style="${l?`background:${l.color}`:''}" title="목표">
         <select data-do="setlist">
-          <option value="" ${!l?'selected':''}>분류 없음</option>
+          <option value="" ${!l?'selected':''}>목표 없음</option>
           ${opts.map(x=>`<option value="${esc(x.id)}" ${l&&l.id===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}
         </select></span>
     </span>
@@ -1441,7 +1446,7 @@ function group(ts, fold){
     const l = k ? DB.listOf(k) : null;
     out += `<div class="box">
       <h2 ${l ? `data-list="${esc(l.id)}" title="목표 화면 열기"` : ''}>${l
-          ? `<span class="gdot" style="background:${l.color}"></span>${esc(l.name)}` : '분류 없음'}${fold ? cnt(arr) : ' · ' + arr.length}</h2>
+          ? `<span class="gdot" style="background:${l.color}"></span>${esc(l.name)}` : '목표 없음'}${fold ? cnt(arr) : ' · ' + arr.length}</h2>
       ${fold ? rows(arr) : `<ul>${arr.map(row).join('')}</ul>`}</div>`;
   }
   return out;
@@ -1520,7 +1525,7 @@ function readWeek(wk){
     out.push(g >= p * 0.9 ? `「${name(k)}」에는 잡아 둔 ${fmtDur(p)}만큼 썼습니다.`
       : `「${name(k)}」에 ${fmtDur(p)}을 잡아 두었고, 쓴 시간은 ${g ? fmtDur(g) + '입니다' : '아직 없습니다'}.`); });
   const extra = [...got.entries()].filter(([k, g]) => !plan.has(k) && g >= 1800).sort((a, b) => b[1] - a[1])[0];
-  if (extra) out.push(`시간표에 없던 ${extra[0] ? '「' + name(extra[0]) + '」' : '분류 없는 일'}에 ${fmtDur(extra[1])}이 갔습니다.`);
+  if (extra) out.push(`시간표에 없던 ${extra[0] ? '「' + name(extra[0]) + '」' : '목표 없는 일'}에 ${fmtDur(extra[1])}이 갔습니다.`);
   const moved = DB.todos().filter(t => !t.done && inWk(t.date) && t.movedCount >= 2).sort((a, b) => b.movedCount - a.movedCount)[0];
   if (moved) out.push(`여러 번 옮긴 일 — 「${moved.text}」 ${moved.movedCount}번. 쪼개 보거나, 이 주는 내려놔도 됩니다.`);
   return out.slice(0, 4);
@@ -1539,7 +1544,7 @@ function weekPage(){                           // 한 주 — 끝낸 것과 쓴 
   const groups = order.map(k => { const l = k ? DB.listOf(k) : null, p = per.get(k);
     const bits = [p.done.length ? '끝낸 것 ' + p.done.length : '', p.secs ? fmtDur(p.secs) : ''].filter(Boolean).join(' · ');
     return `<div class="wg"><div class="wh" ${l ? `data-list="${esc(l.id)}" title="목표 화면 열기"` : ''}>${l
-        ? `<span class="gdot" style="background:${l.color}"></span>${esc(l.name)}` : '분류 없음'}<span class="n">${bits}</span></div>
+        ? `<span class="gdot" style="background:${l.color}"></span>${esc(l.name)}` : '목표 없음'}<span class="n">${bits}</span></div>
       ${p.done.length ? `<div class="wl">${p.done.map(t => esc(t.text)).join(' · ')}</div>` : ''}</div>`; }).join('');
   const opn = w => [0, 1, 2, 3, 4, 5, 6].reduce((a, i) => a + DB.opensOn(DB.shift(w, i)), 0), oNow = opn(wk), oPrev = opn(DB.shift(wk, -7));
   const opens = oNow || oPrev ? `<div class="opn" title="이 기기 안에서만 셉니다 — 밖으로 보내지 않습니다. 5분 넘게 떠나 있다가 돌아온 것을 한 번으로 셉니다">이 주에 ${oNow}번 열었습니다 · 앞 주 ${oPrev}번</div>` : '';
@@ -1689,25 +1694,27 @@ function drawBody(){
         + (showPast ? `<div class="box"><ul>${p.map(row).join('')}</ul></div>` : '');
     }
     const ts = DB.todosOn(day).sort(DB.byWhen), rt = ts.filter(t => t.repeat);   // 루틴(반복하는 일)은 맨 위 한 칸에 따로
-    const first = day === T && !DB.todos().length && !DB.lists().length;   // 처음 온 사람 — 설명 창 없이 빈 칸에서 차이를 보여 준다(규칙 9)
+    const first = day === T && !DB.todos().length && !DB.lists().length;   // 처음 온 사람 — 설명 창 없이 빈 칸에서 차이를 보여 준다(규칙 10)
     html += ts.length ? (rt.length ? `<div class="box routine"><h2>루틴${cnt(rt)}</h2>${rows(rt)}</div>` : '') + group(ts.filter(t => !t.repeat), true)
       : `<div class="box"><div class="empty">${day===T
           ? '오늘 할 일이 없습니다. 위에 적어 보세요.' : '이 날은 비어 있습니다.'}</div>${first ? firstHint() : ''}</div>`;
     const un = DB.undated().sort(DB.byWhen);
     if (un.length && day === T)
       html += `<div class="box"><h2>날짜 없음${cnt(un)}</h2>${rows(un)}</div>`;
-    const sp = DB.timeByDay()[day];               // 이 날 쓴 시간 — 정한 곳 · 그 밖을 오늘 화면에서도(규칙 9). 잰 게 있을 때만, 맨 아래에
+    const sp = DB.timeByDay()[day];               // 이 날 쓴 시간 — 정한 곳 · 그 밖을 오늘 화면에서도(규칙 10). 잰 게 있을 때만, 맨 아래에
     if (sp && sp.on + sp.off) html += `<div class="box dsum"><h2>${day === T ? '오늘' : '이 날'} 쓴 시간</h2>${timeLine(sp)}</div>`;
   }
   $('#body').innerHTML = html;
 }
 
 function firstHint(){                           // 처음 온 사람에게 — 두 줄과 예시 막대 하나. 할 일이나 목표가 하나라도 생기면 사라진다
-  return `<div class="first"><p>「+ 새 분류」로 목표를 만들고(폰은 ☰ 안), 그 목표의 일에 시간을 쓰면 하루가 둘로 나뉘어 보입니다.
+  return `<div class="first"><p>「+ 새 목표」로 목표를 만들고(폰은 ☰ 안), 그 목표의 일에 시간을 쓰면 하루가 둘로 나뉘어 보입니다.
       정한 곳은 목표에 이어 둔 일, 그 밖은 나머지입니다.</p>
     <div class="ex"><span class="exl">예시</span>${timeLine({ on:7200, off:3600 })}</div>
-    <p>시간은 할 일 줄의 「시작」으로 재거나, 「3시 공부」처럼 시각을 적어 두고 끝내면 들어갑니다.</p></div>`;
+    <p>시간은 할 일 줄의 「시작」으로 재거나, 「3시 공부」처럼 시각을 적어 두고 끝내면 들어갑니다.</p>
+    <div class="fstart"><span>틀로 바로 시작</span>${FIRST_FRAMES.map(([k, n]) => `<button data-framego="${k}">${n}</button>`).join('')}</div></div>`;
 }
+const FIRST_FRAMES = [['exam', '시험 준비 8주'], ['morning', '갓생 아침']];   // t/ 폴더의 틀 중 처음 화면에 둘 것 — 이름은 틀 파일과 맞춘다
 
 /* ── 제자리 고치기 ── */
 function startEdit(el, value, save){
@@ -1948,7 +1955,7 @@ function pickDo(a, arg){
   else if (a === 'done'){ const was = ids.filter(id => !DB.todo(id).done); was.forEach(id => DB.toggleTodo(id));
     msg = `${was.length}개를 끝냈습니다`; back = () => was.forEach(id => DB.toggleTodo(id)); }
   else if (a === 'list'){ const prev = ids.map(id => [id, DB.todo(id).listId]); ids.forEach(id => DB.editTodo(id, { listId:arg }));
-    msg = `${n}개의 분류를 바꿨습니다`; back = () => prev.forEach(([id, l]) => DB.editTodo(id, { listId:l })); }
+    msg = `${n}개의 목표를 바꿨습니다`; back = () => prev.forEach(([id, l]) => DB.editTodo(id, { listId:l })); }
   else if (a === 'del'){ ids.forEach(id => DB.removeTodo(id)); msg = `${n}개를 지웠습니다`; back = () => ids.forEach(id => DB.restoreTodo(id)); }
   stopPick(); render(); toast(msg, back);
 }
@@ -2078,7 +2085,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-logmore]')){ logMore += 30; return render(); }
 
   const nl = e.target.closest('#newlist');
-  if (nl) return startAdd(nl, '분류 이름', v => { const l = DB.addList(v); if (l) open = l.id; }, false);
+  if (nl) return startAdd(nl, '목표 이름', v => { const l = DB.addList(v); if (l) open = l.id; }, false);
 
   if (e.target.closest('[data-finfold]')){ showFin = !showFin; return render(); }
   const ar = e.target.closest('[data-area]');
@@ -2626,14 +2633,21 @@ function fbLink(){
 
 /* ── 받은 틀(규칙 11) ── 주소 끝의 ?t=이름 → t/이름.json 을 받아 한 번 묻는다. 사람이 링크를 누른 뒤라 규칙 2에 맞다 */
 let frameAsk = null;                            // { key, f } — 넣을지 묻는 중인 틀
+const fetchFrame = k => !/^[a-z0-9-]{1,40}$/.test(k) ? Promise.reject()
+  : fetch('t/' + k + '.json', { cache:'no-cache' }).then(r => r.ok ? r.json() : Promise.reject()).then(j => DB.cleanFrame(j) || Promise.reject());
 function loadFrame(){
   const k = new URLSearchParams(location.search).get('t'); if (!k) return;
-  if (!/^[a-z0-9-]{1,40}$/.test(k)) return toast('틀 이름을 읽지 못했습니다 — 받은 링크를 다시 눌러 주세요');
-  return fetch('t/' + k + '.json', { cache:'no-cache' }).then(r => r.ok ? r.json() : Promise.reject())
-    .then(j => { const f = DB.cleanFrame(j); if (!f) throw 0;
-      frameAsk = { key:k, f }; page = 'day'; open = null; q = ''; day = DB.today(); render(); })
+  return fetchFrame(k).then(f => { frameAsk = { key:k, f }; page = 'day'; open = null; q = ''; day = DB.today(); render(); })
     .catch(() => toast('틀을 찾지 못했습니다 — 받은 링크를 다시 눌러 주세요'));
 }
+function putFrame(f){                            // 넣고, 되돌리기를 붙인다
+  const r = DB.addFrame(f); render();
+  toast(`넣었습니다 · ${f.name} — 루틴의 「시작」을 누르면 정한 곳에 시간이 쌓입니다`, () => DB.dropFrame(r), 8000);
+  return r;
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-framego]'); if (!b) return;   // 처음 화면의 「틀로 바로 시작」 — 누른 게 곧 고른 것이라 묻지 않고 넣는다(되돌릴 수 있다)
+  b.disabled = true; return fetchFrame(b.dataset.framego).then(putFrame)
+    .catch(() => { b.disabled = false; toast('틀을 받지 못했습니다 — 인터넷을 확인해 주세요'); }); });
 function framePanel(){
   const f = frameAsk.f, n = k => f.goals.reduce((a, g) => a + g[k].length, 0);
   const what = [`목표 ${f.goals.length}`, n('stages') ? `단계 ${n('stages')}` : '', n('routines') ? `루틴 ${n('routines')}` : '', n('todos') ? `할 일 ${n('todos')}` : ''].filter(Boolean).join(' · ');
@@ -2647,8 +2661,7 @@ function framePanel(){
 document.addEventListener('click', e => { const b = e.target.closest('[data-frame]'); if (!b || !frameAsk) return;
   const f = frameAsk.f; frameAsk = null; history.replaceState(null, '', location.pathname);
   if (b.dataset.frame !== 'add') return render();
-  const r = DB.addFrame(f); render();
-  toast(`넣었습니다 · ${f.name} — 목표는 옆 칸에 있습니다`, () => DB.dropFrame(r)); });
+  putFrame(f); });
 
 /* ── 한 주 그림(규칙 11) ── 사람이 누를 때만, 고른 것만. 적은 할 일은 안 넣는다 — 목표 이름과 쓴 시간만. 많이 한 순으로 줄 세우지 않고 옆 칸 차례로 */
 let cardOn = false, cardNames = true;
@@ -2804,13 +2817,17 @@ $('#icsFile').addEventListener('change', e => {
 
 /* ── 내보내기 · 가져오기 ── */
 $('#out').addEventListener('click', () => {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([DB.dump()], { type:'application/json' }));
-  a.download = '오션아워-' + DB.today() + '.json';
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  writeBK({ at:new Date().toISOString(), later:null }); render();
-  toast(`내보냈습니다 · 할 일 ${DB.todos().length}개`);
+  const body = DB.dump(), name = '오션아워-' + DB.today() + '.json';
+  const done = how => { writeBK({ at:new Date().toISOString(), later:null }); render();
+    toast(`${how} · 할 일 ${DB.todos().length}개 — 다른 기기에서는 「가져오기」로 엽니다`); };
+  const download = () => { const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([body], { type:'application/json' })); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); done('내보냈습니다'); };
+  let file = null; try{ file = new File([body], name, { type:'application/json' }); }catch(e){}
+  // 폰 — 보내기 창(에어드롭 · 카톡 · 파일에 저장)으로 다른 기기에 바로 보낸다(규칙 9). 닫으면 아무것도 안 하고, 안 되면 내려받기로
+  if (file && matchMedia('(pointer: coarse)').matches && navigator.canShare && navigator.canShare({ files:[file] }))
+    return navigator.share({ files:[file], title:name }).then(() => done('보냈습니다'), err => { if (!err || err.name !== 'AbortError') download(); });
+  download();
 });
 $('#in').addEventListener('click', () => $('#file').click());
 $('#file').addEventListener('change', e => {
@@ -2820,8 +2837,8 @@ $('#file').addEventListener('change', e => {
     const res = DB.restore(r.result);
     if (!res.ok) return toast(res.why);
     if (!confirm(`지금 것을 가져온 것으로 바꿉니다.\n\n`
-      + `지금:      할 일 ${DB.todos().length}개 · 분류 ${DB.lists().length}개\n`
-      + `가져올 것: 할 일 ${res.todos}개 · 분류 ${res.lists}개\n\n`
+      + `지금:      할 일 ${DB.todos().length}개 · 목표 ${DB.lists().length}개\n`
+      + `가져올 것: 할 일 ${res.todos}개 · 목표 ${res.lists}개\n\n`
       + `바꾼 뒤 15초 안에는 알림에서 되돌릴 수 있습니다.`)) return;
     const prev = DB.apply(res.data);
     day = DB.today(); open = null; page = 'day'; openDays = null; q = '';
@@ -2882,7 +2899,7 @@ setInterval(dayTick, 30000);
 addEventListener('focus', dayTick);
 document.addEventListener('visibilitychange', dayTick);
 
-/* ── 연 횟수 ── 이 기기 안에서만 센다(규칙 6). 5분 넘게 떠나 있다가 돌아오면 한 번. 새로 고침은 안 센다.
+/* ── 연 횟수 ── 이 기기 안에서만 센다(규칙 8). 5분 넘게 떠나 있다가 돌아오면 한 번. 새로 고침은 안 센다.
    떠난 때는 이 브라우저 것이라 자료가 아니라 따로 둔다 */
 const SEEN = DB.key + '.seen', AWAY = 5 * 60e3;
 let awayAt = null;
