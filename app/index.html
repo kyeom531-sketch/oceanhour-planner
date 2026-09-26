@@ -414,6 +414,11 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .lsub{font-size:11.5px;color:var(--d70);padding:4px 0 0 4px}
 .ltime .lplan{color:var(--d70)}
 /* 한 주 */
+.whero{display:flex;flex-wrap:wrap;gap:6px 32px;margin:2px 0 8px}          /* 정한 곳 / 그 밖을 큰 숫자로 — 우리 차이가 이 화면의 주인공(09-26 채점 1판) */
+.whero span{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--d70)}
+.whero b{display:block;font-size:30px;line-height:1.2;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.split.big{height:10px;margin:0 0 12px}
+@media(max-width:640px){ .whero{gap:6px 22px} .whero b{font-size:25px} }
 .wlist{padding:0 0 6px}
 .wg{padding:7px 0;border-top:1px solid var(--line)}
 .wg:first-child{border-top:0}
@@ -1591,6 +1596,13 @@ function timeLine(o){                          // 「정한 곳 · 그 밖」 �
     <div class="split" title="정한 곳 ${fmtDur(o.on)} · 그 밖 ${fmtDur(o.off)}"><i style="flex:${o.on}"></i><b style="flex:${o.off}"></b></div>`;
 }
 
+function timeHero(o){                          // 한 주의 주인공 — 정한 곳 / 그 밖을 큰 숫자로. % 없이 두 몫만
+  if (!o || !(o.on + o.off)) return '';
+  return `<div class="whero"><div><span><i class="k on"></i>정한 곳</span><b>${fmtDur(o.on)}</b></div><div><span><i class="k off"></i>그 밖</span><b>${fmtDur(o.off)}</b></div></div>
+    <div class="split big" title="정한 곳 ${fmtDur(o.on)} · 그 밖 ${fmtDur(o.off)}"><i style="flex:${o.on}"></i><b style="flex:${o.off}"></b></div>${o.plan
+      ? `<div class="ltime"><span class="lplan" title="시간표에 놓고 끝낸 일 — 타이머로 재지 않아 칸 길이로 적었습니다">그중 시간표로 ${fmtDur(o.plan)}</span></div>` : ''}`;
+}
+
 function logPage(){                            // 날마다 한 줄 — 끝낸 것과 쓴 시간. 점수·비교 없이
   const T = DB.today(), done = new Map(), work = new Map(), unknown = [], tb = DB.timeByDay();
   const put = (m, d, t) => (m.get(d) || m.set(d, []).get(d)).push(t);
@@ -1659,13 +1671,13 @@ function weekPage(){                           // 한 주 — 끝낸 것과 쓴 
       ${p.done.length ? `<div class="wl">${p.done.map(t => esc(t.text)).join(' · ')}</div>` : ''}</div>`; }).join('');
   const opn = w => [0, 1, 2, 3, 4, 5, 6].reduce((a, i) => a + DB.opensOn(DB.shift(w, i)), 0), oNow = opn(wk), oPrev = opn(DB.shift(wk, -7));
   const opens = oNow || oPrev ? `<div class="opn" title="이 기기 안에서만 셉니다 — 밖으로 보내지 않습니다. 5분 넘게 떠나 있다가 돌아온 것을 한 번으로 셉니다">이 주에 ${oNow}번 열었습니다 · 앞 주 ${oPrev}번</div>` : '';
-  const rv = DB.review(wk), prev = DB.review(DB.shift(wk, -7));
+  const rv = DB.review(wk), prev = DB.review(DB.shift(wk, -7)), hero = timeHero(sum);
   const field = (f, label, ph) => `<label class="rv"><span>${label}</span>
       <textarea data-rev="${f}" data-week="${wk}" rows="2" placeholder="${ph}">${esc(rv[f])}</textarea></label>`;
   return (cardOn ? cardPanel(wk) : '') + (prev.next.trim() ? `<div class="carry wnext">지난주에 정한 한 가지 — 「${esc(prev.next.trim())}」</div>` : '')
-    + `<div class="box read"><h2>한 주를 읽어 드립니다</h2>${readWeek(wk).map(s => `<p>${esc(s)}</p>`).join('')}
+    + `<div class="box read"><h2>한 주를 읽어 드립니다</h2>${hero}${readWeek(wk).filter(s => !(hero && s.startsWith('이 주에 쓴 시간'))).map(s => `<p>${esc(s)}</p>`).join('')}
         <div class="rnote">규칙으로 쓴 문장입니다 — 기기 밖으로 보내지 않습니다</div></div>`
-    + `<div class="box"><h2>한 주${nDone ? ' · 끝낸 것 ' + nDone : ''}</h2>${timeLine(sum)}${opens}
+    + `<div class="box"><h2>한 주${nDone ? ' · 끝낸 것 ' + nDone : ''}</h2>${opens}
         ${groups ? `<div class="wlist">${groups}</div>` : `<div class="empty">이 주에는 끝낸 것도 잰 시간도 ${days[6] < DB.today() ? '' : '아직 '}없습니다.</div>`}</div>`
     + `<div class="box"><h2>돌아보기</h2>${field('good', '잘 된 것', '이번 주에 잘 된 것 하나')}${field('stuck', '걸린 것', '무엇이 막았나 — 탓이 아니라 사실로')}${field('next', '다음 주 한 가지', '다음 주에 하나만 한다면')}</div>`;
 }
@@ -1837,7 +1849,7 @@ function firstHint(){                           // 처음 온 사람에게 — �
     <div class="fstart"><span>틀로 바로 시작</span>${FIRST_FRAMES.map(([k, n]) => `<button data-framego="${k}">${n}</button>`).join('')}</div>
     <p class="fmore"><button data-view="help">이렇게 쓸 수 있어요 — 적는 말 · 도구 · 키보드</button></p></div>`;
 }
-const FIRST_FRAMES = [['exam', '시험 준비 8주'], ['morning', '갓생 아침']];   // t/ 폴더의 틀 중 처음 화면에 둘 것 — 이름은 틀 파일과 맞춘다
+const FIRST_FRAMES = [['exam', '시험 준비 8주'], ['job', '취업 준비 12주'], ['term', '이번 학기']];   // t/ 폴더의 틀 중 처음 화면에 둘 것 — 이름은 틀 파일과 맞춘다. 한국 노션에서 많이 받는 주제 순(시간표 462 · 취준 204 · 학점 189 · 갓생 39 — 조사.md, 09-26 채점 1판)
 
 /* ── 제자리 고치기 ── */
 function startEdit(el, value, save){
@@ -2419,7 +2431,9 @@ document.addEventListener('click', e => {
   page = 'day'; open = null; day = DB.today(); render(); const i = $('#add'); i.value = t.dataset.try; i.focus(); i.dispatchEvent(new Event('input', { bubbles:true }));
 });
 let exI = 0;                                     // 입력칸 안내 — 비어 있을 때 예시를 돌려 보인다
-setInterval(() => { const i = $('#add'); if (!i || i.value) return; exI = (exI + 1) % ADD_EX.length; i.placeholder = `할 일 적기 — 「${ADD_EX[exI]}」처럼 적어도 알아듣습니다`; }, 5000);
+const exPh = ex => innerWidth <= 640 ? `할 일 — 예: ${ex}` : `할 일 적기 — 「${ex}」처럼 적어도 알아듣습니다`;   // 폰은 칸이 좁아 짧게 — 긴 글은 뒤가 잘렸다(09-26 채점 1판, 375px에서 칸 210 · 글 335)
+if ($('#add')) $('#add').placeholder = exPh(ADD_EX[0]);
+setInterval(() => { const i = $('#add'); if (!i || i.value) return; exI = (exI + 1) % ADD_EX.length; i.placeholder = exPh(ADD_EX[exI]); }, 5000);
 
 /* ── 날마다 메모 · 목표 메모(09-26) ── 할 일 메모와 같다. 적는 대로 0.4초 뒤에, 칸을 떠날 때 한 번 더 저장 */
 let memoT;
