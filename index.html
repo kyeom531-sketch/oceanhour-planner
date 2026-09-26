@@ -98,6 +98,16 @@ footer a{color:var(--d70)}
   section{padding:34px 0}
   .two,.steps,.cardrow,.cards,.feats{grid-template-columns:1fr}
 }
+/* 움직임 — 첫 화면이 올라오고, 내리면 칸이 하나씩 올라온다. 움직임을 꺼 둔 사람과 스크립트가 없는 곳에서는 처음부터 다 보인다(09-26 · 인스타 「디자인」 저장 — 「안 움직여서 심심하다」) */
+@media (prefers-reduced-motion:no-preference){
+ .mv .rise{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+ .mv .rise.in{opacity:1;transform:none}
+ .mv .hero > *,.mv .hero + .shot{animation:up .7s cubic-bezier(.2,.7,.2,1) both}   /* 첫 화면은 신호를 안 기다리고 CSS로 올라온다 */
+ .mv .hero > :nth-child(2){animation-delay:.08s} .mv .hero > :nth-child(3){animation-delay:.16s} .mv .hero > :nth-child(4){animation-delay:.24s} .mv .hero + .shot{animation-delay:.32s}
+ .mv .bar.rise i{transform:scaleX(0);transform-origin:left;transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .2s}   /* 막대는 정한 곳이 차오른다 */
+ .mv .bar.rise.in i{transform:none}
+ @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+}
 </style>
 </head>
 <body>
@@ -238,6 +248,22 @@ footer a{color:var(--d70)}
       .then(function(){ b.textContent = '복사했습니다'; })
       .catch(function(){ prompt('이 주소를 복사해 사파리 · 크롬에서 열어 주세요', u); });
   });
+})();
+/* 움직임 — 보이는 자리에 오면 올라온다. 못 쓰는 곳이면 아무것도 안 숨긴다 */
+(function(){
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = [].slice.call(document.querySelectorAll('section > .lbl, section > h2, .pcard, .feats > div, section > p, section .shot, section > .cta, .two > div, .bar, .steps > *'));
+  document.documentElement.classList.add('mv');
+  els.forEach(function(e){ e.classList.add('rise'); });
+  [].slice.call(document.querySelectorAll('.cards, .feats, .two, .steps')).forEach(function(g){   // 한 줄에 놓인 것은 조금씩 늦게
+    [].slice.call(g.children).forEach(function(c, i){ c.style.transitionDelay = (i * 90) + 'ms'; }); });
+  var top = document.querySelector('.top'), alive = false;
+  var io = new IntersectionObserver(function(es){ es.forEach(function(x){ if (!x.isIntersecting) return;
+    if (x.target === top){ alive = true; return; } x.target.classList.add('in'); io.unobserve(x.target); }); }, { rootMargin:'0px 0px -8% 0px' });
+  io.observe(top); els.forEach(function(e){ io.observe(e); });
+  function guard(){ setTimeout(function(){ if (!alive) els.forEach(function(e){ e.classList.add('in'); }); }, 4000); }   // 보이는 화면인데 맨 위 머리글 신호도 안 오면 — 숨긴 채 두지 않는다
+  if (document.visibilityState === 'visible') guard();
+  else document.addEventListener('visibilitychange', function v(){ if (document.visibilityState !== 'visible') return; document.removeEventListener('visibilitychange', v); guard(); });
 })();
 </script>
 </body>
