@@ -467,7 +467,7 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .chd .cn{flex:none;white-space:nowrap}
 .hn{font-size:11px;color:var(--red);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .hn.jl{color:var(--d70)}
-.cc.past .cl{opacity:.55}                      /* 지난 날 칸의 일은 연하게 */
+.cc.past .cl:not(.done){opacity:.55}           /* 지난 날 칸의 못 한 일은 연하게 — 끝낸 일은 선명하게(끝낸 기쁨, 규칙 7) */
 .cc.past .cl.span{opacity:.45}
 .wc.past .wcard,.wc.past .wdue{opacity:.55}
 .cw span:last-child,.cc.red .cn{color:var(--red)}
@@ -475,7 +475,14 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .cc.tdy .cn{background:var(--ink);color:var(--card)}
 .cl{display:flex;align-items:center;gap:4px;font-size:11.5px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .cl .gdot{width:6px;height:6px}
+.cl.g,.cl.n{border-radius:4px;padding:0 4px;flex:none}   /* 달력 칩 — 목표 색은 옅은 바탕 + 같은 계열 진한 글자(.gh와 같은 비율), 목표 없는 일은 회색 칩 */
+.cl.g{background:color-mix(in srgb,var(--gc) 13%,var(--card));color:color-mix(in srgb,var(--gc) 78%,var(--ink))}
+.cl.n{background:color-mix(in srgb,var(--ink) 6%,var(--card))}
+.cl.g .ct,.cl.n .ct{color:inherit}
 .cl.done{color:var(--d70);text-decoration:line-through}
+.cl.g.done,.cl.n.done{text-decoration:none}   /* 달력에서 끝낸 일 — 줄 대신 ✓. 한 달이 끝낸 색으로 찬다 */
+.cl.g.done{color:color-mix(in srgb,var(--gc) 78%,var(--ink))}
+.cl.g.done::before,.cl.n.done::before{content:'✓';margin-right:3px;font-weight:700}
 .cl.due{color:var(--c4);font-weight:600}
 .cl.more{color:var(--d70)}
 .cl .ct{color:var(--c4);font-weight:600;flex:none}
@@ -596,7 +603,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   li.row.tools-on .meta{flex-basis:100%;flex-wrap:wrap;justify-content:flex-end}
   .tools button,.tools .rep button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:13px;background:var(--card)}
   /* 달력 */
-  .cg{grid-auto-rows:minmax(62px,auto)}
+  .cg{grid-auto-rows:minmax(max(62px,calc((100vh - 262px) / var(--wk,6))),auto)}   /* 폰 — 달력이 화면을 채운다(인기 1위들의 월 달력처럼). 아래가 비어 있었다 */
   .cc{padding:3px 3px 4px}
   .cn{font-size:11px;padding:0 3px;min-width:18px}
   .cl{font-size:10px}
@@ -1753,7 +1760,7 @@ function calPage(){                            // 월 달력 — 날짜 칸마�
   const T = DB.today(), [y, m] = calMonth.split('-').map(Number);
   const first = new Date(y, m - 1, 1), lead = (first.getDay() + 6) % 7, days = new Date(y, m, 0).getDate();
   const start = DB.shift(DB.ymd(first), -lead), n = Math.ceil((lead + days) / 7) * 7;   // 월요일부터 — 주 보기 · 시간표 · 회고와 같게(09-25)
-  const by = new Map(), dues = new Map(), MAX = 3;
+  const by = new Map(), dues = new Map(), MAX = 4;   // 칸마다 넷까지 — 넘으면 +N
   DB.todos().forEach(t => { if (t.date) spanDays(t).forEach(d => (by.get(d) || by.set(d, []).get(d)).push(t)); });
   DB.lists().forEach(l => { if (l.due && !l.done) (dues.get(l.due) || dues.set(l.due, []).get(l.due)).push(l); });
   DB.todos().forEach(t => { if (t.deadline && !t.done) (dues.get(t.deadline) || dues.set(t.deadline, []).get(t.deadline))
@@ -1767,11 +1774,11 @@ function calPage(){                            // 월 달력 — 날짜 칸마�
     const all = by.get(d) || [], sp = all.filter(t => t.endDate).sort((a, b) => a.date.localeCompare(b.date) || (a.id < b.id ? -1 : 1));   // 여러 날 것은 맨 위 — 날마다 같은 줄에 오게
     const ts = all.filter(t => !t.endDate).sort((a, b) => a.done - b.done || DB.byWhen(a, b));   // 안 끝낸 것 먼저, 그 안에서 시각 순
     const lines = sp.map(t => bar(t, d)).concat((dues.get(d) || []).map(l => `<span class="cl due">${dot(l)}마감 · ${esc(l.name)}</span>`))
-      .concat(ts.map(t => `<span class="cl ${t.done ? 'done' : ''}">${dot(t.listId && DB.listOf(t.listId))}${t.time ? `<b class="ct">${t.time}</b>` : ''}${esc(t.text)}</span>`));
+      .concat(ts.map(t => (l => `<span class="cl ${l ? 'g' : 'n'} ${t.done ? 'done' : ''}"${l ? ` style="--gc:${l.color}"` : ''}>${t.time ? `<b class="ct">${t.time}</b>` : ''}${esc(t.text)}</span>`)(t.listId && DB.listOf(t.listId))));   // 목표 색 칩 — 한국 인기 1위 여섯이 달력 칸에 분류 색 칩을 쌓는다(09-26 벤치마킹)
     cells += `<button class="cc ${mine ? '' : 'out'} ${d === T ? 'tdy' : ''} ${d < T ? 'past' : ''} ${redCls(d)}" data-cal="${d}" title="${dOnly(d)}${DB.holiday(d) ? ' ' + DB.holiday(d) : ''} 열기">
       <span class="chd"><span class="cn">${+d.slice(8)}</span>${holiName(d)}${DB.dayLine(d) ? '<span class="cmk" title="이 날 메모">메모</span>' : ''}</span>${lines.slice(0, MAX).join('')}${lines.length > MAX ? `<span class="cl more">+${lines.length - MAX}</span>` : ''}</button>`;
   }
-  return `<div class="cal"><div class="cw">${[...'월화수목금토일'].map(w => `<span>${w}</span>`).join('')}</div><div class="cg">${cells}</div></div>`;
+  return `<div class="cal"><div class="cw">${[...'월화수목금토일'].map(w => `<span>${w}</span>`).join('')}</div><div class="cg" style="--wk:${n / 7}">${cells}</div></div>`;
 }
 
 function drawBody(){
