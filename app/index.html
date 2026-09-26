@@ -586,6 +586,7 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .qi .qt{flex:1;min-width:0;text-align:left;font-size:13.5px;line-height:1.35;display:flex;align-items:center;gap:6px;padding:2px 0;overflow-wrap:anywhere}
 .qi .qt .gdot{width:7px;height:7px;flex:none}
 .qi.done .qt{color:var(--d70);text-decoration:line-through}
+.qi .qw{font-size:11px;color:var(--d70);flex:none;margin-left:2px}
 .qpk{display:flex;flex-wrap:wrap;gap:5px;flex-basis:100%;padding:3px 0 5px 21px}
 .qpk button{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
 .qpk button:hover{background:var(--hov)}
@@ -1892,12 +1893,14 @@ function calTimePage(days = [0, 1, 2, 3, 4, 5, 6].map(i => DB.shift(calWeek, i))
 /* ── 4칸 ── 중요 × 급함. LockDay(차트 10위)의 중심 · 아이젠하워 매트릭스(17위) · Taska(45위) — 09-26 채점 11판에 넣었다.
    09-22에 「적을 때마다 묻는다」로 뺐던 것이라, 적을 때는 안 묻는다. 안 나눈 일은 아래에 두고 눌러서 놓는다 */
 const QUADS = [[1, '먼저', '중요 · 급함'], [2, '날 잡기', '중요 · 안 급함'], [3, '짧게', '급함 · 덜 중요'], [4, '나중에', '둘 다 아님']];
-function quadPage(d){
-  const ts = DB.todosOn(d).sort(DB.byPos), by = q => ts.filter(t => (t.q || 0) === q);
+function quadPage(d){                         // 오늘은 지난 일 · 날짜 없는 일(언젠가)까지 — 1위 앱의 4칸은 남은 일 전부를 나눈다(LockDay 「중요 · 긴급 · 언젠가」)
+  const T = DB.today(), more = d === T ? [...DB.past(), ...DB.undated().filter(t => !t.done)] : [];
+  const ts = [...DB.todosOn(d).sort(DB.byPos), ...more], by = q => ts.filter(t => (t.q || 0) === q);
+  const when = t => t.date === d ? '' : `<span class="qw">${t.date ? dOnly(t.date) + '부터' : '날짜 없음'}</span>`;
   const item = t => { const l = t.listId && DB.listOf(t.listId);
     return `<div class="qi ${t.done ? 'done' : ''}" data-t="${esc(t.id)}" draggable="true">
       <span class="ck ${t.done ? 'on' : ''}" data-do="toggle"></span>
-      <button class="qt" data-do="quadpick" title="어느 칸에 놓을지 고르기">${l ? `<span class="gdot" style="background:${l.color}"></span>` : ''}${esc(t.text)}</button>
+      <button class="qt" data-do="quadpick" title="어느 칸에 놓을지 고르기">${l ? `<span class="gdot" style="background:${l.color}"></span>` : ''}${esc(t.text)}${when(t)}</button>
       ${quadPick === t.id ? `<span class="qpk">${QUADS.filter(([q]) => q !== t.q).map(([q, n]) => `<button data-do="quad" data-q="${q}">${n}</button>`).join('')}${t.q ? '<button data-do="quad" data-q="0">빼기</button>' : ''}</span>` : ''}</div>`; };
   const box = ([q, n, sub]) => `<div class="qb q${q}" data-qbox="${q}"><div class="qh"><b>${n}</b><span>${sub}</span></div>
       ${by(q).map(item).join('') || '<div class="qe">할 일을 누르면 이 칸에 놓을 수 있습니다</div>'}</div>`;
