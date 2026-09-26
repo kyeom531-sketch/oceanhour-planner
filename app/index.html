@@ -34,6 +34,20 @@
   }
   .dot,.gdot,.cdot:not(.none){filter:brightness(1.5) saturate(.85)}   /* 목표 색은 자료에 적힌 값이라 점만 밝힌다 */
 }
+/* 테마(09-26) — 무료 다섯 벌. 바탕 · 옆 칸 · 강조색만 바꾼다. 어두운 화면에서는 강조색만. 글자 대비는 다섯 다 5 넘는다(검사.js)
+   근거 ③ — 앱스토어 14개 중 5개가 테마를 적었고 아치캘린더가 09-19 폰에도 넣었다. 이 다섯은 무료로 둔다(규칙 6) */
+@media (prefers-color-scheme:light){
+  :root[data-theme=forest]{--bg:#F1F4EF;--side:#E8EDE5;--c4:#2F6B45}
+  :root[data-theme=lavender]{--bg:#F5F3F8;--side:#EDE9F3;--c4:#5A4796}
+  :root[data-theme=peach]{--bg:#FAF3F0;--side:#F3E8E4;--c4:#A23E5A}
+  :root[data-theme=ink]{--bg:#F4F4F3;--side:#EBEBE9;--c4:#3D3D3D}
+}
+@media (prefers-color-scheme:dark){
+  :root[data-theme=forest]{--c4:#86C39B}
+  :root[data-theme=lavender]{--c4:#B3A4E8}
+  :root[data-theme=peach]{--c4:#E595AA}
+  :root[data-theme=ink]{--c4:#CFCFCF}
+}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%}
 body{background:var(--bg);color:var(--ink);
@@ -196,6 +210,12 @@ main{flex:1;overflow:auto}
 .fb{display:block;font-size:11px;color:var(--d70);padding:0 12px 10px;text-decoration:none}
 .fb:hover{color:var(--ink);text-decoration:underline}
 .hbtn{text-align:left;width:100%;padding-top:10px;color:var(--c4)}
+.thbtn{padding-top:0}
+.themes{display:flex;gap:8px;padding:0 12px 10px}
+.themes button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);position:relative;flex:none}
+.themes button i{position:absolute;inset:7px;border-radius:50%}
+.themes button.on{box-shadow:0 0 0 2px var(--ink)}
+@media (pointer:coarse){ .themes{gap:10px} .themes button{width:34px;height:34px} .themes button i{inset:9px} .themes button::before{content:'';position:absolute;inset:-5px} }
 /* 목표 묶음 머리는 목표 색 칩(규칙 12 — 잘 되는 앱은 목표 색을 크게 보인다). 밝은 판 · 어두운 판 둘 다 잉크와 섞어 읽힌다 */
 .box h2.gh{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;margin:7px 0 4px;border-radius:999px;cursor:pointer;
   background:color-mix(in srgb,var(--gc) 13%,var(--card));color:color-mix(in srgb,var(--gc) 78%,var(--ink))}
@@ -624,6 +644,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   #pickbar{bottom:calc(var(--tabh) + 10px)}
 }
 </style>
+<script>try{ var th = localStorage.getItem('oceanhour.theme'); if (th) document.documentElement.dataset.theme = th; }catch(e){}   /* 테마 — 그리기 전에 입혀 깜빡이지 않게 */</script>
 </head>
 <body>
 
@@ -645,6 +666,8 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
     <input type="file" id="icsFile" accept=".ics,text/calendar" hidden>
   </div>
   <button class="fb hbtn" data-view="help">이렇게 쓸 수 있어요</button>
+  <button class="fb hbtn thbtn" id="themeBtn" aria-expanded="false">색 바꾸기</button>
+  <div class="themes hide" id="themes"></div>
   <a class="fb" id="fb" href="#" target="_blank" rel="noopener" title="깃허브에 글을 남깁니다 — 누구나 볼 수 있는 곳이라 적어 둔 할 일은 넣지 마세요">고장 · 바라는 것 알리기</a>
 </aside>
 
@@ -1235,6 +1258,29 @@ const DB = (() => {
     return { ok:true, data:c.data, todos:live(c.data.todos).length, lists:live(c.data.lists).length };
   }
   function apply(d){ fresh(); const prev = S; S = d; save(); return prev; }   // 앞의 것을 돌려준다 — 되돌리기에 쓴다
+  /* 두 기기 합치기(09-26) — 서버 없이 파일로. 같은 id는 더 나중에 고친 쪽(updatedAt)을, 한쪽에만 있는 것은 더한다.
+     지운 것도 지운 시각으로 따라간다. 잰 시간 · 센 횟수 · 연 횟수는 날마다 큰 쪽(두 번 세지 않으려고).
+     두 기기에서 따로 끝낸 반복 일은 다음 차례가 둘 생긴다 — 같은 날 · 같은 글 · 같은 규칙의 안 끝낸 반복 일은 하나만 남긴다 */
+  function merge(o){
+    fresh();
+    const cur = JSON.parse(JSON.stringify(S));  // 복사본 위에서 합친다 — 되돌리기에 쓸 앞의 것은 그대로 둔다
+    const at = x => Date.parse(x && x.updatedAt) || 0, pick = (a, b) => at(b) > at(a) ? b : a;
+    const byId = (A, B, inner) => { const m = new Map((A || []).map(x => [x.id, x]));
+      (B || []).forEach(y => { const x = m.get(y.id); m.set(y.id, x ? (inner ? inner(x, y) : pick(x, y)) : y); }); return [...m.values()]; };
+    const most = (a, b) => { const r = { ...(a || {}) }; for (const [k, v] of Object.entries(b || {})) r[k] = Math.max(r[k] || 0, v); return r; };
+    const byKey = (a, b) => { const r = { ...(a || {}) }; for (const [k, v] of Object.entries(b || {})) r[k] = r[k] ? pick(r[k], v) : v; return r; };
+    const lists = byId(cur.lists, o.lists, (x, y) => ({ ...pick(x, y), stages: byId(x.stages, y.stages) }));
+    let todos = byId(cur.todos, o.todos, (x, y) => ({ ...pick(x, y), subs: byId(x.subs, y.subs),
+      spent: most(x.spent, y.spent), planned: most(x.planned, y.planned), tally: most(x.tally, y.tally) }));
+    const nexts = new Set(todos.map(t => t.nextId).filter(Boolean)), seen = new Map();
+    todos.filter(t => t.repeat && !t.done && !t.deletedAt && t.date)
+      .sort((a, b) => (nexts.has(b.id) - nexts.has(a.id)) || at(b) - at(a))   // 앞 차례가 가리키는 것 · 나중에 고친 것을 남긴다
+      .forEach(t => { const k = [t.text, t.listId, t.date, JSON.stringify(t.repeat)].join('|');
+        if (seen.has(k)){ t.deletedAt = now(); t.deletedBy = 'app'; t.updatedAt = now(); } else seen.set(k, t.id); });
+    const c = clean({ ...cur, lists, todos, reviews: byKey(cur.reviews, o.reviews), days: byKey(cur.days, o.days), opens: most(cur.opens, o.opens) });
+    if (c.bad) return null;
+    const prev = S; S = c.data; save(); return prev;
+  }
 
   return { key:KEY, load, save, blockedWhy, roomTight, today, ymd, shift,
            lists, listOf, addList, editList, finishList, reopenList, removeList, restoreList, areas, renameArea,
@@ -1245,7 +1291,7 @@ const DB = (() => {
            setRepeat, skipTodo, nextDate, rollTimes, countUp, detachOnce, undetach, importTodos, dropTodos, copyTodos, cleanFrame, addFrame, dropFrame, placeBetween, byPos, byWhen, COLORS,
            running, startRun, stopRun, unstop, setFocus, focusLeft, runSecs, secsOn, totalSecs, timeByDay, plannedSecs, blockMin,
            monday, review, setReview, setListNote, searchMemos, dayLine, setDayLine, linedDays, opensOn, countOpen, holiday, redDay, holiKnown, HOLI_YEARS, jeolgi,
-           dump, restore, apply };
+           dump, restore, apply, merge };
 })();
 
 /* ══════════════ 화면 층 ══════════════ */
@@ -1826,6 +1872,7 @@ function drawBody(){
     if (copyFor === 'day:' + day) html += `<div class="box">${copyPanel('day:' + day, day)}</div>`;
     html = calTimePage([day]);
   } else {
+    if (importAsk) html += importPanel();
     if (frameAsk && day === DB.today()) html += framePanel();
     html += loadLine(day);
     if (copyFor === 'day:' + day) html += `<div class="box">${copyPanel('day:' + day, day)}</div>`;
@@ -2444,8 +2491,8 @@ function helpPage(){
     <div class="box help"><h2>목표</h2>${li([['+ 새 목표', '옆 칸(폰은 ☰ 안)'], ['단계 · 마감(D-) · 영역 · 메모', '목표 화면에서'], ['틀로 바로 시작', '처음 화면 · 받은 틀 링크로 목표 · 루틴을 한 번에']])}</div>
     <div class="box help"><h2>한 주 · 달력 · 기록</h2>${li([['한 주', '정한 곳 / 그 밖 · 목표별 시간 · 돌아보기 세 칸 · 그림으로(인스타에 올릴 한 장)'],
       ['달력', '월 · 주 · 시간표(끌어서 옮기기) · 공휴일 · 절기'], ['기록', '날마다 끝낸 것과 쓴 시간'], ['찾기', '할 일 · 메모 · 목표 메모까지']])}</div>
-    <div class="box help"><h2>자료</h2>${li([['내보내기 · 가져오기', '파일 하나. 폰은 보내기 창으로 다른 기기에'], ['캘린더 파일(.ics)', '폰 캘린더와 주고받기 — 달력 화면'],
-      ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다']])}</div>
+    <div class="box help"><h2>자료</h2>${li([['내보내기 · 가져오기', '파일 하나. 폰은 보내기 창으로 다른 기기에. 가져올 때 합치기(폰 · 컴퓨터를 같이 쓸 때) · 바꾸기(새 기기로 옮길 때)'], ['캘린더 파일(.ics)', '폰 캘린더와 주고받기 — 달력 화면'],
+      ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다'], ['색 바꾸기', '옆 칸 아래 — 다섯 벌. 이 기기에만 둔다']])}</div>
     <div class="box help"><h2>키보드(컴퓨터)</h2>${li([['<kbd>/</kbd>', '찾기'], ['입력칸에서 <kbd>↓</kbd>', '목록으로'], ['<kbd>↑</kbd> <kbd>↓</kbd>', '줄 이동'],
       ['<kbd>스페이스</kbd>', '끝내기'], ['<kbd>Enter</kbd>', '고치기'], ['<kbd>Delete</kbd>', '지우기'], ['<kbd>Alt</kbd>+<kbd>↑</kbd><kbd>↓</kbd>', '순서'], ['<kbd>Esc</kbd>', '입력칸으로']])}</div>`;
 }
@@ -2855,6 +2902,23 @@ function fbLink(){
 
 /* ── 받은 틀(규칙 11) ── 주소 끝의 ?t=이름 → t/이름.json 을 받아 한 번 묻는다. 사람이 링크를 누른 뒤라 규칙 2에 맞다 */
 let frameAsk = null;                            // { key, f } — 넣을지 묻는 중인 틀
+let importAsk = null;                           // 가져온 파일 — 합칠지 바꿀지 묻는 중
+function importPanel(){
+  const r = importAsk;
+  return `<div class="box frame imp"><h2>가져온 파일</h2>
+    <p>이 기기 — 할 일 ${DB.todos().length} · 목표 ${DB.lists().length}　/　파일 — 할 일 ${r.todos} · 목표 ${r.lists}</p>
+    <p><b>합치기</b> — 두 기기에서 적은 것을 다 남깁니다. 같은 할 일은 더 나중에 고친 쪽으로, 지운 것은 지운 대로. 폰과 컴퓨터를 같이 쓸 때.<br>
+      <b>바꾸기</b> — 이 기기 것을 파일 것으로 바꿉니다. 새 기기로 옮길 때.</p>
+    <div class="fbtn"><button data-imp="merge">합치기</button><button data-imp="replace">바꾸기</button><button data-imp="no">그만</button></div></div>`;
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-imp]'); if (!b || !importAsk) return;
+  const r = importAsk, a = b.dataset.imp; importAsk = null;
+  if (a === 'merge'){ const n0 = DB.todos().length, prev = DB.merge(r.data);
+    if (!prev){ render(); return toast('합치지 못했습니다 — 파일은 그대로입니다'); }
+    render(); return toast(`합쳤습니다 · 할 일 ${n0} → ${DB.todos().length} — 다른 기기에도 두려면 여기서 내보내 그 기기에서 합치기`, () => DB.apply(prev), 15000); }
+  if (a === 'replace'){ const prev = DB.apply(r.data);
+    render(); return toast(`바꿨습니다 · 할 일 ${DB.todos().length}개`, () => DB.apply(prev), 15000); }
+  render(); });
 const fetchFrame = k => !/^[a-z0-9-]{1,40}$/.test(k) ? Promise.reject()
   : fetch('t/' + k + '.json', { cache:'no-cache' }).then(r => r.ok ? r.json() : Promise.reject()).then(j => DB.cleanFrame(j) || Promise.reject());
 function loadFrame(){
@@ -3058,17 +3122,32 @@ $('#file').addEventListener('change', e => {
   r.onload = () => {
     const res = DB.restore(r.result);
     if (!res.ok) return toast(res.why);
-    if (!confirm(`지금 것을 가져온 것으로 바꿉니다.\n\n`
-      + `지금:      할 일 ${DB.todos().length}개 · 목표 ${DB.lists().length}개\n`
-      + `가져올 것: 할 일 ${res.todos}개 · 목표 ${res.lists}개\n\n`
-      + `바꾼 뒤 15초 안에는 알림에서 되돌릴 수 있습니다.`)) return;
-    const prev = DB.apply(res.data);
-    day = DB.today(); open = null; page = 'day'; openDays = null; q = '';
-    $('#q').value = ''; $('#qx').classList.add('hide');
-    render(); toast(`가져왔습니다 · 할 일 ${DB.todos().length}개`, () => DB.apply(prev), 15000);
+    importAsk = res; day = DB.today(); open = null; page = 'day'; openDays = null; q = '';   // 합칠지 바꿀지 앱 안에서 묻는다(09-26 — 전에는 바꾸기뿐이었다)
+    $('#q').value = ''; $('#qx').classList.add('hide'); render(); window.scrollTo(0, 0);
+    document.body.classList.remove('side-on');   // 폰 — 옆 칸 서랍에서 가져오기를 눌렀으면 닫고 오늘 화면의 물음을 보인다
   };
   r.readAsText(f);
 });
+
+/* ── 테마(09-26) ── 무료 다섯 벌. 고른 색은 이 기기에만 둔다(자료 밖 — 기기마다 다를 수 있다) */
+const THEMES = [['base', '기본', '#F6F4F1', '#2C5B88'], ['forest', '숲', '#F1F4EF', '#2F6B45'], ['lavender', '라벤더', '#F5F3F8', '#5A4796'],
+                ['peach', '복숭아', '#FAF3F0', '#A23E5A'], ['ink', '먹', '#F4F4F3', '#3D3D3D']];
+const THEME_KEY = DB.key + '.theme';
+const themeNow = () => document.documentElement.dataset.theme || 'base';
+function setTheme(k){
+  const t = THEMES.find(x => x[0] === k) || THEMES[0];
+  if (t[0] === 'base') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = t[0];
+  try{ t[0] === 'base' ? localStorage.removeItem(THEME_KEY) : localStorage.setItem(THEME_KEY, t[0]); }catch(e){}
+  const m = document.querySelector('meta[name=theme-color][media*=light]'); if (m) m.content = t[2];
+  drawThemes();
+}
+function drawThemes(){ const box = $('#themes'); if (!box) return;
+  box.innerHTML = THEMES.map(([k, n, bg, c]) => `<button data-theme-pick="${k}" class="${themeNow() === k ? 'on' : ''}" title="${n}" aria-label="색 ${n}" aria-pressed="${themeNow() === k}" style="background:${bg}"><i style="background:${c}"></i></button>`).join(''); }
+$('#themeBtn').addEventListener('click', () => { const open = $('#themes').classList.toggle('hide') === false; $('#themeBtn').setAttribute('aria-expanded', open); drawThemes(); });
+document.addEventListener('click', e => { const b = e.target.closest('[data-theme-pick]'); if (!b) return;
+  const was = themeNow(); if (b.dataset.themePick === was) return;
+  setTheme(b.dataset.themePick); toast(`색을 바꿨습니다 · ${THEMES.find(x => x[0] === themeNow())[1]}`, () => setTheme(was)); });
+setTheme(themeNow());
 
 /* ── 알림 ── 되돌릴 것이 있으면 되돌리기 단추가 붙는다 */
 let tT, undo = null;
