@@ -566,13 +566,42 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .tb{position:absolute;display:flex;gap:4px;align-items:flex-start;padding:3px 4px 3px 6px;border-radius:5px;overflow:hidden;
   font-size:11.5px;line-height:1.3;cursor:grab;touch-action:none;
   background:color-mix(in srgb,var(--bc) 24%,var(--card))}   /* 분류는 바탕색으로 — 왼쪽 띠는 뺐다(09-25). 13%로는 다섯 색이 안 갈려서 24% */
-.tb.done{opacity:.55}
+.tb.done{background:color-mix(in srgb,var(--bc) 10%,var(--card));color:var(--d70)}
 .tb.done .tbt{text-decoration:line-through}
 .tb .tbt{flex:1;min-width:0;overflow-wrap:break-word}
 .tb .tbt b{display:block;font-weight:600;color:var(--ink);font-size:10.5px}
 .tb-rs{position:absolute;left:0;right:0;bottom:0;height:7px;cursor:ns-resize}
 .tb-ghost{position:absolute;left:2px;right:2px;border-radius:5px;background:color-mix(in srgb,var(--c4) 12%,transparent);border:1.5px dashed var(--c4);
   pointer-events:none;font-size:10.5px;color:var(--c4);font-weight:600;padding:2px 5px}
+/* 4칸 */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.qb{background:var(--card);border-radius:var(--r);padding:10px 10px 8px;min-height:150px;box-shadow:0 1px 2px rgba(40,38,35,.04);border-top:3px solid var(--qc)}
+.qb.q1{--qc:var(--c1)} .qb.q2{--qc:var(--c4)} .qb.q3{--qc:var(--c2)} .qb.q4{--qc:var(--c5)}
+.qb.over,.qrest.over{box-shadow:0 0 0 2px var(--qc,var(--c4))}
+.qh{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.qh b{font-size:14px;color:var(--qc)}
+.qh span{font-size:11.5px;color:var(--d70)}
+.qe{font-size:12px;color:var(--d70);padding:6px 0}
+.qi{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:3px 0;cursor:grab}
+.qi .qt{flex:1;min-width:0;text-align:left;font-size:13.5px;line-height:1.35;display:flex;align-items:center;gap:6px;padding:2px 0;overflow-wrap:anywhere}
+.qi .qt .gdot{width:7px;height:7px;flex:none}
+.qi.done .qt{color:var(--d70);text-decoration:line-through}
+.qpk{display:flex;flex-wrap:wrap;gap:5px;flex-basis:100%;padding:3px 0 5px 21px}
+.qpk button{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
+.qpk button:hover{background:var(--hov)}
+.qrest .qi{padding:4px 0}
+@media (max-width:640px){ .quad{gap:8px} .qb{padding:8px 8px 6px;min-height:120px} .qh{flex-wrap:wrap;gap:0 6px} .qh span{font-size:11px} .qi .qt{font-size:14px} }
+@media (min-width:641px){ .daybar .qx{display:none!important} }   /* 컴퓨터는 목록 · 4칸 · 시간 띠를 한 줄 셋으로 */
+@media (max-width:640px){ .daybar .seg.dseg button[data-daymode=quad]{display:none} .daybar .dseg.q button[data-daymode=time]{display:none} }   /* 폰 — 늘 보이는 단추 다섯(규칙 3). 4칸은 「⋯」 안 */
+.tt{--actw:30%}
+.tt.one{--actw:40%}
+/* ▶로 잰 시간 — 칸 오른쪽 줄. 잡은 칸(옅은 바탕)과 갈리게 왼쪽에 진한 띠 */
+.ta{position:absolute;right:2px;width:calc(var(--actw) - 4px);border-radius:4px;overflow:hidden;
+  background:color-mix(in srgb,var(--bc) 12%,var(--card));border-left:3px solid var(--bc);font-size:10.5px;line-height:1.25;padding:2px 3px;color:var(--d70)}
+.ta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tt-leg{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:11px;color:var(--d70)}
+.tt-leg i{display:inline-block;width:12px;height:10px;border-radius:3px;background:color-mix(in srgb,var(--c4) 24%,var(--card))}
+.tt-leg i.a{background:color-mix(in srgb,var(--c4) 12%,var(--card));border-left:3px solid var(--c4)}
 .tt-now{position:absolute;left:0;right:0;border-top:1.5px solid var(--c4);pointer-events:none}
 .tt-now::before{content:'';position:absolute;left:-4px;top:-4.5px;width:7px;height:7px;border-radius:50%;background:var(--c4)}
 .tt-over{background:color-mix(in srgb,var(--c4) 8%,transparent)}
@@ -663,7 +692,9 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
     .runbar button,.keep button,#one .top button,.sw button)::after{content:'';position:absolute;
     top:min(0px,calc(50% - 22px));bottom:min(0px,calc(50% - 22px));left:min(0px,calc(50% - 22px));right:min(0px,calc(50% - 22px))}
   .li,.newlist,.fold,.addrow,.logday,.mhit,.fb,#one .fi,#one .acts button,#one .foot button,.sug button,
-    .tools button,.tools .rep button,#pickbar button,#pickbar .pksel,.fbtn button,.gact button,.cp-act button,#one .fnext button{min-height:44px}
+    .tools button,.tools .rep button,#pickbar button,#pickbar .pksel,.fbtn button,.gact button,.cp-act button,#one .fnext button,.qi .qt,.qpk button{min-height:44px}
+  .qpk button{min-width:44px}
+  .qi{padding:0}
   .newlist,.fold,.addrow,.fb{display:flex;align-items:center;padding-top:0;padding-bottom:0}
   .li{padding-top:0;padding-bottom:0}
   .cnm{min-height:44px;margin:0}
@@ -761,6 +792,10 @@ const DB = (() => {
   const cleanSpent = o => { const r = {};      // 날짜마다 쓴 초 {"2026-09-23": 1520}
     if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) if (isDay(k) && +v > 0) r[k] = Math.round(+v);
     return r; };
+  const cleanSegs = a => {                     // ▶로 잰 구간 [시작, 끝] (초) — 시간표에 잡은 칸과 나란히 보인다(채점 11판 K2). 늦은 것 200개까지
+    if (!Array.isArray(a)) return undefined;
+    const r = a.filter(x => Array.isArray(x) && Number.isInteger(x[0]) && Number.isInteger(x[1]) && x[1] > x[0] && x[0] > 1e9).map(x => [x[0], x[1]]);
+    return r.length ? r.sort((x, y) => x[0] - y[0]).slice(-200) : undefined; };
   const cleanRep = r => { const x = cleanRule(r); return x && r.paused ? { ...x, paused:true } : x; };   // 잠시 멈춤 — 끝내도 다음 것을 안 만든다
   const cleanRule = r => {                      // 반복 규칙 — 매일 · 평일 · 며칠마다 · 매주(격주) 그 요일 · 매달 그 날 · 매년 그 날. 모르는 모양은 「반복 안 함」
     if (!r || typeof r !== 'object') return null;
@@ -801,7 +836,8 @@ const DB = (() => {
       note: str(t.note), made: isDay(t.made) ? t.made : null,
       movedFrom: isDay(t.movedFrom) ? t.movedFrom : null, movedCount: Math.max(0, +t.movedCount || 0),
       repeat: cleanRep(t.repeat), nextId: t.nextId ? str(t.nextId) : null,
-      spent: cleanSpent(t.spent), run: typeof t.run === 'string' && !isNaN(Date.parse(t.run)) ? t.run : null,
+      q: [1, 2, 3, 4].includes(+t.q) ? +t.q : undefined,   // 4칸 — 1 중요·급함 · 2 중요·안 급함 · 3 안 중요·급함 · 4 둘 다 아님. 적을 때 묻지 않는다(채점 11판 S17)
+      spent: cleanSpent(t.spent), segs: cleanSegs(t.segs), run: typeof t.run === 'string' && !isNaN(Date.parse(t.run)) ? t.run : null,
       runEnd: t.run && typeof t.runEnd === 'string' && !isNaN(Date.parse(t.runEnd)) ? t.runEnd : null,   // 집중 — 이 시각이 되면 멈춘다
       time: /^([01]\d|2[0-3]):[0-5]\d$/.test(t.time) ? t.time : null,   // 시각 "15:00" | null
       dur: Number.isInteger(+t.dur) && +t.dur >= 15 && +t.dur <= 1440 ? +t.dur : null,   // 시간표 블록 길이(분) — 없으면 1시간
@@ -1004,11 +1040,11 @@ const DB = (() => {
   function detachOnce(id){                      // 이번만 따로 — 이번 것은 반복 없는 할 일로 떼어 내고, 반복은 다음 날부터 그대로
     fresh(); const t = todo(id); if (!t || !t.repeat || t.done || t.run) return null;
     const back = JSON.parse(JSON.stringify(t)), n = mk(t.text, t.listId, t.date);
-    Object.assign(n, { pos:t.pos, time:t.time, dur:t.dur, note:t.note, deadline:t.deadline, subs:t.subs, spent:t.spent, planned:t.planned, goal:t.goal, tally:t.tally,
+    Object.assign(n, { pos:t.pos, time:t.time, dur:t.dur, note:t.note, deadline:t.deadline, subs:t.subs, spent:t.spent, segs:t.segs, planned:t.planned, goal:t.goal, tally:t.tally,
                        movedFrom:t.movedFrom, movedCount:t.movedCount });
     S.todos.push(n);
     t.subs = subsOf(t).map(x => ({ id:uid(), text:x.text, done:false, updatedAt:now(), deletedAt:null }));
-    t.spent = {}; t.planned = {}; t.tally = {}; t.movedFrom = null; t.movedCount = 0; t.date = nextOf(t); t.updatedAt = now();
+    t.spent = {}; t.segs = undefined; t.planned = {}; t.tally = {}; t.movedFrom = null; t.movedCount = 0; t.date = nextOf(t); t.updatedAt = now();
     save(); return { id:n.id, back };
   }
   function undetach(r){ fresh(); const t = todo(r.back.id); if (t) Object.assign(t, r.back, { updatedAt:now() });
@@ -1039,7 +1075,7 @@ const DB = (() => {
   /* ── 시간 재기 ── 한 번에 하나만 돈다. 켠 시각(run)을 적어 두니 새로고침해도 이어진다.
      멈출 때 자정을 넘겼으면 날짜마다 나눠 적는다. 「정한 곳」 = 목표(분류)에 붙은 할 일 */
   function stopInto(t){                         // 저장은 부른 쪽이 한다. 되돌리기에 쓸 앞 모습을 돌려준다
-    const back = { spent:{ ...(t.spent || {}) }, run:t.run, runEnd:t.runEnd || null };
+    const back = { spent:{ ...(t.spent || {}) }, segs:t.segs ? t.segs.map(x => [...x]) : undefined, run:t.run, runEnd:t.runEnd || null };
     let s = new Date(t.run);
     const end = t.runEnd && Date.parse(t.runEnd) < Date.now() ? new Date(t.runEnd) : new Date();   // 집중 시간이 지났으면 거기까지만
     t.spent = t.spent || {};
@@ -1047,6 +1083,8 @@ const DB = (() => {
       const next = new Date(s.getFullYear(), s.getMonth(), s.getDate() + 1), e = end < next ? end : next;
       const k = ymd(s), sec = Math.round((e - s) / 1000); if (sec > 0) t.spent[k] = (t.spent[k] || 0) + sec; s = e;   // 0초는 적지 않는다 — 파일로 옮기면 사라져서 앞뒤가 달라진다(09-25)
     }
+    const a = Math.floor(Date.parse(t.run) / 1000), b = Math.floor(end / 1000);   // 구간도 적는다 — 1분이 안 되면 안 적는다
+    if (b - a >= 60) t.segs = [...(t.segs || []), [a, b]].slice(-200);
     t.run = null; t.runEnd = null; t.updatedAt = now(); return back;
   }
   const running = () => S.todos.find(t => t.run && !t.deletedAt) || null;
@@ -1058,7 +1096,9 @@ const DB = (() => {
     t.run = now(); t.updatedAt = now(); save(); return { was };
   }
   function stopRun(id){ fresh(); const t = todo(id); if (!t || !t.run) return null; const back = stopInto(t); save(); return back; }
-  function unstop(id, back){ fresh(); const t = todo(id); if (!t) return; t.spent = back.spent; t.run = back.run; t.runEnd = back.runEnd || null; t.updatedAt = now(); save(); }
+  function setQuad(id, q){ fresh(); const t = todo(id); if (!t) return null; const was = t.q;   // 4칸에 놓기 — 0이면 뺀다
+    t.q = [1, 2, 3, 4].includes(q) ? q : undefined; t.updatedAt = now(); save(); return was; }
+  function unstop(id, back){ fresh(); const t = todo(id); if (!t) return; t.spent = back.spent; t.segs = back.segs; t.run = back.run; t.runEnd = back.runEnd || null; t.updatedAt = now(); save(); }
   function setFocus(id, min){                   // 집중 — 지금부터 min분. 0 이면 풀고 그냥 잰다
     fresh(); const t = todo(id); if (!t || !t.run) return null;
     t.runEnd = min > 0 ? new Date(Date.now() + min * 60000).toISOString() : null; t.updatedAt = now(); save(); return t;
@@ -1190,7 +1230,7 @@ const DB = (() => {
       t.planned = { ...(t.planned || {}), [t.date]: (t.dur || 60) * 60 };
     else if (!t.done && t.planned && t.planned[t.date]){ const p = { ...t.planned }; delete p[t.date]; t.planned = p; }
     if (t.done && t.repeat && !t.repeat.paused && !t.nextId){   // 반복 — 다음 것 하나(멈춘 반복은 안 만든다)
-      const n = mk(t.text, t.listId, nextOf(t)); n.note = t.note; n.repeat = { ...t.repeat }; n.time = t.time; n.dur = t.dur; n.goal = t.goal;
+      const n = mk(t.text, t.listId, nextOf(t)); n.note = t.note; n.repeat = { ...t.repeat }; n.time = t.time; n.dur = t.dur; n.goal = t.goal; n.q = t.q;
       n.subs = subsOf(t).map(x => ({ id:uid(), text:x.text, done:false, updatedAt:now(), deletedAt:null }));   // 하위 할 일은 새로 — 안 끝낸 것으로
       if (t.repeat.every === 'times'){ const W = monday(today());                    // 주 N회 — 다음 것에 이번 주에 몇 번 했는지 적어 보낸다
         n.repeat = { every:'times', n:t.repeat.n, wk:W, got:(t.repeat.wk === W ? t.repeat.got || 0 : 0) + 1 }; }
@@ -1312,7 +1352,8 @@ const DB = (() => {
     const byKey = (a, b) => { const r = { ...(a || {}) }; for (const [k, v] of Object.entries(b || {})) r[k] = r[k] ? pick(r[k], v) : v; return r; };
     const lists = byId(cur.lists, o.lists, (x, y) => ({ ...pick(x, y), stages: byId(x.stages, y.stages) }));
     let todos = byId(cur.todos, o.todos, (x, y) => ({ ...pick(x, y), subs: byId(x.subs, y.subs),
-      spent: most(x.spent, y.spent), planned: most(x.planned, y.planned), tally: most(x.tally, y.tally) }));
+      spent: most(x.spent, y.spent), planned: most(x.planned, y.planned), tally: most(x.tally, y.tally),
+      segs: [...new Map([...(x.segs || []), ...(y.segs || [])].map(g => [g[0], g])).values()] }));   // 잰 구간은 시작 시각으로 합친다
     const nexts = new Set(todos.map(t => t.nextId).filter(Boolean)), seen = new Map();
     todos.filter(t => t.repeat && !t.done && !t.deletedAt && t.date)
       .sort((a, b) => (nexts.has(b.id) - nexts.has(a.id)) || at(b) - at(a))   // 앞 차례가 가리키는 것 · 나중에 고친 것을 남긴다
@@ -1330,7 +1371,7 @@ const DB = (() => {
            subsOf, subOf, addSub, editSub, toggleSub, removeSub, restoreSub,
            addTodo, editTodo, toggleTodo, moveTodo, carry, uncarry, removeTodo, restoreTodo,
            setRepeat, skipTodo, nextDate, rollTimes, countUp, detachOnce, undetach, importTodos, dropTodos, copyTodos, cleanFrame, addFrame, dropFrame, placeBetween, byPos, byWhen, COLORS,
-           running, startRun, stopRun, unstop, setFocus, focusLeft, runSecs, secsOn, totalSecs, timeByDay, plannedSecs, blockMin,
+           running, startRun, stopRun, unstop, setQuad, setFocus, focusLeft, runSecs, secsOn, totalSecs, timeByDay, plannedSecs, blockMin,
            monday, review, setReview, setListNote, searchMemos, dayLine, setDayLine, linedDays, opensOn, countOpen, holiday, redDay, holiKnown, HOLI_YEARS, jeolgi,
            dump, restore, apply, merge };
 })();
@@ -1350,7 +1391,8 @@ let archMore  = 100;   // 보관함에 그리는 수 — 1000일째에도 빨리
 let colorsOpen = false; // 목표 화면에서 색 고르기를 펼쳤나
 let calMode  = 'month'; // 달력 — 'month' 월 · 'week' 주
 let calWeek  = null;    // 주 보기의 월요일
-let dayMode  = 'list';  // 날짜 화면 — 'list' 목록 · 'time' 그날 하루를 시간 띠로
+let dayMode  = 'list';  // 날짜 화면 — 'list' 목록 · 'quad' 중요 · 급함 4칸 · 'time' 그날 하루를 시간 띠로
+let quadPick = null;    // 4칸 — 어디에 놓을지 고르는 중인 할 일
 let openDays = null;   // 기록에서 펼친 날. 처음에는 가장 최근 날 하나
 let logMore  = 30;     // 기록에 그리는 날 수 — 1000일째에도 첫 화면이 빨리 뜨게
 const mode = () => q ? 'find' : open ? 'goal' : page;
@@ -1478,6 +1520,13 @@ function render(){
   const cg = $('.cg');   // 폰 월 달력 — 위에 놓인 것(날짜 줄 · 알림 띠)의 높이가 그때그때 달라 그린 뒤에 재서 칸 높이를 맞춘다
   if (cg && innerWidth <= 640) cg.style.setProperty('--cgtop', Math.round(cg.getBoundingClientRect().top + $('main').scrollTop) + 'px');
 }
+// 4칸 끌어 놓기 — 마우스는 끌고, 손가락은 눌러서 고른다(아이폰 사파리는 끌어 놓기가 고르지 않다)
+document.addEventListener('dragstart', e => { const qi = e.target.closest && e.target.closest('.qi'); if (!qi) return; e.dataTransfer.setData('text/plain', qi.dataset.t); e.dataTransfer.effectAllowed = 'move'; });
+document.addEventListener('dragover', e => { const b = e.target.closest && e.target.closest('[data-qbox]'); if (!b) return; e.preventDefault(); b.classList.add('over'); });
+document.addEventListener('dragleave', e => { const b = e.target.closest && e.target.closest('[data-qbox]'); if (b && !b.contains(e.relatedTarget)) b.classList.remove('over'); });
+document.addEventListener('drop', e => { const b = e.target.closest && e.target.closest('[data-qbox]'); if (!b) return; e.preventDefault();
+  const id = e.dataTransfer.getData('text/plain'), t = DB.todo(id); if (!t) return; const q = +b.dataset.qbox, was = DB.setQuad(id, q); quadPick = null; render();
+  toast(q ? `「${t.text}」 → ${QUADS[q - 1][1]}` : `「${t.text}」 4칸에서 뺐습니다`, () => DB.setQuad(id, was || 0)); });
 let cgW = innerWidth;   // 폰을 돌려 폭이 바뀌면 달력 칸 높이를 다시 잰다(주소창이 숨고 나오는 높이 변화는 dvh가 맡는다)
 addEventListener('resize', () => { if (innerWidth !== cgW){ cgW = innerWidth; if ($('.cg')) render(); } });
 
@@ -1567,10 +1616,11 @@ function drawDay(){
        <button data-go="1" aria-label="다음 날">›</button>
        ${day!==T ? `<button class="today" data-go="0">오늘로</button>` : ''}
        ${day === T ? `<button class="today ${pmNow ? 'xtra' : ''}" data-flow="am" title="아침 계획 — 남은 일과 날짜 없는 일에서 오늘 할 것 고르기">계획</button><button class="today ${pmNow ? '' : 'xtra'}" data-flow="pm" title="저녁 마무리 — 오늘 한 것 · 남은 것 · 한 줄">마무리</button>` : ''}
-       <span class="seg dseg"><button data-daymode="list" class="${dayMode === 'list' ? 'on' : ''}" title="할 일 목록으로">목록</button><button data-daymode="time" class="${dayMode === 'time' ? 'on' : ''}" title="그날 하루를 시간 띠로">시간 띠</button></span>
+       ${dayMode !== 'quad' ? `<button class="today xtra qx" data-daymode="quad" title="중요 · 급함 4칸으로 나눠 보기">4칸</button>` : ''}
+       <span class="seg dseg ${dayMode === 'quad' ? 'q' : ''}"><button data-daymode="list" class="${dayMode === 'list' ? 'on' : ''}" title="할 일 목록으로">목록</button><button data-daymode="quad" class="${dayMode === 'quad' ? 'on' : ''}" title="중요 · 급함 4칸으로 나눠 보기">4칸</button><button data-daymode="time" class="${dayMode === 'time' ? 'on' : ''}" title="그날 하루를 시간 띠로">시간 띠</button></span>
        ${DB.todosOn(day).length ? `<button class="today xtra" data-daycopy title="이 날의 할 일을 다른 날에도">이 날 복사</button>` : ''}
        <button class="today xtra" data-pickon title="여러 개를 골라 한꺼번에 옮기기 · 끝내기 · 지우기">고르기</button>
-       <button class="dmore" data-daymore title="${dayMore ? '접기' : '더 — ' + (day === T ? (pmNow ? '계획' : '마무리') + ' · ' : '') + (DB.todosOn(day).length ? '이 날 복사 · ' : '') + '고르기'}" aria-label="더 보기">⋯</button>`;
+       <button class="dmore" data-daymore title="${dayMore ? '접기' : '더 — ' + (dayMode !== 'quad' ? '4칸 · ' : '') + (day === T ? (pmNow ? '계획' : '마무리') + ' · ' : '') + (DB.todosOn(day).length ? '이 날 복사 · ' : '') + '고르기'}" aria-label="더 보기">⋯</button>`;
 }
 
 function row(t){
@@ -1581,6 +1631,7 @@ function row(t){
   const opts = DB.lists().filter(x => !x.done || (l && x.id === l.id));
   const hasNote = !!(t.note && t.note.trim()), noteOn = openNotes.has(t.id);
   const subs = DB.subsOf(t), subOn = openSubs.has(t.id), subDone = subs.filter(x => x.done).length;
+  // 잡은 길이(dur) — 재기 전엔 시각 칩에 「오후 2시 · 1시간 30분」, 재고 나면 「50분 / 1시간 30분」(채점 11판 K2 — Sunsama처럼 할 일마다 계획 · 실제)
   const play = !t.done && !t.run && !inLog && !!l && (m === 'day' || m === 'goal');   // 목표의 일은 「시작」을 늘 보이게 — 정한 곳 / 그 밖을 만드는 단추(규칙 10). 줄 도구에서는 뺀다(규칙 3)
   const r = t.repeat, rb = new Date((t.date || T) + 'T00:00:00');
   const repSel = `<span class="rep"><button tabindex="-1">반복</button><select data-do="setrepeat" title="반복">
@@ -1620,12 +1671,12 @@ function row(t){
       ${play ? `<button class="play" data-do="start" title="시간 재기 — 정한 곳에 쌓입니다" aria-label="시간 재기 · ${esc(t.text)}">▶</button>` : ''}
       <button class="more" data-do="more" aria-label="도구 펼치기" title="이 할 일의 도구 전부 — 반복 · 기간 · 마감 · 복사 · 세기 …">⋯</button>
       ${t.run ? `<span class="d run" data-run="${esc(t.id)}">● ${fmtClock(DB.runSecs(t))}</span>`
-        : DB.totalSecs(t) ? `<span class="d" title="${DB.plannedSecs(t) ? '쓴 시간 — ≈ 는 시간표로 적은 몫이 들어 있다는 뜻' : '쓴 시간'}">${DB.plannedSecs(t) ? '≈' : ''}${fmtDur(DB.totalSecs(t))}</span>` : ''}
+        : DB.totalSecs(t) ? `<span class="d" title="${DB.plannedSecs(t) ? '쓴 시간 — ≈ 는 시간표로 적은 몫이 들어 있다는 뜻' : '쓴 시간'}${t.dur ? ' / 잡은 길이' : ''}">${DB.plannedSecs(t) ? '≈' : ''}${fmtDur(DB.totalSecs(t))}${t.dur ? ` / ${fmtDur(t.dur * 60)}` : ''}</span>` : ''}
       <input type="time" class="tpick" data-do="settime" value="${t.time || ''}" tabindex="-1" aria-hidden="true">
       ${t.date ? `<input type="date" class="epick" data-do="setend" value="${t.endDate || ''}" min="${DB.shift(t.date, 1)}" tabindex="-1" aria-hidden="true">` : ''}
       <input type="date" class="epick dpick" data-do="setdl" value="${t.deadline || ''}" tabindex="-1" aria-hidden="true">
       ${t.deadline && !t.done && !inLog ? `<span class="d nm-mark dl ${ddays(t.deadline) <= 1 ? 'near' : ''}" data-do="dlpick" title="마감 고치기">${dOnly(t.deadline)}까지 · ${ddText(t.deadline)}</span>` : ''}
-      ${t.time ? `<span class="d tm" data-do="timepick" title="시각 고치기">${fmtTime(t.time)}</span>` : ''}
+      ${t.time ? `<span class="d tm" data-do="timepick" title="시각 고치기">${fmtTime(t.time)}${t.dur && !DB.totalSecs(t) && !t.run ? ` · ${fmtDur(t.dur * 60)}` : ''}</span>` : ''}
       ${hasNote ? `<span class="d nm-mark" data-do="note" title="메모 ${noteOn ? '접기' : '펼치기'}">메모</span>` : ''}
       ${subs.length ? `<span class="d nm-mark" data-do="subs" title="하위 할 일 ${subOn ? '접기' : '펼치기'}">하위 ${subDone}/${subs.length}</span>` : ''}
       ${t.goal && !inLog ? `<button class="tallyb ${t.done ? 'full' : ''}" data-do="countup" title="한 번 더">${(t.tally || {})[t.date || DB.today()] || 0}/${t.goal}</button>` : ''}
@@ -1797,6 +1848,13 @@ function calTimePage(days = [0, 1, 2, 3, 4, 5, 6].map(i => DB.shift(calWeek, i))
     if (t.time) put(timed, t.date, t);
     else if (!t.done) spanDays(t).forEach(d => { if (d >= days[0] && d <= days[6]) put(untimed, d, t); }); });   // 여러 날 것은 날마다
   const inbox = DB.undated().filter(t => !t.done).sort(DB.byPos);
+  // ▶로 잰 구간 — 날마다 잘라 오른쪽 줄에 놓는다. 잡은 칸(왼쪽)과 나란히 보면 어디서 어긋났는지 보인다(채점 11판 K2, Sync: Plan & Actual)
+  const acts = new Map(), nowS = Math.floor(Date.now() / 1000);
+  DB.todos().forEach(t => { const g = [...(t.segs || []), ...(t.run ? [[Math.floor(Date.parse(t.run) / 1000), nowS]] : [])];
+    g.forEach(([a, b]) => days.forEach(d => { const d0 = Date.parse(d + 'T00:00:00') / 1000, x = Math.max(a, d0), y = Math.min(b, d0 + 86400);
+      if (y - x >= 60) put(acts, d, { t, s:(x - d0) / 60, e:(y - d0) / 60, live:!!t.run && b === nowS }); })); });
+  const act = [...acts.values()].some(a => a.length), R = act ? 'var(--actw)' : '0px';
+  const hm = m => fmtTime(String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(Math.round(m % 60)).padStart(2, '0'));
   const chip = t => `<div class="tchip" data-tchip="${esc(t.id)}" data-t="${esc(t.id)}" title="시간 칸으로 끌어 놓기">
       <span class="ck" data-do="toggle"></span><span>${esc(t.text)}</span></div>`;
   const col = d => {
@@ -1812,20 +1870,40 @@ function calTimePage(days = [0, 1, 2, 3, 4, 5, 6].map(i => DB.shift(calWeek, i))
     const blocks = pos.map(({ t, s, e, k, n }) => { const l = t.listId && DB.listOf(t.listId);
       const top = Math.max(0, (s - H0 * 60) * PX), h = Math.max(18, (Math.min(e, H1 * 60) - Math.max(s, H0 * 60)) * PX);
       return `<div class="tb ${t.done ? 'done' : ''}" data-tb="${esc(t.id)}" data-t="${esc(t.id)}"
-          style="top:${top}px;height:${h}px;left:calc(${k / n * 100}% + 2px);width:calc(${100 / n}% - 4px);--bc:${l ? l.color : 'var(--c4)'}">
+          style="top:${top}px;height:${h}px;left:calc((100% - ${R}) * ${k / n} + 2px);width:calc((100% - ${R}) / ${n} - 4px);--bc:${l ? l.color : 'var(--c4)'}">
         <span class="ck ${t.done ? 'on' : ''}" data-do="toggle"></span><span class="tbt"><b>${t.time}</b>${esc(t.text)}</span>
         <span class="tb-rs" data-rs="${esc(t.id)}" title="끌어서 길이 바꾸기"></span></div>`; }).join('');
+    const done = (acts.get(d) || []).map(({ t, s, e, live }) => { const l = t.listId && DB.listOf(t.listId);
+      const top = Math.max(0, (s - H0 * 60) * PX), h = Math.max(6, (Math.min(e, H1 * 60) - Math.max(s, H0 * 60)) * PX);
+      return `<div class="ta" style="top:${top}px;height:${h}px;--bc:${l ? l.color : 'var(--c5)'}" title="▶로 잰 시간 · ${hm(s)}~${live ? '지금' : hm(e)} · ${fmtDur((e - s) * 60)} · ${esc(t.text)}">${h >= 16 ? `<span>${esc(t.text)}</span>` : ''}</div>`; }).join('');
     const x = new Date(), nm = x.getHours() * 60 + x.getMinutes();
     const now = d === T && nm >= H0 * 60 ? `<div class="tt-now" style="top:${(nm - H0 * 60) * PX}px"></div>` : '';
-    return `<div class="ttc ${d === T ? 'tdy' : ''}" data-tcol="${d}">${blocks}${now}</div>`; };
+    return `<div class="ttc ${d === T ? 'tdy' : ''}" data-tcol="${d}">${blocks}${done}${now}</div>`; };
   const hours = Array.from({ length: H1 - H0 }, (_, i) => `<span style="top:${i * 60 * PX}px">${H0 + i}</span>`).join('');
   return `<div class="tt ${days.length === 1 ? 'one' : ''}">
     <div class="tt-tray" data-ttray><span class="tt-lab">날짜 없는 일</span>${inbox.slice(0, 40).map(chip).join('')
-      || '<span class="tt-empty">없음 — 칸에서 여기로 끌어 오면 날짜가 빠집니다</span>'}</div>
+      || '<span class="tt-empty">없음 — 칸에서 여기로 끌어 오면 날짜가 빠집니다</span>'}${act ? '<span class="tt-leg"><i></i>잡은 시간 · <i class="a"></i>▶로 잰 시간(오른쪽 줄)</span>' : ''}</div>
     <div class="tt-grid tt-top"><span></span>${days.map(d => `<div class="tth ${d === T ? 'tdy' : ''} ${redCls(d)}" data-cal="${d}" title="그날 화면 열기">
         <span>${WD[new Date(d + 'T00:00:00').getDay()]}</span><b>${+d.slice(8)}</b>${holiName(d)}</div>`).join('')}
       <span class="tt-gut">시각<br>없음</span>${days.map(d => `<div class="tts" data-tstrip="${d}">${(untimed.get(d) || []).sort(DB.byPos).map(chip).join('')}</div>`).join('')}</div>
     <div class="tt-grid tt-body"><div class="tt-hours">${hours}</div>${days.map(col).join('')}</div></div>`;
+}
+
+/* ── 4칸 ── 중요 × 급함. LockDay(차트 10위)의 중심 · 아이젠하워 매트릭스(17위) · Taska(45위) — 09-26 채점 11판에 넣었다.
+   09-22에 「적을 때마다 묻는다」로 뺐던 것이라, 적을 때는 안 묻는다. 안 나눈 일은 아래에 두고 눌러서 놓는다 */
+const QUADS = [[1, '먼저', '중요 · 급함'], [2, '날 잡기', '중요 · 안 급함'], [3, '짧게', '급함 · 덜 중요'], [4, '나중에', '둘 다 아님']];
+function quadPage(d){
+  const ts = DB.todosOn(d).sort(DB.byPos), by = q => ts.filter(t => (t.q || 0) === q);
+  const item = t => { const l = t.listId && DB.listOf(t.listId);
+    return `<div class="qi ${t.done ? 'done' : ''}" data-t="${esc(t.id)}" draggable="true">
+      <span class="ck ${t.done ? 'on' : ''}" data-do="toggle"></span>
+      <button class="qt" data-do="quadpick" title="어느 칸에 놓을지 고르기">${l ? `<span class="gdot" style="background:${l.color}"></span>` : ''}${esc(t.text)}</button>
+      ${quadPick === t.id ? `<span class="qpk">${QUADS.filter(([q]) => q !== t.q).map(([q, n]) => `<button data-do="quad" data-q="${q}">${n}</button>`).join('')}${t.q ? '<button data-do="quad" data-q="0">빼기</button>' : ''}</span>` : ''}</div>`; };
+  const box = ([q, n, sub]) => `<div class="qb q${q}" data-qbox="${q}"><div class="qh"><b>${n}</b><span>${sub}</span></div>
+      ${by(q).map(item).join('') || '<div class="qe">할 일을 누르면 이 칸에 놓을 수 있습니다</div>'}</div>`;
+  const rest = by(0);
+  return `<div class="quad">${QUADS.map(box).join('')}</div>`
+    + `<div class="box qrest" data-qbox="0"><h2>아직 안 나눈 일 · ${rest.length}</h2>${rest.map(item).join('') || '<div class="empty">다 나눴습니다.</div>'}</div>`;
 }
 
 function calWeekPage(){                        // 주 보기 — 이레 칸. 카드를 끌어 다른 날로, 칸 아래에서 바로 적기
@@ -1912,6 +1990,9 @@ function drawBody(){
     html = a.length ? `<div class="box"><h2>밀린 일 · ${a.length}</h2><ul>${a.slice(0, archMore).map(row).join('')}</ul>
         ${a.length > archMore ? `<button class="addrow" data-archmore>더 보기 · 남은 것 ${a.length - archMore}</button>` : ''}</div>`
       : `<div class="box"><div class="empty">보관함이 비어 있습니다.</div></div>`;
+  } else if (dayMode === 'quad'){               // 중요 · 급함 4칸 — 그날의 할 일을 나눠 본다. 적을 때는 안 묻고, 여기서 눌러 놓는다(채점 11판 S17)
+    html += loadLine(day);
+    html += quadPage(day);
   } else if (dayMode === 'time'){               // 그날 하루를 시간 띠로 — 목록은 그대로 두고 따로 본다
     html += loadLine(day);
     if (copyFor === 'day:' + day) html += `<div class="box">${copyPanel('day:' + day, day)}</div>`;
@@ -2402,6 +2483,9 @@ document.addEventListener('click', e => {
   const el = e.target.closest('[data-do]'); if (!el) return;
   const t = DB.todo(el.closest('[data-t]').dataset.t); if (!t) return;
   const a = el.dataset.do;
+  if (a === 'quadpick'){ quadPick = quadPick === t.id ? null : t.id; return render(); }
+  if (a === 'quad'){ const q = +el.dataset.q, was = DB.setQuad(t.id, q); quadPick = null; render();
+    return toast(q ? `「${t.text}」 → ${QUADS[q - 1][1]}` : `「${t.text}」 4칸에서 뺐습니다`, () => DB.setQuad(t.id, was || 0)); }
   if (a === 'more'){ toolsOn = toolsOn === t.id ? null : t.id; toolsMore = null; return render(); }
   if (a === 'toolmore'){ toolsMore = toolsMore === t.id ? null : t.id; return render(); }
   if (a === 'copy'){ toolsOn = null; toolsMore = null; copyFor = copyFor === t.id ? null : t.id; copyPick = new Set(); return render(); }
@@ -2532,7 +2616,7 @@ function helpPage(){
       ['▶', '목표의 일은 눌러서 시간을 잰다. 재는 줄에서 25분 · 50분 집중, 끝나면 5분 쉬기'], ['체크 칸', '끝내기. 폰은 오른쪽으로 밀면 끝, 왼쪽으로 밀면 내일로'],
       ['⋮⋮ 끌기', '순서 바꾸기(컴퓨터)'], ['고르기', '여러 개를 한꺼번에 옮기기 · 끝내기 · 지우기']])}</div>
     <div class="box help"><h2>하루</h2>${li([['계획', '아침에 밀린 일 · 날짜 없는 일에서 오늘 할 것 고르기'], ['마무리', '저녁에 한 것을 보고, 남은 것은 내일로, 한 줄 남기기'],
-      ['시간 띠', '그날을 시간 칸으로'], ['오늘 메모', '날짜 화면 맨 아래'], ['지난 일 · 하나씩', '밀린 일을 한 장씩 정리']])}</div>
+      ['4칸', '그날 할 일을 중요 · 급함으로 나눠 보기. 할 일을 눌러 칸을 고른다(폰은 ⋯ 안)'], ['시간 띠', '그날을 시간 칸으로 — 잡은 시간 옆 오른쪽 줄에 ▶로 잰 시간'], ['오늘 메모', '날짜 화면 맨 아래'], ['지난 일 · 하나씩', '밀린 일을 한 장씩 정리']])}</div>
     <div class="box help"><h2>목표</h2>${li([['+ 새 목표', '옆 칸(폰은 ☰ 안)'], ['단계 · 마감(D-) · 영역 · 메모', '목표 화면에서'], ['틀로 바로 시작', '처음 화면 · 받은 틀 링크로 목표 · 루틴을 한 번에']])}</div>
     <div class="box help"><h2>한 주 · 달력 · 기록</h2>${li([['한 주', '정한 곳 / 그 밖 · 목표별 시간 · 돌아보기 세 칸 · 그림으로(인스타에 올릴 한 장)'],
       ['달력', '월 · 주 · 시간표(끌어서 옮기기) · 공휴일 · 절기'], ['기록', '날마다 끝낸 것과 쓴 시간'], ['찾기', '할 일 · 메모 · 목표 메모까지']])}</div>
