@@ -188,7 +188,7 @@ li.row.picked .pk{background:var(--c4);box-shadow:none}
 .area-in::placeholder{color:var(--d70)}
 .sec.area span{cursor:text}
 .sec.area span:hover{color:var(--ink)}
-.sw{display:inline-flex;gap:7px;padding:4px 8px;background:var(--card);border-radius:999px;box-shadow:0 1px 4px rgba(40,38,35,.12)}
+.sw{display:inline-flex;gap:10px;padding:4px 8px;background:var(--card);border-radius:999px;box-shadow:0 1px 4px rgba(40,38,35,.12)}
 .daybar .sw button{width:15px;height:15px;border-radius:50%;padding:0}
 .daybar .sw button.on{box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--ink)}
 .keep{border-top:1px solid var(--line);padding:9px 12px;display:flex;gap:6px;align-items:center}
@@ -230,7 +230,7 @@ main{flex:1;overflow:auto}
 .help tr:first-child td{border-top:0}
 .help td:first-child{width:46%;padding-right:10px}
 .help td:last-child{color:var(--d70)}
-.help .try{color:var(--c4);text-align:left;font-size:13.5px;padding:0;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--c4) 35%,transparent);text-underline-offset:3px}
+.help .try{color:var(--c4);text-align:left;font-size:13.5px;padding:2px 0;display:inline-block;line-height:20px;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--c4) 35%,transparent);text-underline-offset:3px}
 .help ul{margin:0 0 8px;padding:0 0 0 18px;font-size:13.5px;line-height:1.65}
 .help ul span{color:var(--d70)}
 .help kbd{font:inherit;font-size:12px;padding:0 5px;border:1px solid var(--line);border-radius:4px;background:var(--hov)}
@@ -328,6 +328,9 @@ li.row:focus-visible{background:var(--hov);border-radius:4px;box-shadow:inset 2p
 .play{flex:none;position:relative;width:20px;height:20px;border-radius:50%;font-size:8.5px;line-height:20px;text-align:center;padding-left:1px;
   color:var(--c4);box-shadow:inset 0 0 0 1.2px color-mix(in srgb,var(--c4) 45%,transparent)}
 .play:hover{background:color-mix(in srgb,var(--c4) 12%,transparent)}
+/* 마우스 화면도 누르는 자리 24px(11판, WCAG 2.5.8) — 도구를 펼치면 ▶ · ⋯ 곁에 단추가 붙어 간격으로도 모자랐다 */
+.meta .more{position:relative}
+.play::after,.meta .more::after{content:'';position:absolute;inset:min(0px,calc(50% - 12px))}
 .tabs{display:none}
 /* 손가락으로 쓸 때(폰 · 태블릿) — 누르는 자리 44px(애플) · 입력칸 16px(아이폰은 작으면 확대한다). 보이는 크기는 거의 그대로 */
 @media (pointer:coarse){
@@ -627,7 +630,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   li.row.tools-on .meta{flex-basis:100%;flex-wrap:wrap;justify-content:flex-end}
   .tools button,.tools .rep button{padding:6px 10px;border:1px solid var(--line);border-radius:7px;font-size:13px;background:var(--card)}
   /* 달력 */
-  .cg{grid-auto-rows:minmax(max(62px,calc((100vh - 262px) / var(--wk,6))),auto)}   /* 폰 — 달력이 화면을 채운다(인기 1위들의 월 달력처럼). 아래가 비어 있었다 */
+  .cg{grid-auto-rows:minmax(max(62px,calc((100dvh - var(--cgtop,200px) - var(--tabh) - 12px) / var(--wk,6))),auto)}   /* 폰 — 달력이 아래 탭 바로 위까지 찬다(인기 1위들의 월 달력처럼). 262px을 빼던 때는 아래 73px이 비었다(11판). --cgtop은 render가 잰다 */
   .cc{padding:3px 3px 4px}
   .cn{font-size:11px;padding:0 3px;min-width:18px}
   .cl{font-size:10px}
@@ -647,9 +650,10 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   #toast{bottom:calc(var(--tabh) + 64px)}
   #pickbar{bottom:calc(var(--tabh) + 10px)}
 }
-/* 폰 누르는 자리 44px(10판, 애플 기준) — 재 보니 165곳이 작았다. 할 일 줄은 그대로 열둘이 보이게, 손가락이 닿는 자리만 넓힌다.
-   한 줄에 놓인 작은 단추는 ::after로 44까지 넓히고, 위아래로 쌓인 줄은 줄 높이를 44로 한다(넓히면 이웃과 겹친다) */
-@media (pointer:coarse) and (max-width:767px){
+/* 손가락 누르는 자리 44px(10판, 애플 기준) — 재 보니 폰에서 165곳이 작았다. 할 일 줄은 그대로 열둘이 보이게, 손가락이 닿는 자리만 넓힌다.
+   한 줄에 놓인 작은 단추는 ::after로 44까지 넓히고, 위아래로 쌓인 줄은 줄 높이를 44로 한다(넓히면 이웃과 겹친다).
+   11판 — 폭으로 가르지 않고 손가락 기기 전부(태블릿도 44) */
+@media (pointer:coarse){
   .ck::before{inset:min(-14px,calc(50% - 22px))}
   .tx{position:relative}
   .tx::before{content:'';position:absolute;inset:min(0px,calc(50% - 22px)) -3px}
@@ -668,14 +672,17 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .area-in,#one .fadd{min-height:44px}
   .help .try{display:inline-flex;align-items:center;min-height:44px}   /* 예시가 두 줄로 접히면 줄끼리 44 떨어지게 */
   .tools button,.tools .rep button{min-width:44px}
-  /* 여러 개 고르기 띠 — 44px 단추가 네 줄로 쌓여 화면 아래 1/4을 덮었다. 네 칸 격자로 세 줄 */
+  .sw{flex-wrap:wrap;gap:14px;padding:7px 10px}
+  .sw button{width:30px;height:30px}
+  body.picking .wrap{padding-bottom:160px}
+}
+/* 폰 — 여러 개 고르기 띠. 44px 단추가 네 줄로 쌓여 화면 아래 1/4을 덮었다. 네 칸 격자로 세 줄 */
+@media (pointer:coarse) and (max-width:640px){
   #pickbar{left:8px;right:8px;transform:none;max-width:none;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
   #pickbar .pn{order:-2;grid-column:span 2;align-self:center}
   #pickbar [data-pk=all],#pickbar [data-pk=stop]{order:-1}
   #pickbar button,#pickbar .pksel{padding:4px;white-space:normal;text-align:center;display:flex;align-items:center;justify-content:center;min-width:0}
   body.picking .wrap{padding-bottom:calc(200px + var(--tabh))}
-  .sw{flex-wrap:wrap;gap:14px;padding:7px 10px}
-  .sw button{width:30px;height:30px}
 }
 </style>
 <script>try{ var th = localStorage.getItem('oceanhour.theme'); if (th) document.documentElement.dataset.theme = th; }catch(e){}   /* 테마 — 그리기 전에 입혀 깜빡이지 않게 */</script>
@@ -1413,7 +1420,7 @@ function drawPickbar(){
     <button data-pk="today" ${dis}>오늘로</button><button data-pk="tomorrow" ${dis}>내일로</button>
     <label class="pksel pkd">날짜…<input type="date" data-pkdate ${dis}></label>
     <button data-pk="done" ${dis}>끝내기</button>
-    <select class="pksel" data-pklist ${dis}><option value="">목표 ▾</option><option value="-">목표 없음</option>${DB.lists().filter(l => !l.done).map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('')}</select>
+    <select class="pksel" data-pklist ${dis}><option value="">목표</option><option value="-">목표 없음</option>${DB.lists().filter(l => !l.done).map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('')}</select>
     <button class="del" data-pk="del" ${dis}>지우기</button>
     <button data-pk="all">보이는 것 모두</button><button data-pk="stop">그만</button>`;
 }
@@ -1468,7 +1475,11 @@ function render(){
   const n = DB.todos().length;
   $('#keepT').textContent = why ? '저장 멈춤' : `이 컴퓨터에만 · ${n}개`;
   keepStore();
+  const cg = $('.cg');   // 폰 월 달력 — 위에 놓인 것(날짜 줄 · 알림 띠)의 높이가 그때그때 달라 그린 뒤에 재서 칸 높이를 맞춘다
+  if (cg && innerWidth <= 640) cg.style.setProperty('--cgtop', Math.round(cg.getBoundingClientRect().top + $('main').scrollTop) + 'px');
 }
+let cgW = innerWidth;   // 폰을 돌려 폭이 바뀌면 달력 칸 높이를 다시 잰다(주소창이 숨고 나오는 높이 변화는 dvh가 맡는다)
+addEventListener('resize', () => { if (innerWidth !== cgW){ cgW = innerWidth; if ($('.cg')) render(); } });
 
 function drawSide(){
   const T = DB.today(), c = {};                 // 숫자는 누르면 펼쳐져 보이는 것 — 안 끝낸 할 일
