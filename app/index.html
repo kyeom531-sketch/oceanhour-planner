@@ -575,7 +575,7 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
   pointer-events:none;font-size:10.5px;color:var(--c4);font-weight:600;padding:2px 5px}
 /* 4칸 */
 .quad{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.qb{background:var(--card);border-radius:var(--r);padding:10px 10px 8px;min-height:150px;box-shadow:0 1px 2px rgba(40,38,35,.04);border-top:3px solid var(--qc)}
+.qb{background:color-mix(in srgb,var(--qc) 5%,var(--card));border-radius:var(--r);padding:10px 10px 8px;min-height:150px;box-shadow:0 1px 2px rgba(40,38,35,.04)}   /* 칸 색은 옅은 바탕과 머리 글자로 — 한쪽 굵은 띠는 안 쓴다(09-25 시간표에서 뺀 것과 같다) */
 .qb.q1{--qc:var(--c1)} .qb.q2{--qc:var(--c4)} .qb.q3{--qc:var(--c2)} .qb.q4{--qc:var(--c5)}
 .qb.over,.qrest.over{box-shadow:0 0 0 2px var(--qc,var(--c4))}
 .qh{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
@@ -596,13 +596,13 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 @media (max-width:640px){ .daybar .seg.dseg button[data-daymode=quad]{display:none} .daybar .dseg.q button[data-daymode=time]{display:none} }   /* 폰 — 늘 보이는 단추 다섯(규칙 3). 4칸은 「⋯」 안 */
 .tt{--actw:30%}
 .tt.one{--actw:40%}
-/* ▶로 잰 시간 — 칸 오른쪽 줄. 잡은 칸(옅은 바탕)과 갈리게 왼쪽에 진한 띠 */
+/* ▶로 잰 시간 — 칸 오른쪽 줄. 잡은 칸(24%)보다 진한 바탕으로 가른다. 한쪽 띠는 안 쓴다(09-25 시간표에서 뺐다) */
 .ta{position:absolute;right:2px;width:calc(var(--actw) - 4px);border-radius:4px;overflow:hidden;
-  background:color-mix(in srgb,var(--bc) 12%,var(--card));border-left:3px solid var(--bc);font-size:10.5px;line-height:1.25;padding:2px 3px;color:var(--d70)}
+  background:color-mix(in srgb,var(--bc) 42%,var(--card));font-size:10.5px;line-height:1.25;padding:2px 4px;color:var(--ink)}
 .ta span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tt-leg{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:11px;color:var(--d70)}
 .tt-leg i{display:inline-block;width:12px;height:10px;border-radius:3px;background:color-mix(in srgb,var(--c4) 24%,var(--card))}
-.tt-leg i.a{background:color-mix(in srgb,var(--c4) 12%,var(--card));border-left:3px solid var(--c4)}
+.tt-leg i.a{background:color-mix(in srgb,var(--c4) 42%,var(--card))}
 .tt-now{position:absolute;left:0;right:0;border-top:1.5px solid var(--c4);pointer-events:none}
 .tt-now::before{content:'';position:absolute;left:-4px;top:-4.5px;width:7px;height:7px;border-radius:50%;background:var(--c4)}
 .tt-over{background:color-mix(in srgb,var(--c4) 8%,transparent)}
