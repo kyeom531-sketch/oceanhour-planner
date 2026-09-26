@@ -6,7 +6,7 @@
       "due": 56,
       "stages": ["범위 한 번 훑기", "약한 곳 다시 보기", "기출 세 번 풀기", "마무리 정리"],
       "routines": [
-        { "text": "공부 — 시작을 눌러 재기", "repeat": "day" },
+        { "text": "공부", "repeat": "day" },
         { "text": "오답 다시 보기", "repeat": "weekday" },
         { "text": "모의고사 한 회", "repeat": "times:1" }
       ],

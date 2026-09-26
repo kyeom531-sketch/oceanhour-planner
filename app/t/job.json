@@ -7,8 +7,8 @@
       "stages": ["지원할 직무 정하기", "이력서 · 자기소개서", "서류 넣기", "면접 준비"],
       "routines": [
         { "text": "채용 공고 보기", "repeat": "weekday" },
-        { "text": "자기소개서 — 시작을 눌러 재기", "repeat": "times:3" },
-        { "text": "면접 질문 하나 답해 보기", "repeat": "times:2" }
+        { "text": "자기소개서 쓰기", "repeat": "times:3" },
+        { "text": "면접 연습", "repeat": "times:2" }
       ],
       "todos": ["지원할 직무 하나 정하기", "이력서 한 장 만들기", "넣을 곳 다섯 곳 꼽기"]
     }

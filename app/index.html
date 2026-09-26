@@ -413,6 +413,8 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .k.on,.split i{background:var(--c4)}
 .k.off,.split b{background:var(--off)}
 .split{display:flex;height:5px;border-radius:999px;overflow:hidden;margin:0 0 9px}
+.dsum.wait .split{background:var(--line)}
+.dsum.wait .wnote{font-size:12px;color:var(--d70);margin:0 0 2px}
 .lsub{font-size:11.5px;color:var(--d70);padding:4px 0 0 4px}
 .ltime .lplan{color:var(--d70)}
 /* 한 주 */
@@ -1643,7 +1645,7 @@ function readWeek(wk){
     const s = days.reduce((a, d) => a + DB.secsOn(t, d), 0);
     if (s){ got.set(k, (got.get(k) || 0) + s); if (k) on += s; else off += s; } });
   if (!on && !off && !plan.size)
-    return ['이 주에는 시간표도 잰 시간도 없습니다. 시간표에 한 칸을 놓거나 「시작」을 누르면, 다음에는 여기서 읽어 드립니다.'];
+    return ['이 주에는 시간표도 잰 시간도 없습니다. 시간표에 한 칸을 놓거나 목표의 일 옆 ▶를 누르면, 다음에는 여기서 읽어 드립니다.'];
   const out = [];
   if (on + off) out.push(`이 주에 쓴 시간 ${fmtDur(on + off)} 가운데 정한 곳이 ${fmtDur(on)}, 그 밖이 ${fmtDur(off)}입니다.`);
   [...plan.entries()].filter(([k]) => k).sort((a, b) => b[1] - a[1]).slice(0, 2).forEach(([k, p]) => {   // 잡아 둔 시간이 큰 목표부터 둘 — 사람이 아니라 계획을 읽는 차례
@@ -1838,6 +1840,9 @@ function drawBody(){
       html += `<div class="box"><h2>날짜 없음${cnt(un)}</h2>${rows(un)}</div>`;
     const sp = DB.timeByDay()[day];               // 이 날 쓴 시간 — 정한 곳 · 그 밖을 오늘 화면에서도(규칙 10). 잰 게 있을 때만, 맨 아래에
     if (sp && sp.on + sp.off) html += `<div class="box dsum"><h2>${day === T ? '오늘' : '이 날'} 쓴 시간</h2>${timeLine(sp)}</div>`;
+    else if (day === T && ts.some(t => t.listId && !t.done) && !Object.keys(DB.timeByDay()).length)   // 첫날 — 한 번도 안 잰 사람에게 자리를 먼저 보인다(규칙 10 · 09-26 채점 3판). 한 번 재면 다시 안 뜬다
+      html += `<div class="box dsum wait"><h2>오늘 쓴 시간</h2><div class="ltime"><span><i class="k on"></i>정한 곳</span><span><i class="k off"></i>그 밖</span></div>
+        <div class="split"></div><p class="wnote">목표의 일 옆 ▶를 누르면 여기서 하루가 정한 곳 / 그 밖으로 나뉩니다</p></div>`;
     const dm = DB.dayLine(day), dn = day === T ? '오늘' : '이 날';   // 날마다 메모 — 저녁 마무리의 한 줄과 같은 자리. 비어 있으면 회색 한 줄만(규칙 3)
     html += dm || memoOpen === day
       ? `<div class="box memo-box"><h2>${dn} 메모</h2><textarea data-daymemo="${day}" rows="2" placeholder="${dn} 남길 말 — 저녁 마무리의 한 줄도 여기 들어갑니다">${esc(dm)}</textarea></div>`
