@@ -1029,10 +1029,11 @@ const DB = (() => {
                 done:false, doneAt:null, note:'', made:today(),
                 movedFrom:null, movedCount:0, repeat:null, nextId:null, spent:{}, run:null, runEnd:null, time:null, dur:null, planned:{},
                 updatedAt:now(), deletedAt:null, deletedBy:null, subs:[], src:null, goal:null, tally:{} });
-  function addTodo(text, listId, date){
+  function addTodo(text, listId, date, extra){  // extra — 적은 말에서 알아들은 칸(시각 · 길이 · 끝나는 날 · 마감 · 세기). 한 번에 넣고 한 번만 저장한다(15판 — 할 일 10,000개에서 칸마다 저장하니 적기가 305ms)
     text = (text||'').trim(); if (!text) return null;
     fresh();
     const t = mk(text, listId, date===undefined ? today() : date);
+    if (extra){ Object.assign(t, extra); if (t.endDate && (!t.date || t.endDate <= t.date)) t.endDate = null; }
     S.todos.push(t); save(); return t;
   }
 
@@ -1496,6 +1497,7 @@ function copyPanel(key, base){                  // 앞으로 두 주를 칩으�
       <button data-cpdo="go" class="${n ? 'on' : ''}" ${n ? '' : 'disabled'}>${n ? n + '일에 복사' : '날을 고르세요'}</button><button data-cpdo="close">닫기</button></span></div>`;
 }
 let trashMore = 100;                            // 휴지통 — 한 번에 그리는 수
+let findMore = 100;                             // 찾기 — 한 번에 그리는 수(15판 — 할 일 10,000개에서 찾은 1,400줄을 다 그리니 느린 폰에서 808ms)
 const cnt = ts => { const n = ts.filter(t => !t.done).length; return n ? ' · ' + n : ''; };
 
 const ICON = {                                   // 이동 아이콘(규칙 12) — 선 하나로, 글과 같이 쓴다
@@ -2003,7 +2005,7 @@ function drawBody(){
     const memoBox = nm ? `<div class="box"><h2>메모에서 · ${nm}</h2><ul class="mlist">${mm.lists.map(l => `<li><button class="mhit" data-memogoal="${esc(l.id)}">
           <span class="gdot" style="background:${l.color}"></span><span class="mt">${esc(l.name)} 메모</span><span class="msnip">${esc(snip(l.note))}</span></button></li>`).join('')}${mm.days.map(x => `<li><button class="mhit" data-memoday="${x.d}">
           <span class="mt">${dOnly(x.d)} 메모</span><span class="msnip">${esc(snip(x.line))}</span></button></li>`).join('')}</ul></div>` : '';
-    html = r.length || nm ? (r.length ? group(r, false) : '') + memoBox
+    html = r.length || nm ? (r.length ? group(r.slice(0, findMore), false) + (r.length > findMore ? `<div class="box"><button class="addrow" data-findmore>더 보기 · 남은 것 ${r.length - findMore}</button></div>` : '') : '') + memoBox
       : `<div class="box"><div class="empty">찾은 것이 없습니다 · 「${esc(q)}」</div></div>`;
   } else if (open){
     html = goalPage(DB.listOf(open));
@@ -2408,6 +2410,7 @@ document.addEventListener('click', e => {
     open = null; page = 'trash'; trashMore = 100; q = ''; $('#q').value = ''; $('#qx').classList.add('hide');
     return render(); }
   if (e.target.closest('[data-trashmore]')){ trashMore += 100; return render(); }
+  if (e.target.closest('[data-findmore]')){ findMore += 100; return render(); }
   const ut = e.target.closest('[data-untodo]');
   if (ut){ const t = DB.todo(ut.dataset.untodo); if (!t) return;
     DB.restoreTodo(t.id); toast(`되살렸습니다 · 「${t.text}」${t.date ? ' — ' + dOnly(t.date) + '에 있습니다' : ''}`, () => DB.removeTodo(t.id)); return render(); }
@@ -2978,12 +2981,9 @@ function addEntry(pick){                        // pick — 고른 제안. 없�
   const { v, p, part, date } = entryParts(); if (!v.trim()) return;
   dayTick();
   const here = q ? DB.today() : day, text = pick ? pick.text : p ? p.text : v.trim();
-  const t = DB.addTodo(text, $('#addList').value || (pick && pick.listId) || null, date);   // 분류를 골라 두었으면 그것, 아니면 전에 쓰던 분류
+  const extra = p ? { ...(p.time ? { time:p.time, dur:p.dur } : {}), ...(p.end ? { endDate:p.end } : {}), ...(p.deadline ? { deadline:p.deadline } : {}), ...(p.goal ? { goal:p.goal } : {}) } : null;
+  const t = DB.addTodo(text, $('#addList').value || (pick && pick.listId) || null, date, extra);   // 분류를 골라 두었으면 그것, 아니면 전에 쓰던 분류
   if (t && p && p.rep) DB.setRepeat(t.id, p.rep);          // 적은 규칙 그대로 (매달 31일은 31일로)
-  if (t && p && p.time) DB.editTodo(t.id, { time:p.time, dur:p.dur });
-  if (t && p && p.end) DB.editTodo(t.id, { endDate:p.end });
-  if (t && p && p.deadline) DB.editTodo(t.id, { deadline:p.deadline });
-  if (t && p && p.goal) DB.editTodo(t.id, { goal:p.goal });
   $('#add').value = ''; rawOnce = false; sugAt = -1; sugOff = false; drawHint(); drawSug(); q = ''; $('#q').value = ''; $('#qx').classList.add('hide');
   render(); $('#add').focus();
   if (t && date !== here) toast(`${p.when}에 넣었습니다 · 「${t.text}」`, () => DB.removeTodo(t.id));   // 지금 화면에 안 보이는 곳으로 갔을 때
@@ -3007,7 +3007,7 @@ $('#add').addEventListener('keydown', e => {
 
 /* ── 찾기 ── */
 $('#q').addEventListener('input', e => {
-  q = e.target.value;
+  q = e.target.value; findMore = 100;
   $('#qx').classList.toggle('hide', !q);
   render();
 });
@@ -3402,9 +3402,22 @@ $('#install').addEventListener('click', async () => { if (!installAsk) return;
   installAsk.prompt(); const r = await installAsk.userChoice.catch(() => null); installAsk = null;
   if (!r || r.outcome !== 'accepted') $('#install').classList.add('hide'); });
 
+/* ── 앱 밖에서 들어오기(채점 15판 S18) ── 안드로이드에 설치한 웹 앱은 다른 앱의 「공유 → 오션아워」로 글이 오고(share_target),
+   아이콘을 길게 누르면 바로가기(shortcuts — 할 일 적기 · 달력 · 한 주)로 온다. 공유받은 글은 입력칸에 넣어 두기만 한다 — Enter로 넣는다(모르는 새 줄을 저절로 만들지 않는다) */
+function takeLaunch(u){
+  const go = u.get('go'), txt = [u.get('title'), u.get('text'), u.get('url')].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim().slice(0, 300);
+  if (!go && !txt) return false;
+  history.replaceState(null, '', location.pathname);
+  if (go === 'cal' || go === 'week'){ q = ''; open = null; const b = $(`aside [data-view=${go}]`); if (b) b.click(); return true; }   // 옆 칸 단추를 누른 것과 같게 — 달력은 처음 열 때 달을 잡는다
+  page = 'day'; day = DB.today(); dayMode = 'list'; open = null; q = ''; render();
+  const i = $('#add'); if (txt){ i.value = txt; i.dispatchEvent(new Event('input', { bubbles:true })); toast('공유받은 글을 입력칸에 넣었습니다 — Enter로 할 일이 됩니다'); }
+  i.focus(); return true;
+}
+
 render();
 $('#add').focus();
 $('#fb').href = fbLink();
+takeLaunch(new URLSearchParams(location.search));
 loadFrame();
 { let s = 0; try{ s = +localStorage.getItem(SEEN) || 0; }catch(e){}   // 첫 화면을 그린 뒤에 센다 — 여는 빠르기(규칙 2)를 안 늦춘다
   if (Date.now() - s >= AWAY) setTimeout(() => DB.countOpen(), 0); }

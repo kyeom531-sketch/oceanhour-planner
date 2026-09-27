@@ -9,12 +9,89 @@
   "background_color": "#F6F4F1",
   "theme_color": "#F6F4F1",
   "screenshots": [
-    { "src": "shots/wide.png", "sizes": "1600x900", "type": "image/png", "form_factor": "wide", "label": "오늘 화면 — 목표별 할 일과 오늘 쓴 시간" },
-    { "src": "shots/narrow.png", "sizes": "750x1500", "type": "image/png", "form_factor": "narrow", "label": "폰에서 본 오늘 화면" }
+    {
+      "src": "shots/wide.png",
+      "sizes": "1600x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "오늘 화면 — 목표별 할 일과 오늘 쓴 시간"
+    },
+    {
+      "src": "shots/narrow.png",
+      "sizes": "750x1500",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "폰에서 본 오늘 화면"
+    }
   ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ]
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "할 일 적기",
+      "short_name": "적기",
+      "description": "오늘 화면의 입력칸으로",
+      "url": "./?go=add",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "달력",
+      "short_name": "달력",
+      "description": "월 달력",
+      "url": "./?go=cal",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "한 주",
+      "short_name": "한 주",
+      "description": "정한 곳 / 그 밖",
+      "url": "./?go=week",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "./",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
