@@ -230,6 +230,8 @@ main{flex:1;overflow:auto}
 .help tr:first-child td{border-top:0}
 .help td:first-child{width:46%;padding-right:10px}
 .help td:last-child{color:var(--d70)}
+.pvl{margin:4px 0 0}
+.pvl a{color:var(--c4);font-size:13px;display:inline-flex;align-items:center;min-height:24px}   /* 개인정보 처리방침(14판 — 앱스토어 제출에 든다) */
 .help .try{color:var(--c4);text-align:left;font-size:13.5px;padding:2px 0;display:inline-block;line-height:20px;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--c4) 35%,transparent);text-underline-offset:3px}
 .help ul{margin:0 0 8px;padding:0 0 0 18px;font-size:13.5px;line-height:1.65}
 .help ul span{color:var(--d70)}
@@ -579,6 +581,8 @@ select:focus-visible{outline:2px solid color-mix(in srgb,var(--c4) 60%,transpare
 textarea:focus-visible{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c4) 55%,transparent)}
 .area-in:focus-visible{border-bottom:1px solid var(--c4)}
 .cdot:focus-within{box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--c4)}
+/* 아주 좁은 폰(아이폰 「확대」 화면 · 320) — 월 달력 날짜 칸이 42px이었다. 옆 여백을 조금 써서 44 넘게(14판) */
+@media (max-width:340px){ .cal{margin:0 -8px} }
 /* 4칸 */
 .quad{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .qb{background:color-mix(in srgb,var(--qc) 5%,var(--card));border-radius:var(--r);padding:10px 10px 8px;min-height:150px;box-shadow:0 1px 2px rgba(40,38,35,.04)}   /* 칸 색은 옅은 바탕과 머리 글자로 — 한쪽 굵은 띠는 안 쓴다(09-25 시간표에서 뺀 것과 같다) */
@@ -656,6 +660,10 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   aside [data-view=today],aside [data-view=cal],aside [data-view=week],aside [data-view=log]{display:none}   /* 아래 탭에 있다 */
   li.row .tx{font-size:15px}
   .entry select{max-width:92px}
+  /* 적는 동안 입력칸 — 뜻 칩 · 목표 고르기가 같은 줄에 붙어 390에서 93px(글자 여섯)이었다(14판). 칩은 아랫줄로 내리고 입력칸은 한 줄을 쓴다 */
+  .entry{flex-wrap:wrap;row-gap:4px}
+  .entry input{min-width:calc(100% - 130px)}
+  .entry .hint{order:9;margin-left:17px}
   .li{padding:9px 8px;font-size:15px}
   .li .del{opacity:1}
   /* 줄 도구 */
@@ -703,6 +711,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .li,.newlist,.fold,.addrow,.logday,.mhit,.fb,#one .fi,#one .acts button,#one .foot button,.sug button,
     .tools button,.tools .rep button,#pickbar button,#pickbar .pksel,.fbtn button,.gact button,.cp-act button,#one .fnext button,.qi .qt,.qpk button{min-height:44px}
   .qpk button{min-width:44px}
+  .pvl a{min-height:44px}
   .fstart button{min-height:44px}   /* 처음 화면 — 새로 온 사람이 가장 먼저 누르는 자리(12판) */
   .fmore button{min-height:44px;text-align:left}
   .qi{padding:0}
@@ -2655,7 +2664,7 @@ function helpPage(){
     <div class="box help"><h2>한 주 · 달력 · 기록</h2>${li([['한 주', '정한 곳 / 그 밖 · 목표별 시간 · 돌아보기 세 칸 · 그림으로(인스타에 올릴 한 장)'],
       ['달력', '월 · 주 · 시간표(끌어서 옮기기) · 공휴일 · 절기'], ['기록', '날마다 끝낸 것과 쓴 시간'], ['찾기', '할 일 · 메모 · 목표 메모까지']])}</div>
     <div class="box help"><h2>자료</h2>${li([['내보내기 · 가져오기', '파일 하나. 폰은 보내기 창으로 다른 기기에. 가져올 때 합치기(폰 · 컴퓨터를 같이 쓸 때) · 바꾸기(새 기기로 옮길 때)'], ['캘린더 파일(.ics)', '폰 캘린더와 주고받기 — 달력 화면'],
-      ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다'], ['색 바꾸기', '옆 칸 아래 — 다섯 벌. 이 기기에만 둔다']])}</div>
+      ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다'], ['색 바꾸기', '옆 칸 아래 — 다섯 벌. 이 기기에만 둔다'], ['개인정보', '모으지 않는다 — 적은 것은 이 기기 브라우저에만']])}<p class="pvl"><a href="https://kyeom531-sketch.github.io/oceanhour-planner/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></p></div>
     <div class="box help"><h2>키보드(컴퓨터)</h2>${li([['<kbd>/</kbd>', '찾기'], ['입력칸에서 <kbd>↓</kbd>', '목록으로'], ['<kbd>↑</kbd> <kbd>↓</kbd>', '줄 이동'],
       ['<kbd>스페이스</kbd>', '끝내기'], ['<kbd>Enter</kbd>', '고치기'], ['<kbd>Delete</kbd>', '지우기'], ['<kbd>Alt</kbd>+<kbd>↑</kbd><kbd>↓</kbd>', '순서'], ['<kbd>Esc</kbd>', '입력칸으로']])}</div>`;
 }
@@ -2665,7 +2674,7 @@ document.addEventListener('click', e => {
   page = 'day'; open = null; day = DB.today(); render(); const i = $('#add'); i.value = t.dataset.try; i.focus(); i.dispatchEvent(new Event('input', { bubbles:true }));
 });
 let exI = 0;                                     // 입력칸 안내 — 비어 있을 때 예시를 돌려 보인다
-const exPh = ex => innerWidth <= 640 ? `할 일 — 예: ${ex}` : `할 일 적기 — 「${ex}」처럼 적어도 알아듣습니다`;   // 폰은 칸이 좁아 짧게 — 긴 글은 뒤가 잘렸다(09-26 채점 1판, 375px에서 칸 210 · 글 335)
+const exPh = ex => innerWidth <= 340 ? `예: ${ex}` : innerWidth <= 640 ? `할 일 — 예: ${ex}` : `할 일 적기 — 「${ex}」처럼 적어도 알아듣습니다`;   // 폰은 칸이 좁아 짧게 — 긴 글은 뒤가 잘렸다(09-26 채점 1판, 375px에서 칸 210 · 글 335). 320(아이폰 「확대」 화면)은 칸이 151px이라 「할 일 —」도 뺀다(14판)
 if ($('#add')) $('#add').placeholder = exPh(ADD_EX[0]);
 setInterval(() => { const i = $('#add'); if (!i || i.value) return; exI = (exI + 1) % ADD_EX.length; i.placeholder = exPh(ADD_EX[exI]); }, 5000);
 
