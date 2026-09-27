@@ -573,6 +573,12 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .tb-rs{position:absolute;left:0;right:0;bottom:0;height:7px;cursor:ns-resize}
 .tb-ghost{position:absolute;left:2px;right:2px;border-radius:5px;background:color-mix(in srgb,var(--c4) 12%,transparent);border:1.5px dashed var(--c4);
   pointer-events:none;font-size:10.5px;color:var(--c4);font-weight:600;padding:2px 5px}
+/* 키보드 초점(채점 13판) — 입력칸 · 선택 상자는 outline을 지웠던 자리라 따로 보인다. 입력칸 · 찾기는 상자에, 할 일 줄의 목표 점은 점에 */
+.entry:focus-within,.find:focus-within{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c4) 55%,transparent)}
+select:focus-visible{outline:2px solid color-mix(in srgb,var(--c4) 60%,transparent);outline-offset:2px;border-radius:4px}
+textarea:focus-visible{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c4) 55%,transparent)}
+.area-in:focus-visible{border-bottom:1px solid var(--c4)}
+.cdot:focus-within{box-shadow:0 0 0 2px var(--card),0 0 0 3.5px var(--c4)}
 /* 4칸 */
 .quad{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .qb{background:color-mix(in srgb,var(--qc) 5%,var(--card));border-radius:var(--r);padding:10px 10px 8px;min-height:150px;box-shadow:0 1px 2px rgba(40,38,35,.04)}   /* 칸 색은 옅은 바탕과 머리 글자로 — 한쪽 굵은 띠는 안 쓴다(09-25 시간표에서 뺀 것과 같다) */
@@ -603,6 +609,8 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .tt-leg{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:11px;color:var(--d70)}
 .tt-leg i{display:inline-block;width:12px;height:10px;border-radius:3px;background:color-mix(in srgb,var(--c4) 24%,var(--card))}
 .tt-leg i.a{background:color-mix(in srgb,var(--c4) 42%,var(--card))}
+.ta.est{background:color-mix(in srgb,var(--bc) 12%,var(--card));border:1px dashed color-mix(in srgb,var(--bc) 70%,var(--ink))}   /* 재지 않고 끝낸 일 — 잰 것(진한 바탕)과 갈리게 옅은 바탕 · 점선 테두리 */
+.tt-leg i.e{background:color-mix(in srgb,var(--c4) 12%,var(--card));border:1px dashed color-mix(in srgb,var(--c4) 70%,var(--ink))}
 .tt-now{position:absolute;left:0;right:0;border-top:1.5px solid var(--c4);pointer-events:none}
 .tt-now::before{content:'';position:absolute;left:-4px;top:-4.5px;width:7px;height:7px;border-radius:50%;background:var(--c4)}
 .tt-over{background:color-mix(in srgb,var(--c4) 8%,transparent)}
@@ -756,7 +764,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
     <span class="p">+</span>
     <input id="add" placeholder="할 일 적기 — 「내일 치과 3시」처럼 적어도 알아듣습니다" autocomplete="off" autofocus data-first>
     <button class="hint hide" id="addHint" title="누르면 알아듣지 않고 쓴 그대로 넣습니다"></button>
-    <select id="addList"></select>
+    <select id="addList" aria-label="목표 고르기 — 적는 할 일을 넣을 목표"></select>
     <div class="sug hide" id="sug" role="listbox" aria-label="전에 적던 일"></div>
   </div>
   <div id="body"></div>
@@ -1465,7 +1473,7 @@ function drawPickbar(){
     <button data-pk="today" ${dis}>오늘로</button><button data-pk="tomorrow" ${dis}>내일로</button>
     <label class="pksel pkd">날짜…<input type="date" data-pkdate ${dis}></label>
     <button data-pk="done" ${dis}>끝내기</button>
-    <select class="pksel" data-pklist ${dis}><option value="">목표</option><option value="-">목표 없음</option>${DB.lists().filter(l => !l.done).map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('')}</select>
+    <select class="pksel" data-pklist ${dis} aria-label="고른 할 일을 목표로 옮기기"><option value="">목표</option><option value="-">목표 없음</option>${DB.lists().filter(l => !l.done).map(l => `<option value="${esc(l.id)}">${esc(l.name)}</option>`).join('')}</select>
     <button class="del" data-pk="del" ${dis}>지우기</button>
     <button data-pk="all">보이는 것 모두</button><button data-pk="stop">그만</button>`;
 }
@@ -1690,14 +1698,14 @@ function row(t){
         : showDate ? `<span class="d">${t.date?dOnly(t.date):'날짜 없음'}</span>`
         : (t.movedFrom && t.movedFrom !== t.date ? `<span class="d">${dOnly(t.movedFrom)}부터</span>` : '')}
       <span class="cdot ${l?'':'none'}" style="${l?`background:${l.color}`:''}" title="목표">
-        <select data-do="setlist">
+        <select data-do="setlist" aria-label="목표 바꾸기 — ${esc(t.text)}">
           <option value="" ${!l?'selected':''}>목표 없음</option>
           ${opts.map(x=>`<option value="${esc(x.id)}" ${l&&l.id===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}
         </select></span>
     </span>
     ${noteOn ? `<div class="memo"><textarea data-note="${esc(t.id)}" rows="2" placeholder="메모 — 적는 대로 저장됩니다">${esc(t.note)}</textarea></div>` : ''}
     ${subOn ? `<div class="subs">${subs.map(x => `<div class="sub ${x.done ? 'done' : ''}" data-sub="${esc(x.id)}">
-        <span class="ck ${x.done ? 'on' : ''}" data-subdo="toggle"></span><span class="stx" data-subdo="edit">${esc(x.text)}</span>
+        <span class="ck ${x.done ? 'on' : ''}" data-subdo="toggle" role="checkbox" aria-checked="${!!x.done}" aria-label="${esc(x.text)}"></span><span class="stx" data-subdo="edit">${esc(x.text)}</span>
         <button class="sx" data-subdo="del" title="지우기">×</button></div>`).join('')}
       <button class="addrow sadd" data-subdo="add" data-again="sub-${esc(t.id)}">+ 하위 할 일</button></div>` : ''}
     ${copyFor === t.id ? copyPanel(t.id, t.date) : ''}</li>`;
@@ -1728,7 +1736,7 @@ function goalPage(l){
   const ss = DB.stagesOf(l), cur = DB.nowStage(l);
   const stage = s => { const isNow = cur && cur.id === s.id;
     return `<li class="row stage ${s.done?'done':''} ${isNow?'cur':''}" data-s="${esc(s.id)}">
-      <span class="ck ${s.done?'on':''}" data-sdo="toggle"></span>
+      <span class="ck ${s.done?'on':''}" data-sdo="toggle" role="checkbox" aria-checked="${!!s.done}" aria-label="${esc(s.name)}"></span>
       <span class="tx" data-sdo="edit">${esc(s.name)}</span>
       <span class="meta"><span class="tools">
           ${!s.done && !isNow ? `<button data-sdo="cur">지금으로</button>` : ''}
@@ -1872,11 +1880,14 @@ function calTimePage(days = [0, 1, 2, 3, 4, 5, 6].map(i => DB.shift(calWeek, i))
   const acts = new Map(), nowS = Math.floor(Date.now() / 1000);
   DB.todos().forEach(t => { const g = [...(t.segs || []), ...(t.run ? [[Math.floor(Date.parse(t.run) / 1000), nowS]] : [])];
     g.forEach(([a, b]) => days.forEach(d => { const d0 = Date.parse(d + 'T00:00:00') / 1000, x = Math.max(a, d0), y = Math.min(b, d0 + 86400);
-      if (y - x >= 60) put(acts, d, { t, s:(x - d0) / 60, e:(y - d0) / 60, live:!!t.run && b === nowS }); })); });
-  const act = [...acts.values()].some(a => a.length), R = act ? 'var(--actw)' : '0px';
+      if (y - x >= 60) put(acts, d, { t, s:(x - d0) / 60, e:(y - d0) / 60, live:!!t.run && b === nowS }); }));
+    // 재지 않고 끝낸 일 — 잡은 칸 그대로 실제 줄에(점선). Sync · Daymirror의 「계획대로 했다」와 같은 한 번(채점 13판 K2). 잰 기록이 조금이라도 있으면 그걸 믿는다
+    if (t.done && t.time && t.date && days.includes(t.date) && !(t.segs || []).length && !Object.keys(t.spent || {}).length){
+      const s0 = toMin(t.time); put(acts, t.date, { t, s:s0, e:s0 + (t.dur || 60), est:true }); } });
+  const act = [...acts.values()].some(a => a.length), est = [...acts.values()].some(a => a.some(x => x.est)), R = act ? 'var(--actw)' : '0px';
   const hm = m => fmtTime(String(Math.floor(m / 60) % 24).padStart(2, '0') + ':' + String(Math.round(m % 60)).padStart(2, '0'));
   const chip = t => `<div class="tchip" data-tchip="${esc(t.id)}" data-t="${esc(t.id)}" title="시간 칸으로 끌어 놓기">
-      <span class="ck" data-do="toggle"></span><span>${esc(t.text)}</span></div>`;
+      <span class="ck" data-do="toggle" role="checkbox" aria-checked="false" aria-label="${esc(t.text)}"></span><span>${esc(t.text)}</span></div>`;
   const col = d => {
     const pos = [];                             // 겹치면 옆으로 — 서로 겹치는 것끼리만 묶어서 그 묶음 안에서만 나눈다
     let lanes = [], grp = [], grpEnd = -1;     // 안 겹치는 블록은 제 폭을 다 쓴다
@@ -1891,18 +1902,19 @@ function calTimePage(days = [0, 1, 2, 3, 4, 5, 6].map(i => DB.shift(calWeek, i))
       const top = Math.max(0, (s - H0 * 60) * PX), h = Math.max(18, (Math.min(e, H1 * 60) - Math.max(s, H0 * 60)) * PX);
       return `<div class="tb ${t.done ? 'done' : ''}" data-tb="${esc(t.id)}" data-t="${esc(t.id)}"
           style="top:${top}px;height:${h}px;left:calc((100% - ${R}) * ${k / n} + 2px);width:calc((100% - ${R}) / ${n} - 4px);--bc:${l ? l.color : 'var(--c4)'}">
-        <span class="ck ${t.done ? 'on' : ''}" data-do="toggle"></span><span class="tbt"><b>${t.time}</b>${esc(t.text)}</span>
+        <span class="ck ${t.done ? 'on' : ''}" data-do="toggle" role="checkbox" aria-checked="${!!t.done}" aria-label="${esc(t.text)}"></span><span class="tbt"><b>${t.time}</b>${esc(t.text)}</span>
         <span class="tb-rs" data-rs="${esc(t.id)}" title="끌어서 길이 바꾸기"></span></div>`; }).join('');
-    const done = (acts.get(d) || []).map(({ t, s, e, live }) => { const l = t.listId && DB.listOf(t.listId);
+    const done = (acts.get(d) || []).map(({ t, s, e, live, est }) => { const l = t.listId && DB.listOf(t.listId);
       const top = Math.max(0, (s - H0 * 60) * PX), h = Math.max(6, (Math.min(e, H1 * 60) - Math.max(s, H0 * 60)) * PX);
-      return `<div class="ta" style="top:${top}px;height:${h}px;--bc:${l ? l.color : 'var(--c5)'}" title="▶로 잰 시간 · ${hm(s)}~${live ? '지금' : hm(e)} · ${fmtDur((e - s) * 60)} · ${esc(t.text)}">${h >= 16 ? `<span>${esc(t.text)}</span>` : ''}</div>`; }).join('');
+      const tip = est ? `재지 않고 끝냄 — 잡은 시각 그대로 · ${hm(s)}~${hm(e)} · ${esc(t.text)}` : `▶로 잰 시간 · ${hm(s)}~${live ? '지금' : hm(e)} · ${fmtDur((e - s) * 60)} · ${esc(t.text)}`;
+      return `<div class="ta ${est ? 'est' : ''}" style="top:${top}px;height:${h}px;--bc:${l ? l.color : 'var(--c5)'}" title="${tip}">${h >= 16 ? `<span>${esc(t.text)}</span>` : ''}</div>`; }).join('');
     const x = new Date(), nm = x.getHours() * 60 + x.getMinutes();
     const now = d === T && nm >= H0 * 60 ? `<div class="tt-now" style="top:${(nm - H0 * 60) * PX}px"></div>` : '';
     return `<div class="ttc ${d === T ? 'tdy' : ''}" data-tcol="${d}">${blocks}${done}${now}</div>`; };
   const hours = Array.from({ length: H1 - H0 }, (_, i) => `<span style="top:${i * 60 * PX}px">${H0 + i}</span>`).join('');
   return `<div class="tt ${days.length === 1 ? 'one' : ''}">
     <div class="tt-tray" data-ttray><span class="tt-lab">날짜 없는 일</span>${inbox.slice(0, 40).map(chip).join('')
-      || '<span class="tt-empty">없음 — 칸에서 여기로 끌어 오면 날짜가 빠집니다</span>'}${act ? '<span class="tt-leg"><i></i>잡은 시간 · <i class="a"></i>▶로 잰 시간(오른쪽 줄)</span>' : ''}</div>
+      || '<span class="tt-empty">없음 — 칸에서 여기로 끌어 오면 날짜가 빠집니다</span>'}${act ? `<span class="tt-leg"><i></i>잡은 시간 · <i class="a"></i>▶로 잰 시간(오른쪽 줄)${est ? ' · <i class="e"></i>재지 않고 끝냄' : ''}</span>` : ''}</div>
     <div class="tt-grid tt-top"><span></span>${days.map(d => `<div class="tth ${d === T ? 'tdy' : ''} ${redCls(d)}" data-cal="${d}" title="그날 화면 열기">
         <span>${WD[new Date(d + 'T00:00:00').getDay()]}</span><b>${+d.slice(8)}</b>${holiName(d)}</div>`).join('')}
       <span class="tt-gut">시각<br>없음</span>${days.map(d => `<div class="tts" data-tstrip="${d}">${(untimed.get(d) || []).sort(DB.byPos).map(chip).join('')}</div>`).join('')}</div>
@@ -1918,7 +1930,7 @@ function quadPage(d){                         // 오늘은 지난 일 · 날짜 
   const when = t => t.date === d ? '' : `<span class="qw">${t.date ? dOnly(t.date) + '부터' : '날짜 없음'}</span>`;
   const item = t => { const l = t.listId && DB.listOf(t.listId);
     return `<div class="qi ${t.done ? 'done' : ''}" data-t="${esc(t.id)}" draggable="true">
-      <span class="ck ${t.done ? 'on' : ''}" data-do="toggle"></span>
+      <span class="ck ${t.done ? 'on' : ''}" data-do="toggle" role="checkbox" aria-checked="${!!t.done}" aria-label="${esc(t.text)}"></span>
       <button class="qt" data-do="quadpick" title="어느 칸에 놓을지 고르기">${l ? `<span class="gdot" style="background:${l.color}"></span>` : ''}${esc(t.text)}${when(t)}</button>
       ${quadPick === t.id ? `<span class="qpk">${QUADS.filter(([q]) => q !== t.q).map(([q, n]) => `<button data-do="quad" data-q="${q}">${n}</button>`).join('')}${t.q ? '<button data-do="quad" data-q="0">빼기</button>' : ''}</span>` : ''}</div>`; };
   const box = ([q, n, sub]) => `<div class="qb q${q}" data-qbox="${q}"><div class="qh"><b>${n}</b><span>${sub}</span></div>
@@ -1936,7 +1948,7 @@ function calWeekPage(){                        // 주 보기 — 이레 칸. 카
   DB.todos().forEach(t => { if (t.deadline && !t.done) put(dues, t.deadline, { name:t.text, color:t.listId && DB.listOf(t.listId) ? DB.listOf(t.listId).color : 'var(--c4)' }); });   // 할 일의 마감도
   const card = t => { const l = t.listId && DB.listOf(t.listId);
     return `<div class="wcard ${t.done ? 'done' : ''}" draggable="true" data-wcard="${esc(t.id)}" data-t="${esc(t.id)}">
-      <span class="ck ${t.done ? 'on' : ''}" data-do="toggle"></span>
+      <span class="ck ${t.done ? 'on' : ''}" data-do="toggle" role="checkbox" aria-checked="${!!t.done}" aria-label="${esc(t.text)}"></span>
       <span class="wt" data-cal="${t.date}" title="그날 화면 열기">${t.time ? `<b class="ct">${t.time}</b>` : ''}${esc(t.text)}</span>
       ${l ? `<span class="gdot" style="background:${l.color}"></span>` : ''}</div>`; };
   return `<div class="wk">${days.map(d => { const ts = (by.get(d) || []).sort((a, b) => a.done - b.done || DB.byWhen(a, b));
