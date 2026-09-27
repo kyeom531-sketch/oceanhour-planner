@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>오션아워</title>
 <meta name="description" content="흩어진 할 일 · 일정 · 목표를 한 곳에. 하루를 정한 곳에 썼는지까지 보여 줍니다. 나무도, 순위도, 연속 기록도 없이.">
+<!-- 링크 미리보기(채점 16판 O21) — 카톡 · 인스타 DM으로 앱 · 틀 링크(/app/?t=…)를 줄 때 그림 · 이름 · 설명이 뜬다 -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="오션아워">
+<meta property="og:title" content="오션아워 — 할 일 · 일정 · 목표를 한 곳에 모은 플래너">
+<meta property="og:description" content="흩어진 할 일 · 일정 · 목표를 한 곳에. 하루를 정한 곳에 썼는지까지 보여 줍니다. 나무도, 순위도, 연속 기록도 없이.">
+<meta property="og:url" content="https://kyeom531-sketch.github.io/oceanhour-planner/app/">
+<meta property="og:image" content="https://kyeom531-sketch.github.io/oceanhour-planner/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="오션아워 — 흩어진 할 일 · 일정 · 목표를 한 곳에 모은 플래너. 오른쪽은 실제 폰 화면">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1B1A18" media="(prefers-color-scheme: dark)">
@@ -409,6 +421,14 @@ li.row.tools-on .tools button,li.row.tools-on .tools .rep button{padding:4px 9px
 .memo textarea{display:block;width:100%;min-height:44px;resize:vertical;font:inherit;font-size:13px;line-height:1.5;
   color:var(--ink);background:var(--hov);border:0;outline:0;border-radius:6px;padding:6px 8px}
 .memo textarea::placeholder{color:var(--d32)}
+.actin{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:6px 0 2px 23px;font-size:12.5px;color:var(--d70)}
+.actin .al{margin-right:2px}
+.actin .ar{display:inline-flex;align-items:center;gap:6px}
+.actin input{font:inherit;font-size:13px;color:var(--ink);background:var(--hov);border:0;border-radius:6px;padding:4px 6px;min-height:30px}
+.actin input:focus-visible{outline:2px solid color-mix(in srgb,var(--c4) 60%,transparent);outline-offset:1px}
+.actin button{font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:7px;color:var(--ink);background:var(--card);min-height:30px}
+.actin button.ok{border-color:color-mix(in srgb,var(--c4) 45%,var(--line))}
+.actin button:hover{background:var(--hov)}
 .addrow,.fold{display:block;width:100%;text-align:left;font-size:13px;padding:6px 0 8px}
 .addrow{color:var(--d70)}
 .addrow:hover{color:var(--ink)}
@@ -601,6 +621,7 @@ textarea:focus-visible{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c4) 55%,tr
 .qpk button{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink)}
 .qpk button:hover{background:var(--hov)}
 .qrest .qi{padding:4px 0}
+@media (max-width:640px){ .actin{padding-left:0} .actin .al{flex-basis:100%} }   /* 폰 — 실제 시각은 제목 한 줄, 시작 ~ 끝 한 묶음(17판) */
 @media (max-width:640px){ .quad{gap:8px} .qb{padding:8px 8px 6px;min-height:120px} .qh{flex-wrap:wrap;gap:0 6px} .qh span{font-size:11px} .qi .qt{font-size:14px} }
 @media (min-width:641px){ .daybar .qx{display:none!important} }   /* 컴퓨터는 목록 · 4칸 · 시간 띠를 한 줄 셋으로 */
 @media (max-width:640px){ .daybar .seg.dseg button[data-daymode=quad]{display:none} .daybar .dseg.q button[data-daymode=time]{display:none} }   /* 폰 — 늘 보이는 단추 다섯(규칙 3). 4칸은 「⋯」 안 */
@@ -709,7 +730,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
     .runbar button,.keep button,#one .top button,.sw button)::after{content:'';position:absolute;
     top:min(0px,calc(50% - 22px));bottom:min(0px,calc(50% - 22px));left:min(0px,calc(50% - 22px));right:min(0px,calc(50% - 22px))}
   .li,.newlist,.fold,.addrow,.logday,.mhit,.fb,#one .fi,#one .acts button,#one .foot button,.sug button,
-    .tools button,.tools .rep button,#pickbar button,#pickbar .pksel,.fbtn button,.gact button,.cp-act button,#one .fnext button,.qi .qt,.qpk button{min-height:44px}
+    .tools button,.tools .rep button,#pickbar button,#pickbar .pksel,.fbtn button,.gact button,.cp-act button,#one .fnext button,.qi .qt,.qpk button,.actin input,.actin button{min-height:44px}
   .qpk button{min-width:44px}
   .pvl a{min-height:44px}
   .fstart button{min-height:44px}   /* 처음 화면 — 새로 온 사람이 가장 먼저 누르는 자리(12판) */
@@ -744,7 +765,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   <div class="brand">오션아워</div>
   <div class="find">
     <span style="color:var(--d70);flex:none">⌕</span>
-    <input id="q" placeholder="찾기" autocomplete="off">
+    <input id="q" aria-label="찾기" placeholder="찾기" autocomplete="off">
     <button class="x hide" id="qx">×</button>
   </div>
   <div class="lists" id="lists"></div>
@@ -766,12 +787,12 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
 <div id="scrim"></div>
 <main>
 <div class="topbar"><button id="menu" aria-label="옆 칸 열기">☰</button><span class="tb-t">오션아워</span></div>
-<div id="warn"></div>
+<div id="warn" role="status"></div>
 <div class="wrap">
   <div class="daybar" id="daybar"></div>
   <div class="entry">
     <span class="p">+</span>
-    <input id="add" placeholder="할 일 적기 — 「내일 치과 3시」처럼 적어도 알아듣습니다" autocomplete="off" autofocus data-first>
+    <input id="add" aria-label="할 일 적기" placeholder="할 일 적기 — 「내일 치과 3시」처럼 적어도 알아듣습니다" autocomplete="off" autofocus data-first>
     <button class="hint hide" id="addHint" title="누르면 알아듣지 않고 쓴 그대로 넣습니다"></button>
     <select id="addList" aria-label="목표 고르기 — 적는 할 일을 넣을 목표"></select>
     <div class="sug hide" id="sug" role="listbox" aria-label="전에 적던 일"></div>
@@ -784,7 +805,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
 <div id="pickbar" class="hide"></div>
 <div id="big" class="hide"></div>
 <div id="one" class="hide"></div>
-<div id="toast"><span id="tmsg"></span><button id="tundo">되돌리기</button></div>
+<div id="toast"><span id="tmsg" role="status"></span><button id="tundo">되돌리기</button></div>   <!-- role=status — 「넣었습니다」 · 「끝냈습니다」가 화면 읽기에도 들린다(채점 16판 D19) -->
 
 <script>
 /* ══════════════ 자료 층 ══════════════
@@ -1097,16 +1118,25 @@ const DB = (() => {
      멈출 때 자정을 넘겼으면 날짜마다 나눠 적는다. 「정한 곳」 = 목표(분류)에 붙은 할 일 */
   function stopInto(t){                         // 저장은 부른 쪽이 한다. 되돌리기에 쓸 앞 모습을 돌려준다
     const back = { spent:{ ...(t.spent || {}) }, segs:t.segs ? t.segs.map(x => [...x]) : undefined, run:t.run, runEnd:t.runEnd || null };
-    let s = new Date(t.run);
     const end = t.runEnd && Date.parse(t.runEnd) < Date.now() ? new Date(t.runEnd) : new Date();   // 집중 시간이 지났으면 거기까지만
+    spread(t, new Date(t.run), end);
+    const a = Math.floor(Date.parse(t.run) / 1000), b = Math.floor(end / 1000);   // 구간도 적는다 — 1분이 안 되면 안 적는다
+    if (b - a >= 60) t.segs = [...(t.segs || []), [a, b]].slice(-200);
+    t.run = null; t.runEnd = null; t.updatedAt = now(); return back;
+  }
+  function spread(t, s, end){                   // 쓴 시간을 날짜마다 나눠 적는다 — 자정을 넘겼으면 둘로
     t.spent = t.spent || {};
     while (s < end){
       const next = new Date(s.getFullYear(), s.getMonth(), s.getDate() + 1), e = end < next ? end : next;
       const k = ymd(s), sec = Math.round((e - s) / 1000); if (sec > 0) t.spent[k] = (t.spent[k] || 0) + sec; s = e;   // 0초는 적지 않는다 — 파일로 옮기면 사라져서 앞뒤가 달라진다(09-25)
     }
-    const a = Math.floor(Date.parse(t.run) / 1000), b = Math.floor(end / 1000);   // 구간도 적는다 — 1분이 안 되면 안 적는다
-    if (b - a >= 60) t.segs = [...(t.segs || []), [a, b]].slice(-200);
-    t.run = null; t.runEnd = null; t.updatedAt = now(); return back;
+  }
+  function addSeg(id, a, b){                    // 실제로 한 시각을 나중에 적기(초) — ▶를 잊었을 때. DayBlocks는 실제 시작 · 끝을 적는다(채점 16판 K2)
+    fresh(); const t = todo(id); if (!t || t.run || !(b - a >= 60) || a < 1e9 || b * 1000 > Date.now()) return null;
+    if ((t.segs || []).some(g => g[0] < b && a < g[1])) return null;   // 이미 적은 구간과 겹치면 두 번 세게 된다
+    const back = { spent:{ ...(t.spent || {}) }, segs:t.segs ? t.segs.map(x => [...x]) : undefined, run:null, runEnd:null };   // 되돌리기는 unstop으로
+    spread(t, new Date(a * 1000), new Date(b * 1000));
+    t.segs = [...(t.segs || []), [a, b]].sort((x, y) => x[0] - y[0]).slice(-200); t.updatedAt = now(); save(); return back;
   }
   const running = () => S.todos.find(t => t.run && !t.deletedAt) || null;
   function startRun(id){
@@ -1392,7 +1422,7 @@ const DB = (() => {
            subsOf, subOf, addSub, editSub, toggleSub, removeSub, restoreSub,
            addTodo, editTodo, toggleTodo, moveTodo, carry, uncarry, removeTodo, restoreTodo,
            setRepeat, skipTodo, nextDate, rollTimes, countUp, detachOnce, undetach, importTodos, dropTodos, copyTodos, cleanFrame, addFrame, dropFrame, placeBetween, byPos, byWhen, COLORS,
-           running, startRun, stopRun, unstop, setQuad, setFocus, focusLeft, runSecs, secsOn, totalSecs, timeByDay, plannedSecs, blockMin,
+           running, startRun, stopRun, unstop, addSeg, setQuad, setFocus, focusLeft, runSecs, secsOn, totalSecs, timeByDay, plannedSecs, blockMin,
            monday, review, setReview, setListNote, searchMemos, dayLine, setDayLine, linedDays, opensOn, countOpen, holiday, redDay, holiKnown, HOLI_YEARS, jeolgi,
            dump, restore, apply, merge };
 })();
@@ -1464,9 +1494,10 @@ function weekGrid(t){                            // 주 N회 — 이번 주 월~
 const timesGot = r => { if (!r || r.every !== 'times') return ''; const g = r.wk === DB.monday(DB.today()) ? r.got || 0 : 0;
   return g ? ' · 이번 주 ' + g + '/' + r.n : ''; };   // 한 번이라도 했을 때만 — 「0/4」를 세워 두지 않는다
 const editing = () => !!document.querySelector('input.edit')
-  || !!(document.activeElement && document.activeElement.matches('textarea[data-note], textarea[data-rev], textarea[data-daymemo], textarea[data-goalmemo]'));   // 메모·회고를 적는 중
+  || !!(document.activeElement && document.activeElement.matches('textarea[data-note], textarea[data-rev], textarea[data-daymemo], textarea[data-goalmemo], .actin input'));   // 메모·회고 · 실제 시각을 적는 중
 let openNotes = new Set();                      // 메모를 펼친 할 일
 let openSubs  = new Set();                      // 하위 할 일을 펼친 할 일
+let actFor    = null;                           // 실제로 한 시각 적기를 편 할 일 하나(16판 K2)
 let toolsOn   = null;                           // 폰 — 「⋯」로 도구를 편 줄 하나
 let toolsMore = null;                           // 도구의 「더」를 편 줄 하나 — 늘 보이는 도구는 여덟까지(규칙 3)
 let dayMore   = false;                          // 날짜 줄의 「⋯」를 폈나
@@ -1645,6 +1676,17 @@ function drawDay(){
        <button class="dmore" data-daymore title="${dayMore ? '접기' : '더 — ' + (dayMode !== 'quad' ? '4칸 · ' : '') + (day === T ? (pmNow ? '계획' : '마무리') + ' · ' : '') + (DB.todosOn(day).length ? '이 날 복사 · ' : '') + '고르기'}" aria-label="더 보기">⋯</button>`;
 }
 
+/* ── 실제로 한 시각 ── ▶를 잊었으면 나중에 시작 · 끝을 적는다(채점 16판 K2). 잰 구간과 똑같이 시간표 실제 줄 · 쓴 시간에 들어간다.
+   그 날(지나간 할 일이면 그 날, 아니면 오늘) 안에서만. 잡은 시각이 있으면 그것을 먼저 넣어 둔다 */
+const actDay = t => { const T = DB.today(); return t.date && t.date <= T ? t.date : T; };
+function actForm(t){
+  const d = actDay(t), n = new Date(), p = t.time ? t.time.split(':').map(Number) : null;
+  const b0 = Math.min(1439, p ? p[0] * 60 + p[1] + (t.dur || 30) : Math.floor((n.getHours() * 60 + n.getMinutes()) / 5) * 5), a0 = Math.max(0, p ? p[0] * 60 + p[1] : b0 - 30);
+  return `<div class="actin" data-actday="${d}"><span class="al">${d === DB.today() ? '오늘' : dOnly(d)} 실제로 한 시각</span>
+    <span class="ar"><input type="time" data-act="a" value="${hhmm(a0)}" aria-label="시작한 시각"><span class="as">~</span><input type="time" data-act="b" value="${hhmm(b0)}" aria-label="끝낸 시각"></span>
+    <span class="ar"><button class="ok" data-do="actsave">적기</button><button data-do="actclose">닫기</button></span></div>`;
+}
+
 function row(t){
   const l = t.listId ? DB.listOf(t.listId) : null;
   const T = DB.today();
@@ -1688,6 +1730,7 @@ function row(t){
         ${!inLog && !t.done && t.date && !r ? (t.endDate ? `<button class="xtra" data-do="clearend">기간 빼기</button>` : `<button class="xtra" data-do="endpick" title="며칠에 걸친 일 — 끝나는 날 고르기">기간</button>`) : ''}
         ${!inLog && !t.done ? (t.deadline ? `<button class="xtra" data-do="cleardl">마감 빼기</button>` : `<button class="xtra" data-do="dlpick" title="언제까지 — 할 날과 따로">마감</button>`) : ''}
         ${!inLog ? `<button class="xtra" data-do="copy" title="같은 일을 다른 날에도">복사</button>` : ''}
+        ${!t.run ? `<button class="xtra" data-do="act" title="▶를 잊었을 때 — 실제로 한 시작 · 끝 시각을 나중에 적습니다">실제 시각</button>` : ''}
         ${!inLog && !t.done ? (t.goal ? `<button class="xtra" data-do="countdown" title="하나 빼기">한 번 빼기</button><button class="xtra" data-do="nogoal">세기 빼기</button>` : `<button class="xtra" data-do="setgoal" title="물 8잔처럼 하루에 여러 번">세기</button>`) : ''}
       </span>
       ${play ? `<button class="play" data-do="start" title="시간 재기 — 정한 곳에 쌓입니다" aria-label="시간 재기 · ${esc(t.text)}">▶</button>` : ''}
@@ -1715,6 +1758,7 @@ function row(t){
         </select></span>
     </span>
     ${noteOn ? `<div class="memo"><textarea data-note="${esc(t.id)}" rows="2" placeholder="메모 — 적는 대로 저장됩니다">${esc(t.note)}</textarea></div>` : ''}
+    ${actFor === t.id && !t.run ? actForm(t) : ''}
     ${subOn ? `<div class="subs">${subs.map(x => `<div class="sub ${x.done ? 'done' : ''}" data-sub="${esc(x.id)}">
         <span class="ck ${x.done ? 'on' : ''}" data-subdo="toggle" role="checkbox" aria-checked="${!!x.done}" aria-label="${esc(x.text)}"></span><span class="stx" data-subdo="edit">${esc(x.text)}</span>
         <button class="sx" data-subdo="del" title="지우기">×</button></div>`).join('')}
@@ -2543,6 +2587,17 @@ document.addEventListener('click', e => {
   if (a === 'nogoal'){ const was = t.goal; DB.editTodo(t.id, { goal:null }); render(); return toast(`세기를 뺐습니다 · 「${t.text}」`, () => DB.editTodo(t.id, { goal:was })); }
   if (a === 'detach'){ toolsOn = null; toolsMore = null; const r = DB.detachOnce(t.id); if (!r) return;
     render(); return toast(`이번 것만 떼어 냈습니다 · 반복은 ${dOnly(DB.todo(t.id).date)}부터`, () => DB.undetach(r)); }
+  if (a === 'act'){ toolsOn = null; toolsMore = null; actFor = actFor === t.id ? null : t.id; render();
+    const i = actFor && document.querySelector(`[data-t="${CSS.escape(t.id)}"] .actin input`); if (i) i.focus(); return; }
+  if (a === 'actclose'){ actFor = null; render(); return focusRow(rowById(t.id)); }
+  if (a === 'actsave'){ const f = el.closest('.actin'), d = f.dataset.actday, va = f.querySelector('[data-act=a]').value, vb = f.querySelector('[data-act=b]').value;
+    const sec = v => Math.floor(new Date(d + 'T' + v + ':00').getTime() / 1000), s = va ? sec(va) : 0, e = vb ? sec(vb) : 0;
+    const why = !s || !e ? '시작과 끝 시각을 다 적어 주세요' : e - s < 60 ? '끝이 시작보다 늦어야 합니다 — 자정을 넘겼으면 날마다 따로 적어 주세요'
+      : e * 1000 > Date.now() ? '아직 오지 않은 시각입니다' : (t.segs || []).some(g => g[0] < e && s < g[1]) ? '이미 잰 구간과 겹칩니다' : '';
+    if (why) return toast(why);
+    const back = DB.addSeg(t.id, s, e); if (!back) return toast('적지 못했습니다');
+    actFor = null; render(); focusRow(rowById(t.id));
+    return toast(`적었습니다 · 「${t.text}」 ${fmtTime(va)}~${fmtTime(vb)} · ${fmtDur(e - s)}`, () => DB.unstop(t.id, back)); }
   if (el.closest('.tools')){ toolsOn = null; toolsMore = null; }   // 도구를 하나 쓰면 접는다
   if (el.closest('.tools')){ document.body.classList.add('cool'); clearTimeout(coolT);
     coolT = setTimeout(() => document.body.classList.remove('cool'), 500); }
@@ -2646,6 +2701,11 @@ document.addEventListener('focusout', e => {
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && e.target.matches && e.target.matches('textarea[data-note], textarea[data-rev], textarea[data-daymemo], textarea[data-goalmemo]') && !e.isComposing) e.target.blur();
+});
+document.addEventListener('keydown', e => {   // 실제 시각 — Enter로 적고 Esc로 닫는다
+  const i = e.target.closest && e.target.closest('.actin input'); if (!i || e.isComposing) return;
+  if (e.key === 'Enter'){ e.preventDefault(); i.closest('.actin').querySelector('[data-do=actsave]').click(); }
+  else if (e.key === 'Escape'){ e.preventDefault(); i.closest('.actin').querySelector('[data-do=actclose]').click(); }
 });
 /* ── 이렇게 쓸 수 있어요(규칙 3 — 숨기지 않는다) ── 사람이 누를 때만 연다(규칙 2). 적는 말 예시는 검사가 하나씩 알아듣는지 본다(규칙 6) */
 const HELP_TRY = [
