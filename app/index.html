@@ -756,6 +756,28 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   #pickbar button,#pickbar .pksel{padding:4px;white-space:normal;text-align:center;display:flex;align-items:center;justify-content:center;min-width:0}
   body.picking .wrap{padding-bottom:calc(200px + var(--tabh))}
 }
+/* ── 종이 · PDF로 뽑기(채점 17판 S19) ── 노트속지(유료 2위) · 데일리스케줄(무료 89위)이 PDF · 인쇄를 내세운다.
+   화면 그대로 찍으면 옆 칸 · 단추가 같이 나오고, 본문이 스크롤 상자라 화면 높이에서 끊겼다(시간표가 밤 9시에서).
+   종이에는 본문만, 끝까지, 밝은 판 색으로. 목표 색 칩은 색 그대로(print-color-adjust) */
+@media print{
+  @page{size:A4;margin:12mm}
+  :root,:root[data-theme]{--bg:#fff;--card:#fff;--side:#fff;--line:rgba(40,38,35,.18);--ink:#2E2C29;--d70:rgba(46,44,41,.72);--d32:rgba(46,44,41,.4);
+    --hov:rgba(46,44,41,.05);--c1:#A8415A;--c2:#8E6524;--c3:#3B6846;--c4:#2C5B88;--c5:#6B6762;--red:#C23A30;--off:#CFC8BF;color-scheme:light}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{height:auto;overflow:visible;background:#fff}
+  body{display:block}
+  main{overflow:visible}
+  .wrap{max-width:none;padding:0}
+  aside,#scrim,.topbar,#warn,.entry,.tabs,#pickbar,#toast,#one,#big,.sug,.runbar,.tools,.meta .more,.play,.grip,.tpick,.epick,.actin,
+    .daybar button,.daybar .seg,.daybar .ics,.carry,.addrow,.fold,.memoadd{display:none!important}
+  .box{box-shadow:none;border:1px solid var(--line)}
+  .dot,.gdot,.cdot:not(.none){filter:none}
+  .cl{white-space:normal;overflow:visible}   /* 달력 칩 — 종이에선 자르지 않고 줄을 바꾼다 */
+  .cc,.row{break-inside:avoid}
+  .tth{flex-wrap:wrap}
+  .tth b{white-space:nowrap}   /* 시간표 머리 — 좁은 종이 폭에서 「24」가 「2 / 4」로 갈렸다 */
+  .tt-empty{display:none}   /* 「끌어 오면」 안내는 화면에서만 */
+}
 </style>
 <script>try{ var th = localStorage.getItem('oceanhour.theme'); if (th) document.documentElement.dataset.theme = th; }catch(e){}   /* 테마 — 그리기 전에 입혀 깜빡이지 않게 */</script>
 </head>
@@ -1643,7 +1665,8 @@ function drawDay(){
   if (page === 'week'){ const cur = DB.monday(T);
     $('#daybar').innerHTML = `<button data-wk="-1" aria-label="지난주">‹</button><h1>${dOnly(weekStart)} – ${dOnly(DB.shift(weekStart, 6))}</h1><button data-wk="1" aria-label="다음 주">›</button><span class="wd wkno">${weekNo(weekStart)}</span>
       ${weekStart !== cur ? `<button class="today" data-wk="0">이번 주</button>` : `<span class="wd">이번 주</span>`}
-      <button class="today" data-card="${cardOn ? 'close' : 'open'}" title="이 주를 그림 한 장으로 — 목표 이름과 쓴 시간만">그림으로</button>`; return; }
+      <button class="today" data-card="${cardOn ? 'close' : 'open'}" title="이 주를 그림 한 장으로 — 목표 이름과 쓴 시간만">그림으로</button>
+      <button class="today" data-print title="이 주를 종이 · PDF로 — 돌아보기 칸은 손으로 적을 자리가 됩니다">인쇄</button>`; return; }
   if (page === 'help'){ $('#daybar').innerHTML = `<h1>이렇게 쓸 수 있어요</h1><span class="wd">적는 말 · 도구 · 하루 · 목표 · 한 주 · 자료 · 키보드</span>`; return; }
   if (page === 'trash'){ $('#daybar').innerHTML = `<h1>휴지통</h1><span class="wd">지운 것 — 되살리면 제자리로 돌아갑니다</span>`; return; }
   if (page === 'arch'){ $('#daybar').innerHTML = `<h1>보관함</h1><span class="wd">${DB.ARCH}일 넘게 밀린 일 — 지운 게 아니라 옮겨 둔 것입니다</span>`; return; }
@@ -1652,7 +1675,7 @@ function drawDay(){
     const ends = calMode === 'month' ? [calMonth + '-01'] : [calWeek, DB.shift(calWeek, 6)];
     const noHoli = ends.some(d => !DB.holiKnown(d))
       ? `<span class="wd holino">공휴일은 ${DB.HOLI_YEARS[0]}–${DB.HOLI_YEARS[DB.HOLI_YEARS.length - 1]}년만 들어 있습니다</span>` : '';
-    const ics = `<span class="ics"><button data-ics="out" title="오늘부터의 할 일을 캘린더 파일(.ics)로 — 폰 캘린더에 넣으면 시각 알림을 폰이 울려 줍니다">캘린더로 내보내기</button><button data-ics="in" title="다른 캘린더에서 내보낸 .ics 파일의 일정을 할 일로 가져옵니다">캘린더 가져오기</button></span>`;
+    const ics = `<span class="ics"><button data-print title="이 화면을 종이 · PDF로 — 옆 칸과 단추는 빼고 찍힙니다">인쇄</button><button data-ics="out" title="오늘부터의 할 일을 캘린더 파일(.ics)로 — 폰 캘린더에 넣으면 시각 알림을 폰이 울려 줍니다">캘린더로 내보내기</button><button data-ics="in" title="다른 캘린더에서 내보낸 .ics 파일의 일정을 할 일로 가져옵니다">캘린더 가져오기</button></span>`;
     const seg = `<span class="seg"><button data-calmode="month" class="${calMode === 'month' ? 'on' : ''}">월</button><button data-calmode="week" class="${calMode === 'week' ? 'on' : ''}">주</button><button data-calmode="time" class="${calMode === 'time' ? 'on' : ''}">시간표</button></span>`;
     $('#daybar').innerHTML = calMode !== 'month'
       ? `<button data-cm="-1" aria-label="지난주">‹</button><h1>${dOnly(calWeek)} – ${dOnly(DB.shift(calWeek, 6))}</h1><button data-cm="1" aria-label="다음 주">›</button><span class="wd wkno">${weekNo(calWeek)}</span>
@@ -2018,7 +2041,7 @@ function calPage(){                            // 월 달력 — 날짜 칸마�
   const T = DB.today(), [y, m] = calMonth.split('-').map(Number);
   const first = new Date(y, m - 1, 1), lead = (first.getDay() + 6) % 7, days = new Date(y, m, 0).getDate();
   const start = DB.shift(DB.ymd(first), -lead), n = Math.ceil((lead + days) / 7) * 7;   // 월요일부터 — 주 보기 · 시간표 · 회고와 같게(09-25)
-  const by = new Map(), dues = new Map(), MAX = 4;   // 칸마다 넷까지 — 넘으면 +N
+  const by = new Map(), dues = new Map(), MAX = printing ? 99 : 4;   // 칸마다 넷까지 — 넘으면 +N. 종이에는 다(17판)
   DB.todos().forEach(t => { if (t.date) spanDays(t).forEach(d => (by.get(d) || by.set(d, []).get(d)).push(t)); });
   DB.lists().forEach(l => { if (l.due && !l.done) (dues.get(l.due) || dues.set(l.due, []).get(l.due)).push(l); });
   DB.todos().forEach(t => { if (t.deadline && !t.done) (dues.get(t.deadline) || dues.set(t.deadline, []).get(t.deadline))
@@ -2725,7 +2748,7 @@ function helpPage(){
       ['4칸', '그날 할 일을 중요 · 급함으로 나눠 보기. 할 일을 눌러 칸을 고른다(폰은 ⋯ 안)'], ['시간 띠', '그날을 시간 칸으로 — 잡은 시간 옆 오른쪽 줄에 ▶로 잰 시간'], ['오늘 메모', '날짜 화면 맨 아래'], ['지난 일 · 하나씩', '밀린 일을 한 장씩 정리']])}</div>
     <div class="box help"><h2>목표</h2>${li([['+ 새 목표', '옆 칸(폰은 ☰ 안)'], ['단계 · 마감(D-) · 영역 · 메모', '목표 화면에서'], ['틀로 바로 시작', '처음 화면 · 받은 틀 링크로 목표 · 루틴을 한 번에']])}</div>
     <div class="box help"><h2>한 주 · 달력 · 기록</h2>${li([['한 주', '정한 곳 / 그 밖 · 목표별 시간 · 돌아보기 세 칸 · 그림으로(인스타에 올릴 한 장)'],
-      ['달력', '월 · 주 · 시간표(끌어서 옮기기) · 공휴일 · 절기'], ['기록', '날마다 끝낸 것과 쓴 시간'], ['찾기', '할 일 · 메모 · 목표 메모까지']])}</div>
+      ['달력', '월 · 주 · 시간표(끌어서 옮기기) · 공휴일 · 절기'], ['인쇄', '달력 · 한 주의 「인쇄」나 ⌘P — 옆 칸과 단추는 빼고 본문만 종이 · PDF로'], ['기록', '날마다 끝낸 것과 쓴 시간'], ['찾기', '할 일 · 메모 · 목표 메모까지']])}</div>
     <div class="box help"><h2>자료</h2>${li([['내보내기 · 가져오기', '파일 하나. 폰은 보내기 창으로 다른 기기에. 가져올 때 합치기(폰 · 컴퓨터를 같이 쓸 때) · 바꾸기(새 기기로 옮길 때)'], ['캘린더 파일(.ics)', '폰 캘린더와 주고받기 — 달력 화면'],
       ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다'], ['색 바꾸기', '옆 칸 아래 — 다섯 벌. 이 기기에만 둔다'], ['개인정보', '모으지 않는다 — 적은 것은 이 기기 브라우저에만']])}<p class="pvl"><a href="https://kyeom531-sketch.github.io/oceanhour-planner/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></p></div>
     <div class="box help"><h2>키보드(컴퓨터)</h2>${li([['<kbd>/</kbd>', '찾기'], ['입력칸에서 <kbd>↓</kbd>', '목록으로'], ['<kbd>↑</kbd> <kbd>↓</kbd>', '줄 이동'],
@@ -3380,6 +3403,13 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-them
   const was = themeNow(); if (b.dataset.themePick === was) return;
   setTheme(b.dataset.themePick); toast(`색을 바꿨습니다 · ${THEMES.find(x => x[0] === themeNow())[1]}`, () => setTheme(was)); });
 setTheme(themeNow());
+
+/* ── 종이 · PDF로(17판 S19) ── 달력 · 한 주의 「인쇄」. ⌘P · Ctrl+P도 같다. 폰은 인쇄 창에서 PDF로 저장한다.
+   찍기 전에 편 도구를 접고, 월 달력은 칸마다 다 싣는다(화면에선 넷까지) */
+var printing = false;                           // calPage가 처음 그릴 때도 읽는다 — var로 둔다
+addEventListener('beforeprint', () => { printing = true; toolsOn = null; actFor = null; if (!editing()) render(); });
+addEventListener('afterprint', () => { printing = false; if (!editing()) render(); });
+document.addEventListener('click', e => { if (e.target.closest('[data-print]')) window.print(); });
 
 /* ── 알림 ── 되돌릴 것이 있으면 되돌리기 단추가 붙는다 */
 let tT, undo = null;
