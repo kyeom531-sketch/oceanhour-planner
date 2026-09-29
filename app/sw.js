@@ -21,6 +21,10 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;
+  // 재는 길(규칙 8·9, C판) — 핑 페이지(oceanhour-ping.pages.dev)는 이제 앱과 다른 주소라 이 위의 origin
+  // 확인에서 이미 걸러진다. 이 서비스 워커의 fetch 이벤트 자체가 그 주소로는 안 걸리므로(교차 출처라
+  // 이 워커가 가로챌 수 없다), 여기서는 막거나 창고에 넣을 게 없다 — 다시 1·2회차의 같은 주소(app/back.html)
+  // 전용 503 분기는 그 경로 자체가 없어져 지웠다.
   e.respondWith(
     fetch(r).then(res => {
       if (res.ok){ const copy = res.clone(); caches.open(CACHE).then(c => c.put(r, copy)); }

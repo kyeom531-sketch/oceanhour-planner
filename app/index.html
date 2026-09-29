@@ -651,6 +651,171 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
 .hide{display:none!important}
 @media(max-width:700px){ aside{width:180px} .wrap{padding:14px 16px 60px} }
 .topbar,#scrim{display:none}
+/* ── 메모(09-27 웹 첫 판) ── 앱의 앞. 이번 주의 한 줄 · 적는 칸 · 지금 떠 있는 메모 · 메모 모음(규칙 2 · 3 · 4 · 7 · 8) */
+.wline{background:color-mix(in srgb,var(--c4) 7%,var(--card));border-radius:var(--r);padding:9px 14px 11px;margin-bottom:10px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+.wl-h{display:flex;gap:8px;align-items:baseline;font-size:12px;font-weight:700;color:var(--d70);letter-spacing:.02em}
+.wl-h .wl-wk{font-weight:400}
+.wl-t{display:block;text-align:left;width:100%;font-size:17px;line-height:1.45;letter-spacing:-.02em;padding:3px 0 0;color:var(--ink);white-space:pre-wrap}
+.wl-t.empty{font-size:14px;color:var(--c4)}
+.wl-t:hover{color:var(--c4)}
+.wl-c{display:block;font-size:11.5px;color:var(--d70);padding-top:3px}
+.wline input.edit{font-size:17px;width:100%;margin-top:3px}
+.mentry{background:var(--card);border-radius:var(--r);padding:10px 12px 8px;margin-bottom:10px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+.mentry textarea{display:block;width:100%;border:0;outline:0;background:transparent;resize:none;font:inherit;font-size:15px;line-height:1.5;color:var(--ink);min-height:24px;max-height:40vh;padding:0}
+.mentry textarea::placeholder{color:var(--d32)}
+.mopts{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding-top:7px;margin-top:7px;border-top:1px solid var(--line)}
+.moods{display:flex;gap:2px;align-items:center}
+.mood{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;position:relative}
+.mood i{width:14px;height:14px;border-radius:50%;background:var(--mc);opacity:.32}
+.mood:hover i{opacity:.7}
+.mood.on i{opacity:1;box-shadow:0 0 0 3px color-mix(in srgb,var(--mc) 25%,transparent)}
+.mo1{--mc:var(--c1)} .mo2{--mc:var(--c2)} .mo3{--mc:var(--c5)} .mo4{--mc:var(--c3)} .mo5{--mc:var(--c4)}
+.mlab{font-size:12px;color:var(--d70);min-width:4.5em}
+.mfeel{font-size:12.5px;color:var(--c4);padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--c4) 9%,transparent)}
+.mfeel.on{color:var(--ink);background:color-mix(in srgb,var(--c4) 15%,transparent)}
+.mshow{font-size:12.5px;color:var(--d70);display:inline-flex;align-items:center;gap:4px}
+.mshow select{color:var(--ink);font-size:12.5px;cursor:pointer}
+.madd{margin-left:auto;font-size:13px;padding:5px 14px;border-radius:7px;background:var(--ink);color:var(--card)}
+.mat{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12.5px;color:var(--d70)}
+.mat input,.mat select{font-size:13px;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 6px;background:var(--card)}
+.feels{flex-basis:100%;padding:2px 0 0}
+.fc{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{font-size:13px;padding:4px 11px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+.fchip:hover{background:var(--hov)}
+.fchip.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.fchip.more{color:var(--c4)}
+.fsep{flex-basis:100%;height:0}
+.help109{font-size:11.5px;color:var(--d70);margin:8px 0 2px}
+.help109 a{color:var(--d70);text-underline-offset:2px}
+li.row.mrow{align-items:flex-start;flex-wrap:wrap}
+.mdot{width:8px;height:8px;border-radius:50%;flex:none;margin-top:7px;background:var(--mc)}
+.mtx{flex:1 1 60%;min-width:0;white-space:pre-wrap;font-size:14px;line-height:1.5;padding:1px 0}
+.mtx.clue{cursor:pointer;color:var(--d70)}
+.mtx .mclue{color:var(--c4);margin-left:3px}
+.mnone{color:var(--d70)}
+.mup .mtx{font-size:15px}
+.mrow .meta{margin-left:auto;flex-wrap:wrap;justify-content:flex-end;max-width:100%;min-width:0}   /* 띄우기 글이 길어도 ⋯가 칸 밖으로 안 밀린다(09-28) */
+.mrow .meta .d{white-space:normal;text-align:right}
+.mrow .meta .more{display:inline-flex}
+.mtools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;flex-basis:100%;justify-content:flex-end;padding:6px 0 4px}
+.mtools button,.mtools label{font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:7px;color:var(--ink);background:var(--card);display:inline-flex;align-items:center;gap:4px}
+.mtools .del{color:var(--red)}
+.mtools select,.mtools input{font-size:12.5px;color:var(--ink)}
+.mtools .mat{flex-basis:auto}
+.mtools .mood{border:0;border-radius:50%;padding:0;background:transparent}
+.mtools .fchip{border-radius:999px;padding:4px 11px}
+.mtools .feels{padding-top:4px}
+.mdown{font-size:12px;color:var(--c4);padding:2px 7px;border-radius:5px;white-space:nowrap}
+.mdown:hover{background:var(--hov)}
+textarea.medit{flex:1 1 60%;min-width:0;font:inherit;font-size:14px;line-height:1.5;border:1px solid var(--line);border-radius:6px;padding:3px 6px;resize:none;background:var(--card);color:var(--ink);outline:0}
+@media (pointer:coarse){ .mood{width:44px;height:44px} .fchip{min-height:36px} .mtools button,.mtools label{min-height:36px} .madd{min-height:40px} }
+/* 바탕화면 그림(5단계) */
+.wallp .wp{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;padding:4px 0 8px}
+.wimg{display:block;border-radius:10px;border:1px solid var(--line);flex:none}
+.wimg.phone{width:170px;aspect-ratio:1170/2532}
+.wimg.desk{width:min(100%,340px);aspect-ratio:16/9}
+.wimg.none{display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;line-height:1.5;color:var(--d70);padding:12px;background:var(--hov)}
+.wps{flex:1 1 240px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.wseg{display:inline-flex;align-self:flex-start;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.wseg button{font-size:12.5px;padding:5px 11px;color:var(--d70)}
+.wseg button+button{border-left:1px solid var(--line)}
+.wseg button.on{background:var(--ink);color:var(--card)}
+.wpi{display:flex;gap:7px;align-items:flex-start;font-size:13px;line-height:1.45;cursor:pointer}
+.wpi input{margin-top:3px;flex:none}
+.wpi span{min-width:0;overflow-wrap:anywhere}
+.wpi i{font-style:normal;font-size:11px;color:var(--d70);margin-left:6px}
+.wph{font-size:12px;font-weight:700;color:var(--d70);margin-top:4px}
+.wpl{display:flex;flex-direction:column;gap:5px;max-height:260px;overflow:auto}
+.wpw{font-size:12px;color:var(--warn-ink);margin:0}
+.wallp .rnote{font-size:11px;line-height:1.6;color:var(--d70)}
+.wallp .fbtn{padding:2px 0 0}
+@media (pointer:coarse){ .wseg button{min-height:40px} .wpi{min-height:36px;align-items:center} .wpi input{margin-top:0} }
+/* 지난 오늘 · 감정 달력 · 그다음(7단계) */
+.maft{display:block;margin-top:2px}
+.maft span{display:block;font-size:13px;color:var(--ink);padding:2px 0 2px 10px;border-left:2px solid color-mix(in srgb,var(--c3) 55%,transparent);margin-top:4px}
+.maft b{font-size:11.5px;color:var(--d70);margin-right:4px}
+textarea.maft-in{flex:1 1 100%;margin:4px 0 6px}
+li.row.hit{background:color-mix(in srgb,var(--c4) 8%,transparent);border-radius:8px}
+.mlh{display:flex;align-items:center;gap:8px}
+.mlh span{margin-right:auto}
+.mlv{font-size:12px;font-weight:400;color:var(--c4);padding:2px 8px;border-radius:6px}
+.mlv:hover{background:var(--hov)}
+.mcal{padding:2px 0 10px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.mcn{display:flex;align-items:center;justify-content:center;gap:14px;font-size:14px;padding:0 0 6px}
+.mcn button{width:30px;height:30px;border-radius:50%;font-size:18px;color:var(--d70)}
+.mcn button:hover{background:var(--hov)}
+.mcg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;max-width:420px;margin:0 auto}
+.mcw{font-size:11px;color:var(--d70);text-align:center;padding-bottom:2px}
+.mcd{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0 5px;border-radius:8px;min-height:40px}
+.mcd b{font-size:12px;font-weight:400;color:var(--ink)}
+.mcd:disabled{cursor:default}
+.mcd:disabled b{color:var(--d32)}
+.mcd:not(:disabled):hover{background:var(--hov)}
+.mcd.td b{font-weight:700;color:var(--c4)}
+.mcd.on{background:color-mix(in srgb,var(--c4) 12%,transparent)}
+.mcd span{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;min-height:6px}
+.mcd i{width:6px;height:6px;border-radius:50%;background:var(--mc)}
+.mcd i.mo0{background:var(--d32)}
+.mcs{font-size:12px;color:var(--d70);margin:8px 0 0;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center}
+.mcs .mdot{margin:0 2px 0 0;width:7px;height:7px}
+.recall .rgl{font-size:12px;color:var(--d70);padding:6px 0 0}
+.rnone{font-size:13px;color:var(--d70);padding:4px 0 8px}
+.rset{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:12px;color:var(--d70);padding:8px 0 10px;border-top:1px solid var(--line);margin-top:4px}
+.rset button{font-size:12px;color:var(--c4);padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
+@media (pointer:coarse){ .mlv,.rset button{min-height:36px} .mcn button{width:44px;height:44px} .mcd{min-height:44px} }
+/* 할 일 · 목표와 잇기(09-28) */
+.lpick{flex-basis:100%;display:flex;flex-direction:column;gap:6px;padding:4px 0 2px}
+.lpick input{width:100%;border:1px solid var(--line);border-radius:7px;padding:6px 9px;font-size:13.5px;background:var(--card);color:var(--ink)}
+.lcands{display:flex;flex-direction:column;gap:3px}
+.lcands button{display:flex;align-items:center;gap:7px;width:100%;text-align:left;padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:var(--card)}
+.lcands button:hover{background:var(--hov)}
+.lcands .lnm{flex:1 1 auto;min-width:0;font-size:13.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lcands .lsb{flex:none;font-size:11.5px;color:var(--d70)}
+.lcands .lnone{font-size:12.5px;color:var(--d70);padding:4px 2px}
+.mlink{flex-basis:100%;font-size:12.5px;color:var(--c4);display:flex;align-items:center;gap:6px}
+.mlink button{color:var(--d70);font-size:14px;padding:0 6px}
+.runbar.rm{flex-wrap:wrap}   /* 붙은 메모가 있을 때만 둘째 줄 */
+.runbar .rmemo{flex-basis:100%;display:flex;flex-direction:column;gap:3px;padding-top:2px}
+.runbar .rmemo button{border:0;padding:3px 0 0;text-align:left;font-size:12.5px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.runbar .rmemo button:hover{background:transparent;text-decoration:underline}
+.runbar .rmemo span{font-size:11.5px;color:var(--d70)}
+.lmk{color:var(--c4)}
+.glink ul{display:flex;flex-direction:column;gap:2px;padding:0 0 4px}
+.glink li button{font-size:13.5px;color:var(--ink);text-align:left;padding:4px 0}
+.glink li button:hover{text-decoration:underline}
+@media (pointer:coarse){ .lcands button{min-height:44px} .lpick input{font-size:16px} .mlink button{min-height:36px} .runbar .rmemo button{min-height:32px} }
+/* 한 주의 한 줄 · 기록의 그날 메모 · 중간에 한 번(09-28) */
+.carry.wkline{color:var(--ink);background:color-mix(in srgb,var(--c4) 7%,var(--card))}
+.carry.wkline .wkl{font-size:12px;font-weight:700;color:var(--d70);flex:none}
+.carry.wkline .wkt{font-size:14.5px;flex:1 1 60%;min-width:0;overflow-wrap:anywhere}
+.lmemo{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--c4);padding:1px 4px 6px;border-radius:5px}
+.lmemo:hover{text-decoration:underline}
+.ldots{display:inline-flex;gap:3px}
+.ldots i{width:6px;height:6px;border-radius:50%;background:var(--mc)}
+.ldots i.mo0{background:var(--d32)}
+@media (pointer:coarse){ .lmemo{min-height:36px;padding-top:6px} }
+/* 아침 계획 · 저녁 마무리에 메모(8단계) */
+#one .fmemo{background:color-mix(in srgb,var(--c4) 7%,transparent);border-radius:8px;padding:8px 10px;margin:0 0 12px;display:flex;flex-direction:column;gap:6px}
+#one .fmemo span{display:block;font-size:11.5px;font-weight:700;color:var(--d70)}
+#one .fwl{font-size:14.5px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere}
+#one .fup div{font-size:13px;line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+#one .fmood{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--d70);margin:0 0 10px}
+/* 링크로 보내기 · 받은 링크(6단계) */
+.linkp .wseg{margin:4px 0 0;flex-wrap:wrap}
+.lsay{font-size:12.5px;color:var(--d70);line-height:1.55;margin:6px 0 8px}
+.lin{display:block;width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:15px;line-height:1.5;resize:vertical;background:var(--card);color:var(--ink);margin:0 0 8px}
+.lname{display:block;width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:14px;background:var(--card);color:var(--ink);margin:0 0 10px}
+.lout{border-top:1px solid var(--line);padding-top:10px}
+.lout input{width:100%;font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:6px 8px;background:var(--hov);color:var(--ink);margin:0 0 8px}
+.linkp .rnote,.gotp .rnote{font-size:11px;line-height:1.6;color:var(--d70);padding:0 0 10px}
+.gotp{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c4) 40%,transparent)}
+.gtx{font-size:17px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0 10px}
+.gre{font-size:12.5px;color:var(--d70);margin:4px 0 0;overflow-wrap:anywhere}
+.gsel{margin:0 0 10px}
+.lk{color:var(--c4);font-size:12.5px;text-decoration:underline;text-underline-offset:2px}
+.lext{display:inline-block;font-size:13px;padding:6px 12px;border-radius:7px;background:#FEE500;color:#191919;text-decoration:none;margin:0 0 10px}
+@media (pointer:coarse){ .lin,.lname,.lout input{font-size:16px} .lext{min-height:44px;line-height:32px} }
+
 /* ── 폰 ── 옆 칸은 왼쪽 서랍, 줄 도구는 「⋯」로 줄 아래에, 재는 시간은 화면 아래에 붙인다(09-25) */
 @media(max-width:640px){
   body{height:100dvh}
@@ -673,12 +838,12 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   .daybar .ics{margin-left:0}
   input,select,textarea{font-size:16px!important}   /* 16px 보다 작으면 아이폰이 누를 때마다 화면을 확대한다 — .entry input 같은 규칙에 밀려 안 먹던 것을 09-26 고쳤다 */
   :root{--tabh:calc(52px + env(safe-area-inset-bottom))}
-  .tabs{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:32;height:var(--tabh);
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:32;height:var(--tabh);
     padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--line)}
   .tabs button{font-size:11.5px;color:var(--d70);min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
   .tabs .ico{width:21px;height:21px}
   .tabs button.on{color:var(--ink);font-weight:700;box-shadow:inset 0 2px 0 var(--ink)}
-  aside [data-view=today],aside [data-view=cal],aside [data-view=week],aside [data-view=log]{display:none}   /* 아래 탭에 있다 */
+  aside [data-view=memo],aside [data-view=today],aside [data-view=cal],aside [data-view=week],aside [data-view=log]{display:none}   /* 아래 탭에 있다 */
   li.row .tx{font-size:15px}
   .entry select{max-width:92px}
   /* 적는 동안 입력칸 — 뜻 칩 · 목표 고르기가 같은 줄에 붙어 390에서 93px(글자 여섯)이었다(14판). 칩은 아랫줄로 내리고 입력칸은 한 줄을 쓴다 */
@@ -754,6 +919,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   #pickbar .pn{order:-2;grid-column:span 2;align-self:center}
   #pickbar [data-pk=all],#pickbar [data-pk=stop]{order:-1}
   #pickbar button,#pickbar .pksel{padding:4px;white-space:normal;text-align:center;display:flex;align-items:center;justify-content:center;min-width:0}
+  body.runm .wrap{padding-bottom:calc(170px + var(--tabh))}   /* 재는 줄 밑에 붙은 메모가 있을 때(09-28) */
   body.picking .wrap{padding-bottom:calc(200px + var(--tabh))}
 }
 /* ── 종이 · PDF로 뽑기(채점 17판 S19) ── 노트속지(유료 2위) · 데일리스케줄(무료 89위)이 PDF · 인쇄를 내세운다.
@@ -768,7 +934,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
   body{display:block}
   main{overflow:visible}
   .wrap{max-width:none;padding:0}
-  aside,#scrim,.topbar,#warn,.entry,.tabs,#pickbar,#toast,#one,#big,.sug,.runbar,.tools,.meta .more,.play,.grip,.tpick,.epick,.actin,
+  aside,#scrim,.topbar,#warn,.entry,.mentry,.tabs,#pickbar,#toast,#one,#big,.sug,.runbar,.tools,.meta .more,.play,.grip,.tpick,.epick,.actin,
     .daybar button,.daybar .seg,.daybar .ics,.carry,.addrow,.fold,.memoadd{display:none!important}
   .box{box-shadow:none;border:1px solid var(--line)}
   .dot,.gdot,.cdot:not(.none){filter:none}
@@ -812,6 +978,11 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
 <div id="warn" role="status"></div>
 <div class="wrap">
   <div class="daybar" id="daybar"></div>
+  <div class="wline hide" id="wline"></div>
+  <div class="mentry hide" id="mentry">
+    <textarea id="memoIn" rows="1" aria-label="메모 적기" placeholder="떠오른 생각 · 느낌 · 할 일 — 날아가기 전에" autocomplete="off"></textarea>
+    <div class="mopts" id="mopts"></div>
+  </div>
   <div class="entry">
     <span class="p">+</span>
     <input id="add" aria-label="할 일 적기" placeholder="할 일 적기 — 「내일 치과 3시」처럼 적어도 알아듣습니다" autocomplete="off" autofocus data-first>
@@ -823,7 +994,7 @@ body.tdragging,body.tdragging *{cursor:grabbing!important;user-select:none}
 </div>
 </main>
 
-<nav class="tabs" id="tabs" aria-label="화면 옮기기"><button data-view="today">오늘</button><button data-view="cal">달력</button><button data-view="week">한 주</button><button data-view="log">기록</button></nav>
+<nav class="tabs" id="tabs" aria-label="화면 옮기기"><button data-view="memo">메모</button><button data-view="today">오늘</button><button data-view="cal">달력</button><button data-view="week">한 주</button><button data-view="log">기록</button></nav>
 <div id="pickbar" class="hide"></div>
 <div id="big" class="hide"></div>
 <div id="one" class="hide"></div>
@@ -838,7 +1009,55 @@ const DB = (() => {
   const V = 1;                                  // 이 앱이 읽을 줄 아는 자료 판
   const NEWER = '더 새 판 오션아워가 만든 자료라 이 판에서는 열 수 없습니다';
   const COLORS = ['#A8415A','#8E6524','#3B6846','#2C5B88','#6B6762','#2A7B7B','#6B4E9B','#B85C2E'];   // 09-26 다섯 → 여덟(규칙 12 — 잘 되는 앱은 목표 색을 여러 가지로 쓴다)
-  let S = { v:V, lists:[], todos:[], reviews:{}, days:{}, opens:{} };
+  let S = { v:V, lists:[], todos:[], reviews:{}, days:{}, opens:{}, memos:[], weeks:{}, recall:null };
+  /* 감정 이름(09-27, 규칙 7) — 값은 영어 낱말, [한국어 이름, 애플 건강 「마음 상태」 이름(HKStateOfMind.Label)].
+     앞 열둘이 늘 보이고(괴로운 쪽 여덟 · 좋은 쪽 넷 — 한국어 감정 낱말의 72%가 불쾌 쪽, 박인조 · 민경환 2005), 나머지는 「더 보기」.
+     더 보기 맨 앞은 가장 익숙 · 가장 유쾌한 낱말(기쁨 · 홀가분). 애플 38개가 모두 들어 있다(검사.js) */
+  const FEELS = {
+    tense:['긴장','stressed'], anxious:['불안','anxious'], stressed:['스트레스','stressed'], drained:['지침','drained'],
+    upset:['속상','disappointed'], down:['우울','sad'], angry:['화남','angry'], lonely:['외로움','lonely'],
+    happy:['행복','happy'], proud:['뿌듯','proud'], grateful:['고마움','grateful'], peaceful:['편안','peaceful'],
+    joyful:['기쁨','joyful'], relieved:['홀가분','relieved'],
+    amazed:['감탄','amazed'], amused:['재밌음','amused'], annoyed:['짜증','annoyed'], ashamed:['수치심','ashamed'], brave:['용기','brave'],
+    calm:['차분','calm'], confident:['자신감','confident'], content:['만족','content'], disappointed:['실망','disappointed'],
+    discouraged:['낙담','discouraged'], disgusted:['역겨움','disgusted'], embarrassed:['민망','embarrassed'], excited:['신남','excited'],
+    frustrated:['답답','frustrated'], guilty:['죄책감','guilty'], hopeful:['희망','hopeful'], hopeless:['절망','hopeless'],
+    indifferent:['무덤덤','indifferent'], irritated:['거슬림','irritated'], jealous:['질투','jealous'], overwhelmed:['버거움','overwhelmed'],
+    passionate:['열정','passionate'], sad:['슬픔','sad'], satisfied:['흡족','satisfied'], scared:['두려움','scared'],
+    surprised:['놀람','surprised'], worried:['걱정','worried'] };
+  const FEEL_FRONT = ['tense','anxious','stressed','drained','upset','down','angry','lonely','happy','proud','grateful','peaceful'];
+  const MOODS = ['아주 힘듦','힘듦','그저 그럼','좋음','아주 좋음'];   // 기분 1~5
+  const LEADS = [0, 10, 30, 60];                                        // 정한 시각 — 몇 분 전부터 뜨나
+  const isAt = s => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}T([01]\d|2[0-3]):[0-5]\d$/.test(s);   // 벽시계 시각 "2026-10-03T14:00"
+  const cleanShow = x => {                      // 띄우기 — 모르는 모양은 「안 띄움」
+    if (!x || typeof x !== 'object') return null;
+    if (x.kind === 'span' && /^\d{4}-\d{2}-\d{2}$/.test(x.from) && /^\d{4}-\d{2}-\d{2}$/.test(x.to) && x.to >= x.from) return { kind:'span', from:x.from, to:x.to };
+    if (x.kind === 'at' && isAt(x.at)) return { kind:'at', at:x.at, lead: LEADS.includes(+x.lead) ? +x.lead : 0,
+      ...(x.mid === false ? { mid:false } : {}), ...(/^\d{4}-\d{2}-\d{2}$/.test(x.seen || '') ? { seen:x.seen } : {}) };   // mid — 중간에 한 번(끄면 false) · seen — 그것을 내린 날
+    if (x.kind === 'until') return { kind:'until', from: /^\d{4}-\d{2}-\d{2}$/.test(x.from) ? x.from : null };
+    if (x.kind === 'again' && /^\d{4}-\d{2}-\d{2}$/.test(x.from)) return { kind:'again', from:x.from, ...(/^\d{4}-\d{2}-\d{2}$/.test(x.seen || '') ? { seen:x.seen } : {}) };
+    return null; };
+  const AGAIN = [1, 3, 7, 14, 30, 60];          // 다시 띄우기 — 적은 날에서 며칠 뒤. 간격을 벌려 가며 다시 볼수록 오래 남는다(간격 효과, Cepeda 2006)
+  const HARD = ['angry','annoyed','anxious','ashamed','disappointed','discouraged','disgusted','drained','embarrassed','frustrated','guilty',
+                'hopeless','irritated','jealous','lonely','overwhelmed','sad','scared','stressed','worried'];   // 애플 건강의 불쾌한 쪽 이름
+  const isHard = m => (m.mood && m.mood <= 2) || (m.feel || []).some(f => HARD.includes((FEELS[f] || [])[1]));
+  const txt1 = (s, n) => (s == null ? '' : String(s)).trim().slice(0, n);
+  const cleanLink = x => !x || typeof x !== 'object' || !['t', 'l'].includes(x.k) || typeof x.id !== 'string' || !x.id || x.id.length > 80 ? null   // 붙인 할 일(t) · 목표(l)(09-28)
+    : { k:x.k, id:x.id, ...(/^\d{4}-\d{2}-\d{2}$/.test(x.seen || '') ? { seen:x.seen } : {}) };
+  const cleanFrom = f => !f || typeof f !== 'object' || !['gift', 'clip'].includes(f.k) || !txt1(f.n, 20) ? null   // 링크로 받은 메모 — 누가 보냈나(이름 없이는 안 받는다)
+    : { k:f.k, n:txt1(f.n, 20), ...(txt1(f.re, 500) ? { re:txt1(f.re, 500) } : {}) };   // re(부탁 원문)도 t와 같은 500자 한도(다시 1회차 — 200자면 긴 부탁이 잘려 중복 판정이 오판)
+  const LINK_KINDS = ['gift', 'ask', 'clip'];   // 한마디 선물 · 한마디 부탁 · 글 담기
+  function giftCode(o){                         // 링크 끝 #g= 뒤의 글 — 서버 없이 링크 안에 담는다(자료.md 「링크」)
+    const c = cleanGift(o); if (!c) return null;
+    const b = new TextEncoder().encode(JSON.stringify(c)); let bin = ''; b.forEach(x => { bin += String.fromCharCode(x); });
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  function cleanGift(o){
+    if (!o || typeof o !== 'object' || !LINK_KINDS.includes(o.k)) return null;
+    const t = txt1(o.t, 500), n = txt1(o.n, 20); if (!t || !n) return null;
+    return { v:1, k:o.k, t, n, ...(o.k === 'gift' && txt1(o.re, 500) ? { re:txt1(o.re, 500) } : {}) }; }   // re(부탁 원문)도 t와 같은 500자 한도(다시 1회차)
+  function giftOf(code){                        // 모르는 모양 · 깨진 글은 null
+    try{ const s = String(code || '').replace(/-/g, '+').replace(/_/g, '/'); if (!/^[A-Za-z0-9+/]{4,12000}$/.test(s)) return null;
+      return cleanGift(JSON.parse(new TextDecoder('utf-8', { fatal:true }).decode(Uint8Array.from(atob(s), c => c.charCodeAt(0))))); }catch(e){ return null; } }
   let blocked = null;                           // 저장을 멈춘 까닭. null 이면 저장한다
   let raw = null;                               // 마지막으로 읽거나 쓴 저장 글자 — 다른 탭이 그새 썼는지 본다
 
@@ -922,7 +1141,22 @@ const DB = (() => {
     const opens = {};                           // 연 횟수 { 날짜: 번 } — 이 기기 안에서만 센다. 밖으로 보내지 않는다
     if (d.opens && typeof d.opens === 'object')
       for (const [k, n] of Object.entries(d.opens)) if (isDay(k) && Number.isInteger(+n) && +n > 0) opens[k] = Math.min(+n, 9999);
-    return { data: { ...d, v:V, lists, todos, reviews, days, opens } };
+    const memos = (Array.isArray(d.memos) ? d.memos : []).filter(m => m && typeof m === 'object').map(m => ({ ...m,   // 메모(09-27) — 자료.md 「메모」
+      id: str(m.id) || uid(), text: str(m.text).slice(0, 5000),
+      mood: [1, 2, 3, 4, 5].includes(+m.mood) ? +m.mood : null,
+      feel: Array.isArray(m.feel) ? [...new Set(m.feel.map(x => str(x)).filter(x => /^[a-z]{2,20}$/.test(x)))].slice(0, 3) : [],   // 모르는 영어 낱말도 남긴다 — 더 새 판이 더한 이름일 수 있다
+      made: typeof m.made === 'string' && !isNaN(Date.parse(m.made)) ? m.made : (m.updatedAt ? str(m.updatedAt) : null),
+      show: cleanShow(m.show), clue: !!m.clue, from: cleanFrom(m.from), link: cleanLink(m.link),
+      after: (Array.isArray(m.after) ? m.after : []).filter(a => a && typeof a === 'object' && str(a.text).trim())   // 그다음 어떻게 됐는지
+        .map(a => ({ at: typeof a.at === 'string' && !isNaN(Date.parse(a.at)) ? a.at : null, text:str(a.text).trim().slice(0, 1000) })).slice(-20), ...stamp(m) }));
+    const weeks = {};                           // 이번 주의 한 줄 { 월요일: {line, updatedAt} }
+    if (d.weeks && typeof d.weeks === 'object')
+      for (const [k, r] of Object.entries(d.weeks)) if (isDay(k) && r && typeof r === 'object')
+        weeks[k] = { line:str(r.line).slice(0, 300), updatedAt: r.updatedAt ? str(r.updatedAt) : null };
+    const rc = d.recall && typeof d.recall === 'object' ? d.recall : null;   // 지난 오늘 — 힘든 메모도 볼지 · 안 볼 달 · 안 볼 사람
+    const recall = rc ? { hard:!!rc.hard, months:[...new Set((Array.isArray(rc.months) ? rc.months : []).map(x => str(x)).filter(x => /^\d{4}-\d{2}$/.test(x)))].slice(0, 600),
+      names:[...new Set((Array.isArray(rc.names) ? rc.names : []).map(x => str(x).trim().slice(0, 20)).filter(Boolean))].slice(0, 200), updatedAt: rc.updatedAt ? str(rc.updatedAt) : null } : null;
+    return { data: { ...d, v:V, lists, todos, reviews, days, opens, memos, weeks, recall } };
   }
 
   function load(){                              // 처음 열 때, 그리고 다른 탭이 저장했을 때
@@ -1254,13 +1488,15 @@ const DB = (() => {
   const linedDays = () => Object.keys(S.days || {}).filter(d => S.days[d] && S.days[d].line);
   function setDayLine(d, text){ fresh(); S.days = S.days || {}; S.days[d] = { line:String(text || '').slice(0, 2000), updatedAt:now() }; save(); }
   const setListNote = (id, v) => editList(id, { note:String(v || '').slice(0, 5000) });
-  function searchMemos(q){                        // 메모에서 찾기 — 날마다 메모 · 목표 메모(할 일 메모는 search 가 이미 본다)
-    const k = String(q || '').trim().toLowerCase(); if (!k) return { days:[], lists:[] };
-    return { days: Object.keys(S.days || {}).filter(d => ((S.days[d] || {}).line || '').toLowerCase().includes(k)).sort().reverse().map(d => ({ d, line:S.days[d].line })),
+  function searchMemos(q){                        // 메모에서 찾기 — 메모 탭의 메모 · 하루 한 줄 · 목표 메모(할 일 메모는 search 가 이미 본다)
+    const k = String(q || '').trim().toLowerCase(); if (!k) return { days:[], lists:[], memos:[] };
+    return { memos: memos().filter(m => [m.text, ...(m.after || []).map(a => a.text)].join('\n').toLowerCase().includes(k)),   // 메모 탭의 메모 · 그다음 한 줄까지
+             days: Object.keys(S.days || {}).filter(d => ((S.days[d] || {}).line || '').toLowerCase().includes(k)).sort().reverse().map(d => ({ d, line:S.days[d].line })),
              lists: lists().filter(l => (l.note || '').toLowerCase().includes(k)) };
   }
   const opensOn = d => (S.opens || {})[d] || 0;
   function countOpen(){ fresh(); S.opens = S.opens || {}; const d = today(); S.opens[d] = Math.min(opensOn(d) + 1, 9999); save(); }
+  const everOpened = () => Object.keys(S.opens || {}).length > 0;   // 재는 길(규칙 8·9) — 세기 전에 판정한다: 진짜 첫 기기인지
   function setReview(wk, field, val){
     if (!['good', 'stuck', 'next'].includes(field)) return;
     fresh();
@@ -1397,19 +1633,107 @@ const DB = (() => {
   }
   const byGone = (a, b) => a.deletedAt < b.deletedAt ? 1 : a.deletedAt > b.deletedAt ? -1 : 0;   // 최근에 지운 것부터
   const trash = () => ({ todos: S.todos.filter(t => t.deletedAt && t.deletedBy !== 'app').sort(byGone),
-                         lists: S.lists.filter(l => l.deletedAt && l.deletedBy !== 'app').sort(byGone) });
+                         lists: S.lists.filter(l => l.deletedAt && l.deletedBy !== 'app').sort(byGone),
+                         memos: (S.memos || []).filter(m => m.deletedAt).sort(byGone) });
   function restoreTodo(id){
     fresh();
     const t = todo(id); if (!t) return null;
     t.deletedAt = null; t.deletedBy = null; t.updatedAt = now(); save(); return t;
   }
 
+  /* ── 메모(09-27 웹 첫 판) ── 적고, 감정을 붙이고, 정한 때에 띄운다. 띄운 것은 때가 지나면 스스로 내려온다(규칙 3) */
+  const memos = () => live(S.memos || []).sort((a, b) => (b.made || '').localeCompare(a.made || ''));   // 최근에 적은 것부터
+  const memo  = id => (S.memos || []).find(m => m.id === id) || null;
+  function addMemo(text, x = {}){               // x — {mood, feel, show, clue, from, link}. 글이 비어도 기분 · 감정 이름이 있으면 적는다
+    fresh(); text = str(text).trim().slice(0, 5000);
+    const feel = (x.feel || []).filter(f => FEELS[f]).slice(0, 3), mood = [1, 2, 3, 4, 5].includes(+x.mood) ? +x.mood : null;
+    if (!text && !mood && !feel.length) return null;
+    const m = { id:uid(), text, mood, feel, made:now(), show:cleanShow(x.show), clue: x.clue != null ? !!x.clue : !!(mood || feel.length),
+                from:cleanFrom(x.from), link:cleanLink(x.link), after:[], updatedAt:now(), deletedAt:null };
+    S.memos = S.memos || []; S.memos.push(m); save(); return m;
+  }
+  function editMemo(id, patch){
+    fresh(); const m = memo(id); if (!m) return null; const was = JSON.parse(JSON.stringify(m));
+    if ('text' in patch) m.text = str(patch.text).trim().slice(0, 5000);
+    if ('show' in patch) m.show = cleanShow(patch.show);
+    if ('clue' in patch) m.clue = !!patch.clue;
+    if ('mood' in patch) m.mood = [1, 2, 3, 4, 5].includes(+patch.mood) ? +patch.mood : null;
+    if ('feel' in patch) m.feel = (patch.feel || []).filter(f => FEELS[f]).slice(0, 3);
+    if ('link' in patch) m.link = cleanLink(patch.link);
+    m.updatedAt = now(); save(); return was;     // 앞 모습 — 되돌리기에 쓴다
+  }
+  function unedit(id, was){ fresh(); const i = (S.memos || []).findIndex(m => m.id === id); if (i < 0) return; S.memos[i] = { ...was, updatedAt:now() }; save(); }
+  function removeMemo(id){ fresh(); const m = memo(id); if (!m) return null; m.deletedAt = now(); m.updatedAt = now(); save(); return m; }
+  function restoreMemo(id){ fresh(); const m = memo(id); if (!m) return null; m.deletedAt = null; m.updatedAt = now(); save(); return m; }
+  const atMs = s => new Date(s).getTime();      // 벽시계 글자 → 이 기기 시각
+  const atWin = m => { const a = atMs(m.show.at); return [a - m.show.lead * 60e3, a + 60 * 60e3]; };   // 정한 시각의 창 — 알림은 이것만 본다
+  function midDay(m){                            // 중간에 한 번 — 적은 때에서 정한 시각까지 7일 넘으면 그 20% 즈음의 날(간격 효과, Cepeda 외 2008). 없으면 null
+    const x = m.show; if (!x || x.kind !== 'at' || !m.made) return null;
+    const b = Date.parse(m.made), a = atMs(x.at); if (!(a - b >= 7 * 864e5)) return null;
+    return ymd(new Date(b + (a - b) * 0.2)); }
+  function shownWin(m, t = new Date()){         // 이 메모가 뜨는 동안 [시작, 끝] (ms) | null — 끝이 없으면 Infinity
+    const x = m.show; if (!x) return null;
+    if (x.kind === 'span') return [atMs(x.from + 'T00:00'), atMs(shift(x.to, 1) + 'T00:00')];
+    if (x.kind === 'at'){ const main = atWin(m), md = midDay(m);   // 정한 시각 lead분 전부터 한 시간 뒤까지 — 7일 넘게 남았으면 그 사이 20% 즈음에 하루 먼저(끄거나 내리면 안 뜬다)
+      if (md && x.mid !== false && x.seen !== md){ const w = [atMs(md + 'T00:00'), atMs(shift(md, 1) + 'T00:00')]; if (t.getTime() < w[1] && w[1] <= main[0]) return w; }
+      return main; }
+    if (x.kind === 'until') return [x.from ? atMs(x.from + 'T00:00') : 0, Infinity];
+    if (x.kind === 'again'){ const T0 = ymd(t);  // 다음 차례의 하루 — 오늘 내렸으면 그다음 차례. 다 지나면 내려온다
+      for (const k of AGAIN){ const d = shift(x.from, k); if (d < T0 || d === x.seen) continue; return [atMs(d + 'T00:00'), atMs(shift(d, 1) + 'T00:00')]; }
+      return [0, 0]; }
+    return null; }
+  const timeShowing = (m, t = new Date()) => { const w = shownWin(m, t), n = t.getTime(); return !!w && w[0] <= n && n < w[1]; };
+  /* 할 일 · 목표와 잇기(09-28) — 계획이 아는 때. 할 일에 붙인 메모는 그 할 일의 날 하루 떠 있고, 목표에 붙인 메모는 그 목표의 일을 ▶할 때.
+     옮기면 따라가고(id가 같다), 반복이면 다음 차례로, 끝내거나 지우면 내려온다. 「내리기」는 그날만(seen) */
+  function linkTodo(m){ if (!m.link || m.link.k !== 't') return null;
+    let t = todo(m.link.id), n = 0; while (t && t.done && t.nextId && n++ < 500) t = todo(t.nextId);
+    return t && !t.done && !t.deletedAt ? t : null; }
+  const linkList = m => { if (!m.link || m.link.k !== 'l') return null; const l = listOf(m.link.id); return l && !l.deletedAt && !l.done ? l : null; };
+  const runMemo = (m, r) => !!r && (m.link.k === 't' ? (x => !!x && x.id === r.id)(linkTodo(m)) : (l => !!l && r.listId === l.id)(linkList(m)));   // 지금 재는 일에 붙었나
+  function linkShowing(m, t = new Date()){
+    if (!m.link) return false; const d = ymd(t); if (m.link.seen === d) return false;
+    if (runMemo(m, running())) return true;
+    const x = linkTodo(m); return !!x && !!x.date && x.date <= d && d <= (x.endDate || x.date); }
+  const showing = (m, t = new Date()) => timeShowing(m, t) || linkShowing(m, t);
+  const runMemos = r => r ? memos().filter(m => m.link && runMemo(m, r)) : [];   // 재는 줄 밑에 — 「내리기」와 상관없이
+  function linkCount(){ const c = new Map();       // 할 일 · 목표마다 붙은 메모 수 — 그릴 때 한 번
+    memos().forEach(m => { if (!m.link) return; const k = m.link.k === 't' ? (linkTodo(m) || {}).id : (linkList(m) || {}).id; if (k) c.set(k, (c.get(k) || 0) + 1); });
+    return c; }
+  const shownMemos = (t = new Date()) => { const rank = m => !m.show ? 1 : m.show.kind === 'at' ? 0 : m.show.kind === 'until' ? 2 : 1;   // 붙인 것만 있는 메모는 하루짜리와 같은 자리
+    return memos().filter(m => showing(m, t)).sort((a, b) => rank(a) - rank(b) || ((a.show || {}).at || '').localeCompare((b.show || {}).at || '') || (b.made || '').localeCompare(a.made || '')); };
+  function addAfter(id, text){                   // 그다음 어떻게 됐는지 — 한 줄 더한다. 앞 모습을 돌려준다(되돌리기)
+    fresh(); const m = memo(id); text = str(text).trim().slice(0, 1000); if (!m || !text) return null;
+    const was = JSON.parse(JSON.stringify(m)); m.after = [...(m.after || []), { at:now(), text }].slice(-20); m.updatedAt = now(); save(); return was; }
+  const madeDay = m => m.made ? ymd(new Date(m.made)) : null;
+  const monthBack = (T, n) => { const [y, mo, d] = T.split('-').map(Number), x = new Date(y, mo - 1 - n, d); return x.getDate() === d ? ymd(x) : null; };   // 없는 날(2월 30일)은 건너뛴다
+  const recallSet = () => S.recall || { hard:false, months:[], names:[], updatedAt:null };
+  function recallMemos(T = today()){             // 지난 오늘 — 일주일 · 한 달 · 일 년 전 오늘 적은 메모. 힘든 메모는 켰을 때만, 안 볼 달 · 사람은 빼고
+    const r = recallSet(), all = memos(), out = []; let hardOut = 0;
+    for (const [d, label] of [[shift(T, -7), '일주일 전 오늘'], [monthBack(T, 1), '한 달 전 오늘'], [monthBack(T, 12), '일 년 전 오늘']]){
+      if (!d || r.months.includes(d.slice(0, 7))) continue;
+      const list = all.filter(m => madeDay(m) === d && !(m.from && r.names.includes(m.from.n)));
+      const ok = list.filter(m => r.hard || !isHard(m)); hardOut += list.length - ok.length;
+      if (ok.length) out.push({ day:d, label, list:ok }); }
+    return { groups:out, hardOut }; }
+  function setRecall(patch){ fresh(); const was = S.recall ? JSON.parse(JSON.stringify(S.recall)) : null;
+    S.recall = { ...recallSet(), ...patch, updatedAt:now() }; save(); return was; }
+  function unsetRecall(was){ fresh(); S.recall = was ? { ...was, updatedAt:now() } : { hard:false, months:[], names:[], updatedAt:now() }; save(); }
+  const memosOn = d => memos().filter(m => madeDay(m) === d);
+  const moodMonth = mon => { const r = {}; memos().forEach(m => { const d = madeDay(m); if (d && d.startsWith(mon)) (r[d] = r[d] || []).push(m); }); return r; };   // 감정 달력 — {날짜: [메모]}
+  function weekLine(mon){                        // 이번 주의 한 줄 — 비었으면 앞 주의 것을 그대로(바꿀 때까지). {line, mon, carried}
+    const w = S.weeks || {}; if (w[mon] && w[mon].line) return { line:w[mon].line, mon, carried:false };
+    const prev = Object.keys(w).filter(k => k < mon && w[k].line).sort().pop();
+    return prev ? { line:w[prev].line, mon:prev, carried:true } : { line:'', mon, carried:false }; }
+  function setWeekLine(mon, text){ fresh(); S.weeks = S.weeks || {}; const was = S.weeks[mon] ? { ...S.weeks[mon] } : null;
+    S.weeks[mon] = { line:str(text).trim().slice(0, 300), updatedAt:now() }; save(); return was; }
+  function unsetWeekLine(mon, was){ fresh(); S.weeks = S.weeks || {}; if (was) S.weeks[mon] = { ...was, updatedAt:now() }; else S.weeks[mon] = { line:'', updatedAt:now() }; save(); }
+
   const dump    = () => { fresh(); return JSON.stringify({ v:V, at:now(), data:S }, null, 1); };
   function restore(text){                       // 맞으면 {ok:true,…}, 아니면 {ok:false,why}
     let j; try{ j = JSON.parse(text); }catch(e){ return { ok:false, why:'읽을 수 없는 파일입니다' }; }
     const c = clean((j && j.data) ? j.data : j);
     if (c.bad) return { ok:false, why: c.bad === '판' ? NEWER : '오션아워가 내보낸 파일이 아닙니다' };
-    return { ok:true, data:c.data, todos:live(c.data.todos).length, lists:live(c.data.lists).length };
+    return { ok:true, data:c.data, todos:live(c.data.todos).length, lists:live(c.data.lists).length, memos:live(c.data.memos).length };
   }
   function apply(d){ fresh(); const prev = S; S = d; save(); return prev; }   // 앞의 것을 돌려준다 — 되돌리기에 쓴다
   /* 두 기기 합치기(09-26) — 서버 없이 파일로. 같은 id는 더 나중에 고친 쪽(updatedAt)을, 한쪽에만 있는 것은 더한다.
@@ -1432,7 +1756,8 @@ const DB = (() => {
       .sort((a, b) => (nexts.has(b.id) - nexts.has(a.id)) || at(b) - at(a))   // 앞 차례가 가리키는 것 · 나중에 고친 것을 남긴다
       .forEach(t => { const k = [t.text, t.listId, t.date, JSON.stringify(t.repeat)].join('|');
         if (seen.has(k)){ t.deletedAt = now(); t.deletedBy = 'app'; t.updatedAt = now(); } else seen.set(k, t.id); });
-    const c = clean({ ...cur, lists, todos, reviews: byKey(cur.reviews, o.reviews), days: byKey(cur.days, o.days), opens: most(cur.opens, o.opens) });
+    const c = clean({ ...cur, lists, todos, reviews: byKey(cur.reviews, o.reviews), days: byKey(cur.days, o.days), opens: most(cur.opens, o.opens),
+                      memos: byId(cur.memos, o.memos), weeks: byKey(cur.weeks, o.weeks), recall: cur.recall && o.recall ? pick(cur.recall, o.recall) : cur.recall || o.recall || null });   // 메모 · 이번 주의 한 줄도 같은 법(09-27)
     if (c.bad) return null;
     const prev = S; S = c.data; save(); return prev;
   }
@@ -1445,7 +1770,9 @@ const DB = (() => {
            addTodo, editTodo, toggleTodo, moveTodo, carry, uncarry, removeTodo, restoreTodo,
            setRepeat, skipTodo, nextDate, rollTimes, countUp, detachOnce, undetach, importTodos, dropTodos, copyTodos, cleanFrame, addFrame, dropFrame, placeBetween, byPos, byWhen, COLORS,
            running, startRun, stopRun, unstop, addSeg, setQuad, setFocus, focusLeft, runSecs, secsOn, totalSecs, timeByDay, plannedSecs, blockMin,
-           monday, review, setReview, setListNote, searchMemos, dayLine, setDayLine, linedDays, opensOn, countOpen, holiday, redDay, holiKnown, HOLI_YEARS, jeolgi,
+           monday, review, setReview, setListNote, searchMemos, dayLine, setDayLine, linedDays, opensOn, countOpen, everOpened, holiday, redDay, holiKnown, HOLI_YEARS, jeolgi,
+           memos, memo, addMemo, editMemo, unedit, removeMemo, restoreMemo, shownMemos, shownWin, showing, timeShowing, linkShowing, linkTodo, linkList, runMemos, linkCount, atWin, midDay, weekLine, setWeekLine, unsetWeekLine, FEELS, FEEL_FRONT, MOODS, LEADS, giftCode, giftOf,
+           AGAIN, isHard, addAfter, madeDay, recallMemos, recallSet, setRecall, unsetRecall, memosOn, moodMonth,
            dump, restore, apply, merge };
 })();
 
@@ -1457,7 +1784,7 @@ let q        = '';     // 찾는 말
 let showDone = false;  // 끝낸 할 일 펼침
 let showPast = false;  // 지난 일 펼침
 let showFin  = false;  // 마친 목표 펼침
-let page     = 'day';  // 'day' 날짜 · 'log' 기록 · 'cal' 달력 (목표 화면은 open 이 정한다)
+let page     = 'memo'; // 'memo' 메모(앱의 앞 — 열면 여기서 시작, 09-27) · 'day' 날짜 · 'log' 기록 · 'cal' 달력 (목표 화면은 open 이 정한다)
 let calMonth = null;   // 달력에 보이는 달 "2026-09". 처음 열면 이번 달
 let weekStart = null;  // 한 주 화면의 월요일. 처음 열면 이번 주
 let archMore  = 100;   // 보관함에 그리는 수 — 1000일째에도 빨리
@@ -1504,7 +1831,8 @@ const fmtTime = s => { if (!s) return ''; let [h, m] = s.split(':').map(Number);
 const repText = r => r.every === 'day' ? '매일' : r.every === 'weekday' ? '평일마다' : r.every === 'days' ? r.n + '일마다'
   : r.every === 'week' ? (r.n === 2 ? '격주 ' : r.n > 2 ? r.n + '주마다 ' : '매주 ') + WD[r.dow] + '요일'
   : r.every === 'year' ? '매년 ' + r.mon + '월 ' + r.dom + '일' : r.every === 'times' ? '주 ' + r.n + '회' : '매달 ' + r.dom + '일';
-let prevMap = null;                             // 반복의 앞 것 — 그릴 때마다 한 번만 만든다
+let prevMap = null;
+let lcMap = null; const linkN = () => lcMap || (lcMap = DB.linkCount());   // 할 일 · 목표마다 붙은 메모 수 — 그릴 때마다 한 번                             // 반복의 앞 것 — 그릴 때마다 한 번만 만든다
 const prevOf = id => { if (!prevMap){ prevMap = new Map(); DB.todos().forEach(x => { if (x.nextId) prevMap.set(x.nextId, x); }); } return prevMap.get(id); };
 function weekGrid(t){                            // 주 N회 — 이번 주 월~일 중 한 날을 채운다. 반복이 이어진 기록을 거슬러 찾는다
   const T = DB.today(), mon = DB.monday(T), on = new Set();
@@ -1515,8 +1843,9 @@ function weekGrid(t){                            // 주 N회 — 이번 주 월~
 }
 const timesGot = r => { if (!r || r.every !== 'times') return ''; const g = r.wk === DB.monday(DB.today()) ? r.got || 0 : 0;
   return g ? ' · 이번 주 ' + g + '/' + r.n : ''; };   // 한 번이라도 했을 때만 — 「0/4」를 세워 두지 않는다
-const editing = () => !!document.querySelector('input.edit')
-  || !!(document.activeElement && document.activeElement.matches('textarea[data-note], textarea[data-rev], textarea[data-daymemo], textarea[data-goalmemo], .actin input'));   // 메모·회고 · 실제 시각을 적는 중
+const editing = () => !!document.querySelector('input.edit, textarea.medit')
+  || !!(document.activeElement && document.activeElement.getClientRects().length && document.activeElement.matches('textarea[data-note], textarea[data-rev], textarea[data-daymemo], textarea[data-goalmemo], .actin input'
+       + ', [data-ltext], [data-lname], [data-rtext], [data-rname], [data-fline], [data-ftom], [data-fadd], [data-mat], [data-mat2], [data-lq]'));   // 링크 · 저녁 마무리 · 띄울 시각(09-28)   // 메모·회고 · 실제 시각을 적는 중
 let openNotes = new Set();                      // 메모를 펼친 할 일
 let openSubs  = new Set();                      // 하위 할 일을 펼친 할 일
 let actFor    = null;                           // 실제로 한 시각 적기를 편 할 일 하나(16판 K2)
@@ -1554,13 +1883,14 @@ let findMore = 100;                             // 찾기 — 한 번에 그리�
 const cnt = ts => { const n = ts.filter(t => !t.done).length; return n ? ' · ' + n : ''; };
 
 const ICON = {                                   // 이동 아이콘(규칙 12) — 선 하나로, 글과 같이 쓴다
+  memo:'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5h14v9.2l-5.3 5.8H5z"/><path d="M13.7 19.5v-5.8H19"/><path d="M8.5 9h7M8.5 12.5h4"/></svg>',   // 붙여 두는 쪽지(09-27)
   today:'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.6 12.3l2.3 2.3 4.6-4.9"/></svg>',
   cal:'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>',
   week:'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="9.5" width="17" height="5" rx="2.5"/><path d="M13.5 9.5v5"/></svg>',
   log:'<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7h11M8.5 12h11M8.5 17h11M4.6 7h.01M4.6 12h.01M4.6 17h.01"/></svg>' };
 function drawTabs(){                            // 폰 아래 탭(옆 칸의 네 곳과 같다) — 엄지가 닿는 곳. 컴퓨터에서는 안 보인다
   const tb = $('#tabs'); if (!tb.dataset.built){ tb.dataset.built = 1;
-    tb.innerHTML = [['today', '오늘'], ['cal', '달력'], ['week', '한 주'], ['log', '기록']].map(([k, n]) => `<button data-view="${k}">${ICON[k]}<span>${n}</span></button>`).join(''); }
+    tb.innerHTML = [['memo', '메모'], ['today', '오늘'], ['cal', '달력'], ['week', '한 주'], ['log', '기록']].map(([k, n]) => `<button data-view="${k}">${ICON[k]}<span>${n}</span></button>`).join(''); }
   const m = mode() === 'day' ? 'today' : mode();
   document.querySelectorAll('#tabs [data-view]').forEach(b => { const on = b.dataset.view === m;
     b.classList.toggle('on', on); on ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'); });
@@ -1568,19 +1898,21 @@ function drawTabs(){                            // 폰 아래 탭(옆 칸의 네
 function render(){
   if (open){ const l = DB.listOf(open); if (!l || l.deletedAt) open = null; }
   if (page === 'arch' && !DB.archive().length) page = 'day';   // 다 되살렸으면 오늘로
-  if (page === 'trash'){ const tr = DB.trash(); if (!tr.todos.length && !tr.lists.length) page = 'day'; }
-  prevMap = null;
-  drawSide(); drawTabs(); drawDay(); drawBody(); drawPickbar(); drawBig(); drawOne();
+  if (page === 'trash'){ const tr = DB.trash(); if (!tr.todos.length && !tr.lists.length && !tr.memos.length) page = 'memo'; }
+  prevMap = null; lcMap = null;
+  drawSide(); drawTabs(); drawDay(); drawMemo(); drawBody(); drawPickbar(); drawBig(); drawOne();
   document.querySelectorAll('textarea[data-note], textarea[data-rev], textarea[data-daymemo], textarea[data-goalmemo]').forEach(fitNote);
   const r = DB.running(), bl = !r ? brkLeft() : null;
   $('#runbar').classList.toggle('hide', !r && !bl);
+  const rmOn = !!r && DB.runMemos(r).length > 0; $('#runbar').classList.toggle('rm', rmOn); document.body.classList.toggle('runm', rmOn);   // 폰 — 재는 줄이 높아지면 아래 자리도 넓힌다
   if (!r && bl) $('#runbar').innerHTML = `<span class="rdot brk"></span><span class="rn">쉬는 시간</span>
     <span class="rt" data-brkleft>${fmtClock(bl)}</span><button data-big>크게</button><button data-brkskip>건너뛰기</button>`;
   if (r) $('#runbar').innerHTML = `<span class="rdot"></span><span class="rn" title="${esc(r.text)}">${esc(r.text)}</span>
     ${r.runEnd ? `<span class="rt focus" data-focusleft title="집중 — 남은 시간. 끝나면 멈추고 알려 드립니다">남은 ${fmtClock(DB.focusLeft(r))}</span><button data-big>크게</button><button data-focus="0" title="집중을 풀고 그냥 잽니다">풀기</button>`
       : `<span class="rt" data-runbar="${esc(r.id)}">${fmtClock(DB.runSecs(r))}</span><button data-focus="25" title="지금부터 25분 — 끝나면 멈추고 알려 드립니다">25분</button><button data-focus="50" title="지금부터 50분">50분</button>`}
-    <button data-runstop="${esc(r.id)}">멈춤</button>`;
-  $('.entry').classList.toggle('hide', ['goal', 'log', 'cal', 'week', 'arch', 'trash', 'help'].includes(mode()));
+    <button data-runstop="${esc(r.id)}">멈춤</button>${(ms => ms.length ? `<div class="rmemo">${ms.slice(0, 2).map(m => `<button data-rmemo="${esc(m.id)}" title="메모 탭에서 보기">메모 · ${
+      esc(m.text ? (m.clue ? clueOf(m.text) + '…' : m.text.split('\n')[0]) : '감정 기록')}</button>`).join('')}${ms.length > 2 ? `<span>외 ${ms.length - 2}</span>` : ''}</div>` : '')(DB.runMemos(r))}`;
+  $('.entry').classList.toggle('hide', ['memo', 'goal', 'log', 'cal', 'week', 'arch', 'trash', 'help'].includes(mode()));
   $('.wrap').classList.toggle('wide', mode() === 'cal');
   const why = DB.blockedWhy(), tight = !why && DB.roomTight(), risk = !why && !tight ? phoneRisk() : null, bk = !why && !tight && !risk ? backupDue() : null;
   $('#warn').classList.toggle('on', !!(why || tight || risk || bk));
@@ -1589,7 +1921,7 @@ function render(){
   else if (risk) $('#warn').innerHTML = riskHTML(risk);
   else if (bk) $('#warn').innerHTML = (bk.never ? `적기 시작한 지 ${bk.days}일, 아직 한 번도 내보내지 않았습니다.` : `마지막으로 내보낸 지 ${bk.days}일 됐습니다.`)
     + ` 이 브라우저 자료가 지워지면 되살릴 수 없습니다.<button data-backup="now">지금 내보내기</button><button data-backup="later">일주일 뒤에</button>`;
-  const n = DB.todos().length;
+  const n = DB.todos().length + DB.memos().length;   // 할 일 · 메모
   $('#keepT').textContent = why ? '저장 멈춤' : `이 컴퓨터에만 · ${n}개`;
   keepStore();
   const cg = $('.cg');   // 폰 월 달력 — 위에 놓인 것(날짜 줄 · 알림 띠)의 높이가 그때그때 달라 그린 뒤에 재서 칸 높이를 맞춘다
@@ -1610,14 +1942,16 @@ function drawSide(){
   DB.todos().forEach(t => { if (t.listId && !t.done) c[t.listId] = (c[t.listId]||0) + 1; });
   const nToday = DB.todos().filter(t => !t.done && (t.date === T || !t.date)).length;
   const L = DB.lists(), going = L.filter(l => !l.done), fin = L.filter(l => l.done), nArch = DB.archive().length;
-  const tr = DB.trash(), nTrash = tr.todos.length + tr.lists.length;
+  const tr = DB.trash(), nTrash = tr.todos.length + tr.lists.length + tr.memos.length, nUp = DB.shownMemos().length;
   const item = l => `<button class="li ${open===l.id?'on':''} ${l.done?'fin':''}" data-list="${esc(l.id)}">
       <span class="dot" style="background:${l.color}"></span>
       <span class="nm">${esc(l.name)}</span>
       ${ddTag(l)}<span class="n">${c[l.id]||''}</span>
       <span class="del" data-dellist="${esc(l.id)}" title="지우기">×</span></button>`;
   $('#lists').innerHTML =
-      `<button class="li ${mode() === 'day' ? 'on' : ''}" data-view="today">
+      `<button class="li ${mode() === 'memo' ? 'on' : ''}" data-view="memo" title="적고, 정한 때에 띄우기 — 숫자는 지금 떠 있는 메모">
+         ${ICON.memo}<span class="nm">메모</span><span class="n">${nUp||''}</span></button>`
+    + `<button class="li ${mode() === 'day' ? 'on' : ''}" data-view="today">
          ${ICON.today}<span class="nm">오늘</span><span class="n">${nToday||''}</span></button>`
     + `<button class="li ${mode() === 'cal' ? 'on' : ''}" data-view="cal">
          ${ICON.cal}<span class="nm">달력</span></button>`
@@ -1667,10 +2001,13 @@ function drawDay(){
       ${weekStart !== cur ? `<button class="today" data-wk="0">이번 주</button>` : `<span class="wd">이번 주</span>`}
       <button class="today" data-card="${cardOn ? 'close' : 'open'}" title="이 주를 그림 한 장으로 — 목표 이름과 쓴 시간만">그림으로</button>
       <button class="today" data-print title="이 주를 종이 · PDF로 — 돌아보기 칸은 손으로 적을 자리가 됩니다">인쇄</button>`; return; }
+  if (page === 'memo'){ $('#daybar').innerHTML = `<h1>메모</h1><span class="wd">${dOnly(T)} ${weekday(T)}${DB.holiday(T) ? ` · <span class="hol">${DB.holiday(T)}</span>` : ''}</span>
+      <button class="today" data-link="${linkOn ? 'close' : 'open'}" aria-expanded="${linkOn}" title="한마디 보내기 · 부탁하기 · 글 담기 링크 — 가입 없이 링크 하나로">친구에게</button>
+      <button class="today" data-wall="${wallOn ? 'close' : 'open'}" aria-expanded="${wallOn}" title="이번 주의 한 줄과 고른 메모를 잠금 화면 · 바탕화면 그림으로">바탕화면 그림</button>`; return; }
   if (page === 'help'){ $('#daybar').innerHTML = `<h1>이렇게 쓸 수 있어요</h1><span class="wd">적는 말 · 도구 · 하루 · 목표 · 한 주 · 자료 · 키보드</span>`; return; }
   if (page === 'trash'){ $('#daybar').innerHTML = `<h1>휴지통</h1><span class="wd">지운 것 — 되살리면 제자리로 돌아갑니다</span>`; return; }
   if (page === 'arch'){ $('#daybar').innerHTML = `<h1>보관함</h1><span class="wd">${DB.ARCH}일 넘게 밀린 일 — 지운 게 아니라 옮겨 둔 것입니다</span>`; return; }
-  if (page === 'log'){ $('#daybar').innerHTML = `<h1>기록</h1><span class="wd">날마다 — 끝낸 것과 쓴 시간</span>`; return; }
+  if (page === 'log'){ $('#daybar').innerHTML = `<h1>기록</h1><span class="wd">날마다 — 끝낸 것 · 쓴 시간 · 메모</span>`; return; }
   if (page === 'cal'){ const [y, m] = calMonth.split('-').map(Number);
     const ends = calMode === 'month' ? [calMonth + '-01'] : [calWeek, DB.shift(calWeek, 6)];
     const noHoli = ends.some(d => !DB.holiKnown(d))
@@ -1718,6 +2055,7 @@ function row(t){
   const opts = DB.lists().filter(x => !x.done || (l && x.id === l.id));
   const hasNote = !!(t.note && t.note.trim()), noteOn = openNotes.has(t.id);
   const subs = DB.subsOf(t), subOn = openSubs.has(t.id), subDone = subs.filter(x => x.done).length;
+  const nLink = linkN().get(t.id) || 0;         // 이 할 일에 붙은 띄울 메모(09-28)
   // 잡은 길이(dur) — 재기 전엔 시각 칩에 「오후 2시 · 1시간 30분」, 재고 나면 「50분 / 1시간 30분」(채점 11판 K2 — Sunsama처럼 할 일마다 계획 · 실제)
   const play = !t.done && !t.run && !inLog && !!l && (m === 'day' || m === 'goal');   // 목표의 일은 「시작」을 늘 보이게 — 정한 곳 / 그 밖을 만드는 단추(규칙 10). 줄 도구에서는 뺀다(규칙 3)
   const r = t.repeat, rb = new Date((t.date || T) + 'T00:00:00');
@@ -1747,6 +2085,7 @@ function row(t){
         ${!inLog && !t.done ? (t.time ? `<button class="q" data-do="cleartime">시각 빼기</button>` : `<button class="q" data-do="timepick">시각</button>`) : ''}
         ${!hasNote ? `<button class="q" data-do="note">메모</button>` : ''}
         ${!subs.length && !inLog ? `<button data-do="subs" title="잘게 나눠 적기">하위 할 일</button>` : ''}
+        ${!inLog && !t.done ? `<button class="xtra" data-do="linkmemo" title="이 할 일의 날에 뜨고, ▶하면 재는 줄 밑에 뜨는 메모">띄울 메모 붙이기</button>` : ''}
         <button class="q" data-do="del">지움</button>
         ${!inLog && r && !t.done ? `<button class="xtra" data-do="skip" title="끝낸 것으로 세지 않고 다음 날로">건너뛰기</button>` : ''}
         ${!inLog && r && !t.done && !t.run ? `<button class="xtra" data-do="detach" title="이번 것만 따로 떼어 고칩니다 — 반복은 다음 날부터 그대로">이번만 따로</button>` : ''}
@@ -1767,6 +2106,7 @@ function row(t){
       ${t.time ? `<span class="d tm" data-do="timepick" title="시각 고치기">${fmtTime(t.time)}${t.dur && !DB.totalSecs(t) && !t.run ? ` · ${fmtDur(t.dur * 60)}` : ''}</span>` : ''}
       ${hasNote ? `<span class="d nm-mark" data-do="note" title="메모 ${noteOn ? '접기' : '펼치기'}">메모</span>` : ''}
       ${subs.length ? `<span class="d nm-mark" data-do="subs" title="하위 할 일 ${subOn ? '접기' : '펼치기'}">하위 ${subDone}/${subs.length}</span>` : ''}
+      ${nLink && !inLog ? `<span class="d nm-mark lmk" data-do="seememo" title="붙은 메모 — 이 할 일의 날에 뜨고, ▶하면 재는 줄 밑에 뜹니다">띄울 메모${nLink > 1 ? ' ' + nLink : ''}</span>` : ''}
       ${t.goal && !inLog ? `<button class="tallyb ${t.done ? 'full' : ''}" data-do="countup" title="한 번 더">${(t.tally || {})[t.date || DB.today()] || 0}/${t.goal}</button>` : ''}
       ${r && !inLog && r.every === 'times' && !r.paused ? weekGrid(t) : ''}
       ${r && !inLog ? `<span class="d">↻ ${repText(r)}${r.paused ? ' · 멈춤' : timesGot(r)}</span>` : ''}
@@ -1827,6 +2167,9 @@ function goalPage(l){
       <button class="addrow" data-lact="addstage">+ 단계</button></div>
     <div class="box"><h2>할 일${cnt(ts)}</h2>${rows(ts)}
       <button class="addrow" data-lact="addtodo">+ 할 일</button></div>
+    ${(ms => `<div class="box glink"><h2>▶할 때 뜨는 메모${ms.length ? ' · ' + ms.length : ''}</h2>${ms.length ? `<ul>${ms.map(m => `<li><button data-rmemo="${esc(m.id)}">${
+        esc(m.text ? (m.clue ? clueOf(m.text) + '…' : m.text.split('\n')[0]) : '감정 기록')}</button></li>`).join('')}</ul>` : ''}
+      <button class="addrow" data-lact="linkmemo">+ 띄울 메모 — 이 목표의 일을 ▶할 때마다 재는 줄 밑에 뜹니다</button></div>`)(DB.memos().filter(m => m.link && m.link.k === 'l' && m.link.id === l.id))}
     <div class="box memo-box"><h2>메모</h2><textarea data-goalmemo="${esc(l.id)}" rows="2" placeholder="왜 이 목표인가 · 어떻게 할까 · 참고할 것 — 적는 대로 저장됩니다">${esc(l.note || '')}</textarea></div>
     <div class="gact">${l.done ? `<button data-lact="reopen">다시 열기</button>` : `<button data-lact="finish">목표 마치기</button>`}
       <button data-lact="del" title="목표만 지웁니다 — 할 일은 「목표 없음」으로 남습니다">지우기</button>${(n => n
@@ -1855,15 +2198,19 @@ function logPage(){                            // 날마다 한 줄 — 끝낸 �
     const ds = new Set([...Object.keys(t.spent || {}), ...Object.keys(t.planned || {})]); if (t.run) ds.add(T);
     ds.forEach(d => { if (!(t.done && t.doneAt === d)) put(work, d, t); });   // 그날 시간만 쓴 것
   });
-  const days = [...new Set([...done.keys(), ...Object.keys(tb), ...DB.linedDays()])].sort().reverse();
+  const mbd = new Map(); DB.memos().forEach(m => { const d = DB.madeDay(m); if (d) put(mbd, d, m); });   // 그날 적은 메모(09-28)
+  const days = [...new Set([...done.keys(), ...Object.keys(tb), ...DB.linedDays(), ...mbd.keys()])].sort().reverse();
   if (!days.length && !unknown.length)
     return `<div class="box"><div class="empty">아직 기록이 없습니다. 할 일을 체크하거나 시간을 재면 그날 날짜로 여기 남습니다.</div></div>`;
   if (!openDays) openDays = new Set(days.slice(0, 1));
   const dayBlock = (key, label, dn, wk, tm) => { const on = openDays.has(key);
     return `<div class="lday"><button class="logday" data-logday="${key}">
         <span>${label}</span>${dn.length ? `<span class="n">· 끝낸 것 ${dn.length}</span>` : ''}<span class="car">${on ? '접기' : '보기'}</span></button>
-      ${timeLine(tm)}${key !== '?' && DB.dayLine(key) ? `<div class="lline">「${esc(DB.dayLine(key))}」</div>` : ''}
+      ${timeLine(tm)}${key !== '?' && DB.dayLine(key) ? `<div class="lline">「${esc(DB.dayLine(key))}」</div>` : ''}${lmemo(key)}
       ${on ? `<ul>${dn.map(row).join('')}</ul>${wk.length ? `<div class="lsub">시간을 쓴 것</div><ul>${wk.map(row).join('')}</ul>` : ''}` : ''}</div>`; };
+  const lmemo = d => { const ms = mbd.get(d); if (!ms) return '';
+    return `<button class="lmemo" data-logmemo="${d}" title="메모 탭에서 그날 메모 보기">메모 ${ms.length}<span class="ldots">${ms.slice().reverse().slice(0, 6)
+      .map(m => `<i class="${m.mood ? 'mo' + m.mood : 'mo0'}"></i>`).join('')}</span></button>`; };
   let html = days.slice(0, logMore)
     .map(d => dayBlock(d, (d === T ? '오늘 · ' : '') + dOnly(d) + ' ' + weekday(d), done.get(d) || [], work.get(d) || [], tb[d])).join('');
   if (days.length <= logMore && unknown.length) html += dayBlock('?', '끝낸 날을 모름', unknown, [], null);
@@ -1936,7 +2283,10 @@ function weekPage(){                           // 한 주 — 끝낸 것과 쓴 
   const rv = DB.review(wk), prev = DB.review(DB.shift(wk, -7)), hero = timeHero(sum);
   const field = (f, label, ph) => `<label class="rv"><span>${label}</span>
       <textarea data-rev="${f}" data-week="${wk}" rows="2" placeholder="${ph}">${esc(rv[f])}</textarea></label>`;
-  return (cardOn ? cardPanel(wk) : '') + (prev.next.trim() ? `<div class="carry wnext">지난주에 정한 한 가지 — 「${esc(prev.next.trim())}」</div>` : '')
+  const wl = DB.weekLine(wk), cur = wk === DB.monday(DB.today());   // 그 주의 한 줄 — 메모 탭 맨 위와 같은 것(09-28). 비었으면 안 보인다
+  return (cardOn ? cardPanel(wk) : '') + (wl.line ? `<div class="carry wkline"><span class="wkl">${cur ? '이번 주' : '이 주'}의 한 줄</span><span class="wkt">${esc(wl.line)}</span>${cur
+        ? '<button data-view="memo" title="메모 탭 맨 위에서 고칩니다">바꾸기</button>' : ''}</div>` : '')
+    + (prev.next.trim() ? `<div class="carry wnext">지난주에 정한 한 가지 — 「${esc(prev.next.trim())}」</div>` : '')
     + `<div class="box read"><h2>한 주를 읽어 드립니다</h2>${hero}${readWeek(wk).filter(s => !(hero && s.startsWith('이 주에 쓴 시간'))).map(s => `<p>${esc(s)}</p>`).join('')}
         <div class="rnote">규칙으로 쓴 문장입니다 — 기기 밖으로 보내지 않습니다</div></div>`
     + `<div class="box"><h2>한 주${nDone ? ' · 끝낸 것 ' + nDone : ''}</h2>${opens}
@@ -2057,7 +2407,7 @@ function calPage(){                            // 월 달력 — 날짜 칸마�
     const lines = sp.map(t => bar(t, d)).concat((dues.get(d) || []).map(l => `<span class="cl due">${dot(l)}마감 · ${esc(l.name)}</span>`))
       .concat(ts.map(t => (l => `<span class="cl ${l ? 'g' : 'n'} ${t.done ? 'done' : ''}"${l ? ` style="--gc:${l.color}"` : ''}>${t.time ? `<b class="ct">${t.time}</b>` : ''}${esc(t.text)}</span>`)(t.listId && DB.listOf(t.listId))));   // 목표 색 칩 — 한국 인기 1위 여섯이 달력 칸에 분류 색 칩을 쌓는다(09-26 벤치마킹)
     cells += `<button class="cc ${mine ? '' : 'out'} ${d === T ? 'tdy' : ''} ${d < T ? 'past' : ''} ${redCls(d)}" data-cal="${d}" title="${dOnly(d)}${DB.holiday(d) ? ' ' + DB.holiday(d) : ''} 열기">
-      <span class="chd"><span class="cn">${+d.slice(8)}</span>${holiName(d)}${DB.dayLine(d) ? '<span class="cmk" title="이 날 메모">메모</span>' : ''}</span>${lines.slice(0, MAX).join('')}${lines.length > MAX ? `<span class="cl more">+${lines.length - MAX}</span>` : ''}</button>`;
+      <span class="chd"><span class="cn">${+d.slice(8)}</span>${holiName(d)}${DB.dayLine(d) ? '<span class="cmk" title="이 날 한 줄">한 줄</span>' : ''}</span>${lines.slice(0, MAX).join('')}${lines.length > MAX ? `<span class="cl more">+${lines.length - MAX}</span>` : ''}</button>`;
   }
   return `<div class="cal"><div class="cw">${[...'월화수목금토일'].map(w => `<span>${w}</span>`).join('')}</div><div class="cg" style="--wk:${n / 7}">${cells}</div></div>`;
 }
@@ -2066,12 +2416,13 @@ function drawBody(){
   let html = '';
   const T = DB.today();
   if (q){
-    const r = DB.search(q), mm = DB.searchMemos(q), nm = mm.days.length + mm.lists.length;
+    const r = DB.search(q), mm = DB.searchMemos(q), nm = mm.days.length + mm.lists.length + mm.memos.length;
     const snip = t => { const i = t.toLowerCase().indexOf(q.trim().toLowerCase()), a = Math.max(0, i - 24);
       return (a ? '…' : '') + t.slice(a, i + q.trim().length + 36).replace(/\s+/g, ' ') + (i + q.trim().length + 36 < t.length ? '…' : ''); };
-    const memoBox = nm ? `<div class="box"><h2>메모에서 · ${nm}</h2><ul class="mlist">${mm.lists.map(l => `<li><button class="mhit" data-memogoal="${esc(l.id)}">
+    const memoBox = nm ? `<div class="box"><h2>메모에서 · ${nm}</h2><ul class="mlist">${mm.memos.slice(0, 30).map(m => `<li><button class="mhit" data-memoid="${esc(m.id)}">
+          <span class="mt">메모 · ${madeText(m)}</span><span class="msnip">${esc(snip([m.text, ...m.after.map(a => a.text)].join(' · ')))}</span></button></li>`).join('')}${mm.lists.map(l => `<li><button class="mhit" data-memogoal="${esc(l.id)}">
           <span class="gdot" style="background:${l.color}"></span><span class="mt">${esc(l.name)} 메모</span><span class="msnip">${esc(snip(l.note))}</span></button></li>`).join('')}${mm.days.map(x => `<li><button class="mhit" data-memoday="${x.d}">
-          <span class="mt">${dOnly(x.d)} 메모</span><span class="msnip">${esc(snip(x.line))}</span></button></li>`).join('')}</ul></div>` : '';
+          <span class="mt">${dOnly(x.d)} 한 줄</span><span class="msnip">${esc(snip(x.line))}</span></button></li>`).join('')}</ul></div>` : '';
     html = r.length || nm ? (r.length ? group(r.slice(0, findMore), false) + (r.length > findMore ? `<div class="box"><button class="addrow" data-findmore>더 보기 · 남은 것 ${r.length - findMore}</button></div>` : '') : '') + memoBox
       : `<div class="box"><div class="empty">찾은 것이 없습니다 · 「${esc(q)}」</div></div>`;
   } else if (open){
@@ -2082,11 +2433,17 @@ function drawBody(){
     html = calMode === 'week' ? calWeekPage() : calMode === 'time' ? calTimePage() : calPage();
   } else if (page === 'week'){
     html = weekPage();
+  } else if (page === 'memo'){
+    html = memoPage();
   } else if (page === 'help'){
     html = helpPage();
   } else if (page === 'trash'){                 // 지운 것 — 영구히 지우는 단추는 두지 않는다(자료.md ②)
     const tr = DB.trash(), gone = s => dOnly(DB.ymd(new Date(s))) + '에 지움';   // 지운 시각은 세계 표준시로 적혀 있다 — 이 컴퓨터 날짜로 바꿔 보인다
-    html = (tr.lists.length ? `<div class="box"><h2>목표 · ${tr.lists.length}</h2><ul>${tr.lists.map(l => `
+    html = (tr.memos.length ? `<div class="box"><h2>메모 · ${tr.memos.length}</h2><ul>${tr.memos.slice(0, trashMore).map(m => `
+        <li class="row"><span class="tx" style="cursor:default">${esc(m.text || [m.mood ? DB.MOODS[m.mood - 1] : '', ...m.feel.map(f => (DB.FEELS[f] || [f])[0])].filter(Boolean).join(' · ') || '빈 메모')}</span>
+          <span class="meta"><span class="d">${gone(m.deletedAt)}</span>
+          <button class="back" data-unmemo="${esc(m.id)}">되살리기</button></span></li>`).join('')}</ul></div>` : '')
+      + (tr.lists.length ? `<div class="box"><h2>목표 · ${tr.lists.length}</h2><ul>${tr.lists.map(l => `
         <li class="row" data-tl="${esc(l.id)}"><span class="gdot" style="background:${l.color};margin-top:6px"></span>
           <span class="tx" style="cursor:default">${esc(l.name)}</span>
           <span class="meta"><span class="d">${(l.unlinked || []).length ? '할 일 ' + l.unlinked.length + '개와 함께 · ' : ''}${gone(l.deletedAt)}</span>
@@ -2137,10 +2494,10 @@ function drawBody(){
     else if (day === T && ts.some(t => t.listId && !t.done) && !Object.keys(DB.timeByDay()).length)   // 첫날 — 한 번도 안 잰 사람에게 자리를 먼저 보인다(규칙 10 · 09-26 채점 3판). 한 번 재면 다시 안 뜬다
       html += `<div class="box dsum wait"><h2>오늘 쓴 시간</h2><div class="ltime"><span><i class="k on"></i>정한 곳</span><span><i class="k off"></i>그 밖</span></div>
         <div class="split"></div><p class="wnote">목표의 일 옆 ▶를 누르면 여기서 하루가 정한 곳 / 그 밖으로 나뉩니다</p></div>`;
-    const dm = DB.dayLine(day), dn = day === T ? '오늘' : '이 날';   // 날마다 메모 — 저녁 마무리의 한 줄과 같은 자리. 비어 있으면 회색 한 줄만(규칙 3)
+    const dm = DB.dayLine(day), dn = day === T ? '오늘' : '이 날';   // 하루 한 줄(09-28 「오늘 메모」에서 이름만 바꿈 — 메모 탭과 겹쳐서) — 저녁 마무리의 한 줄과 같은 자리. 비어 있으면 회색 한 줄만(규칙 3)
     html += dm || memoOpen === day
-      ? `<div class="box memo-box"><h2>${dn} 메모</h2><textarea data-daymemo="${day}" rows="2" placeholder="${dn} 남길 말 — 저녁 마무리의 한 줄도 여기 들어갑니다">${esc(dm)}</textarea></div>`
-      : `<button class="addrow memoadd" data-memoopen="${day}">+ ${dn} 메모</button>`;
+      ? `<div class="box memo-box"><h2>${dn} 한 줄</h2><textarea data-daymemo="${day}" rows="2" placeholder="${dn} 남길 한 줄 — 저녁 마무리에서 적은 것도 여기 들어갑니다">${esc(dm)}</textarea></div>`
+      : `<button class="addrow memoadd" data-memoopen="${day}">+ ${dn} 한 줄</button>`;
   }
   $('#body').innerHTML = html;
 }
@@ -2164,7 +2521,7 @@ function startEdit(el, value, save){
   const fin = (ok, next) => { if (done) return; done = true;
     const v = i.value.trim(), changed = ok && v && v !== value;
     if (changed) save(v);
-    if (next){ render(); if (!open) $('#add').focus(); }   // Enter·Esc — 커서를 입력칸으로 돌려 다음 할 일을 바로 적게
+    if (next){ render(); if (!open) focusEntry(); }   // Enter·Esc — 커서를 입력칸으로 돌려 다음 할 일을 바로 적게(메모 화면이면 메모 칸)
     else { if (changed) el.textContent = v; i.replaceWith(el); }
   };                                            // 다른 곳을 누름 — 화면을 갈아엎지 않아야 그 누름이 사라지지 않는다
   i.addEventListener('keydown', e => {
@@ -2221,7 +2578,7 @@ const beep = () => { try{ if (!audio) return; const t0 = audio.currentTime;
 /* ── 한 장씩 ── 지난 일을 하나씩. 한 것은 바로 적히고, 방금 것은 되돌릴 수 있다 */
 var one = null;                                 // { kind:'past', ids, i, log:[{what, back}] }
 function drawOne(){
-  const el = $('#one'); if (!one){ el.classList.add('hide'); return; }
+  const el = $('#one'); if (!one){ if (el.contains(document.activeElement)) document.activeElement.blur(); el.classList.add('hide'); return; }   // 닫으면 커서도 놓는다
   if (one.kind === 'past') return drawPast(el);
   if (typeof drawFlow === 'function') drawFlow(el);
 }
@@ -2283,7 +2640,10 @@ function drawFlow(el){
         <div class="fnext"><button data-fl="back">앞으로</button><button class="main" data-fl="next">다음</button></div>`; }
     else { const now0 = DB.todosOn(T).filter(t => !t.done), pick = [...f.past, ...f.und].map(id => DB.todo(id)).filter(Boolean);
       const mins = [...now0, ...pick].filter(t => t.time).reduce((a, t) => a + DB.blockMin(t), 0);
-      body = `<div class="big">오늘</div><div class="sub">${now0.length + pick.length}개${mins ? ` · 시간표에 ${fmtDur(mins * 60)}` : ''}</div>
+      const wl = DB.weekLine(DB.monday(T)).line, up = DB.shownMemos();
+      body = (wl || up.length ? `<div class="fmemo">${wl ? `<div class="fwl"><span>이번 주의 한 줄</span>${esc(wl)}</div>` : ''}${up.length
+          ? `<div class="fup"><span>떠 있는 메모 · ${up.length}</span>${up.slice(0, 5).map(m => `<div>${m.text ? esc(m.clue ? clueOf(m.text) + '…' : m.text) : '감정 기록'}</div>`).join('')}</div>` : ''}</div>` : '')
+        + `<div class="big">오늘</div><div class="sub">${now0.length + pick.length}개${mins ? ` · 시간표에 ${fmtDur(mins * 60)}` : ''}</div>
         <div class="flist">${now0.map(t => `<div class="fi ro">${esc(t.text)}<span class="fd">${t.time ? fmtTime(t.time) : ''}</span></div>`).join('')}
           ${pick.map(t => `<div class="fi ro on">${esc(t.text)}<span class="fd">가져옴</span></div>`).join('')}</div>
         <input class="fadd" data-fadd placeholder="더 적기 — Enter">
@@ -2297,8 +2657,10 @@ function drawFlow(el){
       body = `<div class="big">남은 것</div><div class="sub">고른 것은 내일로 옮깁니다. 안 고른 것은 오늘에 남아 내일 「지난 일」이 됩니다.</div>
         <div class="flist">${r.map(t => item(t, f.move.has(t.id), '내일로')).join('') || '<div class="sub">남은 것이 없습니다.</div>'}</div>
         <div class="fnext"><button data-fl="back">앞으로</button><button class="main" data-fl="next">다음</button></div>`; }
-    else body = `<div class="big">오늘 하루 한 줄</div><div class="sub">기록 화면의 오늘 밑에 남습니다. 비워 둬도 됩니다.</div>
+    else body = `<div class="big">오늘 하루 한 줄</div><div class="sub">오늘 화면의 「오늘 한 줄」과 기록 화면에 남습니다. 비워 둬도 됩니다.</div>
         <textarea data-fline placeholder="잘 된 것, 걸린 것, 무엇이든 한 줄">${esc(f.line || '')}</textarea>
+        <div class="fmood"><span>오늘 마음</span><span class="moods" role="group" aria-label="오늘 마음 — 기분 하나. 메모로 남는다">${moodBtns(f.mood, 'fmood')}</span><span class="mlab">${f.mood ? DB.MOODS[f.mood - 1] : ''}</span></div>
+        <input class="fadd" data-ftom maxlength="300" value="${esc(f.tom || '')}" placeholder="내일 띄울 한마디" title="적으면 내일 하루 메모 맨 위에 뜹니다">
         <div class="fnext"><button data-fl="back">앞으로</button><button class="main" data-fl="done">마치기</button></div>`;
   }
   el.classList.remove('hide');
@@ -2323,21 +2685,25 @@ function flowDo(a, arg){
     [...f.move].forEach(id => { const t = DB.todo(id); if (!t || t.done) return; const b = { date:t.date, movedFrom:t.movedFrom, movedCount:t.movedCount };
       DB.moveTodo(id, DB.shift(T, 1)); backs.push(() => DB.editTodo(id, b)); });
     const was = DB.dayLine(T); if ((f.line || '') !== was) DB.setDayLine(T, f.line || '');
+    const TM = DB.shift(T, 1), made = [f.mood ? DB.addMemo('', { mood:f.mood }) : null,   // 오늘 마음 · 내일 띄울 말은 메모로(메모가 앞)
+      (f.tom || '').trim() ? DB.addMemo(f.tom, { show:{ kind:'span', from:TM, to:TM } }) : null].filter(Boolean);
     const n = backs.length; one = null; render();
-    return toast(`하루를 마쳤습니다${n ? ` · 내일로 ${n}개` : ''}`, () => { backs.forEach(b => b()); DB.setDayLine(T, was); });
+    return toast(`하루를 마쳤습니다${n ? ` · 내일로 ${n}개` : ''}${made.length ? ` · 메모 ${made.length}` : ''}`, () => { backs.forEach(b => b()); DB.setDayLine(T, was); made.forEach(m => DB.removeMemo(m.id)); });
   }
 }
 document.addEventListener('click', e => {
   const fl = e.target.closest('[data-flow]'); if (fl) return startFlow(fl.dataset.flow);
   if (!one || one.kind === 'past') return;
   const b = e.target.closest('[data-fl]'); if (b) return flowDo(b.dataset.fl);
-  const fi = e.target.closest('[data-fi]'); if (fi) return flowDo('fi', fi.dataset.fi); });
+  const fi = e.target.closest('[data-fi]'); if (fi) return flowDo('fi', fi.dataset.fi);
+  const fm = e.target.closest('[data-fmood]'); if (fm){ const k = +fm.dataset.fmood; one.mood = one.mood === k ? null : k; render(); const b = $(`#one [data-fmood="${k}"]`); if (b) b.focus(); } });
 document.addEventListener('keydown', e => {
   if (!one || one.kind !== 'am' || !e.target.matches || !e.target.matches('[data-fadd]') || e.key !== 'Enter' || e.isComposing || e.keyCode === 229) return;
   const v = e.target.value.trim(); if (!v) return; const p = parseEntry(v), T = DB.today();
   const t = DB.addTodo(p ? p.text : v, null, T); if (p && p.time) DB.editTodo(t.id, { time:p.time, dur:p.dur });
   one.added.push(t.id); render(); const i = $('#one [data-fadd]'); if (i) i.focus(); });
-document.addEventListener('input', e => { if (one && one.kind === 'pm' && e.target.matches && e.target.matches('[data-fline]')) one.line = e.target.value; });
+document.addEventListener('input', e => { if (!one || one.kind !== 'pm' || !e.target.matches) return;
+  if (e.target.matches('[data-fline]')) one.line = e.target.value; else if (e.target.matches('[data-ftom]')) one.tom = e.target.value; });
 var BREAK_MIN = 5;                               // 처음 그릴 때(render)도 부를 수 있게 function 으로 둔다
 function readBrk(){ try{ return JSON.parse(localStorage.getItem(DB.key + '.break')); }catch(e){ return null; } }
 function setBrk(v){ try{ v ? localStorage.setItem(DB.key + '.break', JSON.stringify(v)) : localStorage.removeItem(DB.key + '.break'); }catch(e){} }
@@ -2552,6 +2918,7 @@ document.addEventListener('click', e => {
       try{ d.showPicker(); }catch(err){ d.focus(); d.click(); } return; }
     if (a === 'nodue')    DB.editList(l.id, { due:null });
     if (a === 'addstage') return startAdd(la, '단계 이름', v => DB.addStage(l.id, v));
+    if (a === 'linkmemo') return draftLink({ k:'l', id:l.id });
     if (a === 'addtodo')  return startAdd(la, '할 일 · 날짜 없이 들어갑니다', v => DB.addTodo(v, l.id, null));
     if (a === 'finish'){ DB.finishList(l.id); toast(`마쳤습니다 · 「${l.name}」`, () => DB.reopenList(l.id)); }
     if (a === 'reopen')   DB.reopenList(l.id);
@@ -2602,6 +2969,10 @@ document.addEventListener('click', e => {
   if (a === 'more'){ toolsOn = toolsOn === t.id ? null : t.id; toolsMore = null; return render(); }
   if (a === 'toolmore'){ toolsMore = toolsMore === t.id ? null : t.id; return render(); }
   if (a === 'copy'){ toolsOn = null; toolsMore = null; copyFor = copyFor === t.id ? null : t.id; copyPick = new Set(); return render(); }
+  if (a === 'linkmemo') return draftLink({ k:'t', id:t.id });
+  if (a === 'seememo'){ const ms = DB.memos().filter(m => m.link && m.link.k === 't' && (DB.linkTodo(m) || {}).id === t.id); if (!ms.length) return;
+    const id = ms[0].id, i = DB.memos().findIndex(m => m.id === id); open = null; page = 'memo'; memoDay = null; memoHit = id; memoMore = Math.max(memoMore, i + 1); render();
+    const li = $(`.mlistb li[data-m="${id}"]`); if (li) li.scrollIntoView({ block:'center' }); return; }
   if (a === 'countup' || a === 'countdown'){ const r = DB.countUp(t.id, a === 'countup' ? 1 : -1); if (!r) return; render();
     if (r.full) toast(`다 채웠습니다 · 「${t.text}」 ${r.n}/${t.goal}`, () => { DB.toggleTodo(t.id); DB.countUp(t.id, -1); });
     return; }
@@ -2730,6 +3101,510 @@ document.addEventListener('keydown', e => {   // 실제 시각 — Enter로 적�
   if (e.key === 'Enter'){ e.preventDefault(); i.closest('.actin').querySelector('[data-do=actsave]').click(); }
   else if (e.key === 'Escape'){ e.preventDefault(); i.closest('.actin').querySelector('[data-do=actclose]').click(); }
 });
+/* ══ 메모(09-27 웹 첫 판) ══ 앱의 앞 — 적고(규칙 2), 감정을 붙이고(7), 정한 때에 띄운다(3). 띄운 것은 때가 지나면 스스로 내려온다.
+   앱은 말을 짓지 않는다(8) — 뜨는 것은 사람이 적은 글뿐. 감정이 붙은 메모는 뜰 때 실마리만 보이고 누르면 펼친다(7 · 떠올린 뒤 답을 보면 더 오래 남는다, Rowland 2014) */
+let mDraft = { mood:null, feel:[], show:'none', at:'', lead:30, link:null };   // 적는 칸에서 고른 것 — 적으면 비운다(몇 분 전은 남긴다)
+let feelOpen = false, feelMore = false;         // 감정 이름을 폈나 · 더 보기를 폈나
+let mTools = null;                              // 도구를 편 메모 하나
+const clueOpen = new Set();                     // 실마리를 펼친 메모
+let memoMore = 50;                              // 메모 모음 — 한 번에 그리는 수(1000일째에도 빨리)
+let upKey = '';                                 // 지금 떠 있는 메모 — 바뀌면 다시 그린다
+const MEMO_EX = ['떠오른 생각 · 느낌 · 할 일 — 날아가기 전에', '면접 때 떠올릴 말 — 천천히, 내 경험으로', '오늘 마음에 남은 한마디', '이번 주에 꼭 기억할 것'];
+function draftLink(link){                         // 할 일 줄 · 목표 화면의 「띄울 메모 붙이기」 — 메모 칸에 붙일 곳을 달고 간다
+  mDraft.link = link; toolsOn = null; toolsMore = null; open = null; page = 'memo'; memoDay = null; q = ''; $('#q').value = ''; $('#qx').classList.add('hide');
+  render(); window.scrollTo(0, 0); $('#memoIn').focus(); }
+const focusEntry = () => { const i = mode() === 'memo' ? $('#memoIn') : $('#add'); if (i) i.focus(); };
+const pad2 = n => String(n).padStart(2, '0');
+const nextHour = () => { const d = new Date(Date.now() + 60 * 60e3); return DB.ymd(d) + 'T' + pad2(d.getHours()) + ':00'; };
+const leadText = l => l ? (l === 60 ? '1시간' : l + '분') + ' 전부터' : '그 시각에';
+const clueOf = t => t.slice(0, Math.max(3, Math.min(12, Math.ceil(t.length * .4)))).trimEnd();   // 실마리 — 첫마디만(끝 빈칸은 떼어 「…」가 붙어 보이게)
+const madeText = m => { if (!m.made) return ''; const d = new Date(m.made), k = DB.ymd(d);
+  return k === DB.today() ? fmtTime(pad2(d.getHours()) + ':' + pad2(d.getMinutes())) : dOnly(k); };
+const SHOW_OPTS = [['none', '안 띄움'], ['day', '오늘 하루'], ['week', '일주일'], ['at', '정한 시각…'], ['until', '바꿀 때까지'], ['again', '잊을 만하면 다시']];
+const kindOf = m => !m.show ? 'none' : m.show.kind === 'span' ? (m.show.from === m.show.to ? 'day' : 'week') : m.show.kind;
+function showOf(kind, at, lead){                // 고른 것 → 자료의 show. 시각을 안 골랐으면 false
+  const T = DB.today();
+  if (kind === 'day') return { kind:'span', from:T, to:T };
+  if (kind === 'week') return { kind:'span', from:T, to:DB.shift(T, 6) };
+  if (kind === 'until') return { kind:'until', from:T };
+  if (kind === 'again') return { kind:'again', from:T };   // 1 · 3 · 7 · 14 · 30 · 60일 뒤에 하루씩
+  if (kind === 'at') return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(at || '') ? { kind:'at', at:at.slice(0, 16), lead:+lead || 0 } : false;
+  return null; }
+function showText(m){                           // 띄우기 글 — 언제까지 · 언제 뜨나 · 내려옴
+  const x = m.show; if (!x) return '';
+  const w = DB.shownWin(m), T = DB.today();
+  if (w[1] <= Date.now()) return '내려옴';
+  if (x.kind === 'until') return '바꿀 때까지';
+  if (x.kind === 'again'){ const d = DB.ymd(new Date(w[0])); return '잊을 만하면 다시 · ' + (d === T ? '오늘' : dOnly(d)); }
+  if (x.kind === 'span') return x.from === x.to ? (x.from === T ? '오늘 하루' : dOnly(x.from) + ' 하루') : (x.from > T ? dOnly(x.from) + '~' : '') + dOnly(x.to) + '까지';
+  const [d, tm] = x.at.split('T'), main = `${d === T ? '오늘' : dOnly(d)} ${fmtTime(tm)}${x.lead ? ' · ' + leadText(x.lead) : ''}`, md = midOn(m);
+  return !md ? main : md === T ? `중간에 한 번(오늘) · ${main}` : `${main} · 중간에 한 번 ${dOnly(md)}`; }
+const midOn = m => { const md = DB.midDay(m); return md && m.show.mid !== false && m.show.seen !== md && md >= DB.today() && DB.ymd(new Date(DB.atWin(m)[0])) > md ? md : null; };   // 아직 남은 「중간에 한 번」의 날
+function drawMemo(){
+  const on = mode() === 'memo';
+  $('#wline').classList.toggle('hide', !on); $('#mentry').classList.toggle('hide', !on);
+  if (!on) return;
+  const mon = DB.monday(DB.today()), w = DB.weekLine(mon);
+  $('#wline').innerHTML = `<div class="wl-h"><span>이번 주의 한 줄</span><span class="wl-wk">${weekNo(mon)}</span></div>`
+    + (w.line ? `<button class="wl-t" data-wledit title="누르면 바꿉니다">${esc(w.line)}</button>${w.carried ? `<span class="wl-c">지난 주부터 이어 온 말 — 누르면 이번 주의 말로 바꿉니다</span>` : ''}`
+              : `<button class="wl-t empty" data-wledit>+ 한 주를 사는 말 하나 — 명언 · 가치관 · 다짐</button>`);
+  drawMopts();
+}
+const moodBtns = (cur, key) => DB.MOODS.map((n, i) =>
+  `<button class="mood mo${i + 1} ${cur === i + 1 ? 'on' : ''}" data-${key}="${i + 1}" aria-pressed="${cur === i + 1}" aria-label="기분 ${n}" title="${n}"><i></i></button>`).join('');
+function drawMopts(){
+  const d = mDraft, a = document.activeElement, keep = a && a.closest && a.closest('#mopts') ? [...a.attributes].find(x => x.name.startsWith('data-')) : null;
+  $('#mopts').innerHTML = `<span class="moods" role="group" aria-label="기분 — 한 번 누르기. 글 없이 기분만 적어도 됩니다">${moodBtns(d.mood, 'mmood')}</span>
+    <span class="mlab">${d.mood ? DB.MOODS[d.mood - 1] : '기분'}</span>
+    <button class="mfeel ${d.feel.length ? 'on' : ''}" data-mfeel aria-expanded="${feelOpen}">${d.feel.length ? d.feel.map(f => DB.FEELS[f][0]).join(' · ') : '감정 이름'}</button>
+    <label class="mshow">띄우기 <select data-mshow aria-label="띄우기 — 언제 맨 위에 띄울까">${SHOW_OPTS.map(([v, n]) => `<option value="${v}" ${d.show === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+    <button class="madd" data-madd>적기</button>`
+    + (d.link ? `<div class="mlink">${esc(linkLabel({ link:d.link }))}에 붙입니다 <button data-mlinkx aria-label="붙이지 않기">×</button></div>` : '')
+    + (d.show === 'at' ? `<div class="mat"><input type="datetime-local" data-mat value="${esc(d.at)}" aria-label="띄울 시각"><select data-mlead aria-label="몇 분 전부터 띄울까">${DB.LEADS.map(l => `<option value="${l}" ${d.lead === l ? 'selected' : ''}>${leadText(l)}</option>`).join('')}</select></div>` : '')
+    + (feelOpen ? feelPanel(d.feel, 'mf') : '');
+  if (keep){ const b = $(`#mopts [${keep.name}${keep.value ? `="${keep.value}"` : ''}]`); if (b) b.focus(); }   // 키보드로 고르던 자리를 잃지 않게
+}
+function feelPanel(sel, key){                   // 감정 이름 — 앞 열둘 · 더 보기. 셋까지. 힘들 때 도움받을 곳을 늘 조용히 둔다(규칙 7 — 진단하지 않고 붙잡지 않는다)
+  const chip = f => `<button class="fchip ${sel.includes(f) ? 'on' : ''}" data-${key}="${f}" aria-pressed="${sel.includes(f)}">${DB.FEELS[f][0]}</button>`;
+  const rest = Object.keys(DB.FEELS).filter(f => !DB.FEEL_FRONT.includes(f));
+  return `<div class="feels"><div class="fc" role="group" aria-label="감정 이름 — 셋까지">${DB.FEEL_FRONT.map(chip).join('')}${feelMore
+      ? '<span class="fsep"></span>' + rest.map(chip).join('') : `<button class="fchip more" data-feelmore>더 보기</button>`}</div>
+    <p class="help109">힘들 때 도움받을 곳 — <a href="tel:109">109 전화</a> · <a href="sms:109">109 문자</a> · 카카오톡 「마들랜」(24시간 · 무료)</p></div>`;
+}
+const pickFeel = (list, f) => list.includes(f) ? list.filter(x => x !== f) : list.length >= 3 ? null : [...list, f];   // 셋까지 — 넘치면 null
+let linkPick = null, linkQ = '';                 // 할 일 · 목표에 붙이기 — 고르는 칸을 편 메모 · 찾는 말
+function linkLabel(m){                          // 메모 줄에 — 어느 할 일 · 목표에 붙었나(끝났으면 끝남)
+  const x = m.link; if (!x) return '';
+  if (x.k === 't'){ const t = DB.linkTodo(m), t0 = DB.todo(x.id);
+    return t ? `할 일 「${t.text}」${t.date ? ' ' + (t.date === DB.today() ? '오늘' : dOnly(t.date)) : ''}` : `할 일 「${t0 ? t0.text : '지운 일'}」 끝남`; }
+  const l = DB.linkList(m), l0 = DB.listOf(x.id); return l ? `목표 「${l.name}」 ▶할 때` : `목표 「${l0 ? l0.name : '지운 목표'}」 끝남`; }
+function linkCands(q){                          // 붙일 곳 — 목표 먼저, 그다음 오늘부터의 안 끝낸 할 일(날짜 없는 것은 끝에)
+  const k = String(q || '').trim().toLowerCase(), T = DB.today(), hit = s => !k || s.toLowerCase().includes(k);
+  const ls = DB.lists().filter(l => !l.done && hit(l.name)).map(l => ({ k:'l', id:l.id, name:l.name, sub:'목표 · ▶할 때마다', color:l.color }));
+  const ts = DB.todos().filter(t => !t.done && (!t.date || (t.endDate || t.date) >= T) && hit(t.text))
+    .sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999') || (a.time || '99').localeCompare(b.time || '99'))
+    .map(t => ({ k:'t', id:t.id, name:t.text, sub:'할 일 · ' + (t.date ? (t.date === T ? '오늘' : dOnly(t.date)) + (t.time ? ' ' + fmtTime(t.time) : '') : '날짜 없음 — ▶할 때') }));
+  return [...ls, ...ts].slice(0, 8); }
+const candHTML = q => { const c = linkCands(q);
+  return c.length ? c.map(x => `<li><button data-lto="${x.k}:${esc(x.id)}">${x.color ? `<span class="gdot" style="background:${x.color}"></span>` : ''}<span class="lnm">${esc(x.name)}</span><span class="lsb">${esc(x.sub)}</span></button></li>`).join('')
+    : '<li class="lnone">붙일 목표 · 할 일이 없습니다 — 오늘 화면에서 할 일을 적거나 옆 칸에서 목표를 만드세요</li>'; };
+function pickPanel(m){                          // 줄 도구 안 — 찾고 고른다
+  return `<div class="lpick"><input data-lq value="${esc(linkQ)}" placeholder="붙일 할 일 · 목표 찾기" aria-label="붙일 할 일 · 목표 찾기">
+    <ul class="lcands">${candHTML(linkQ)}</ul>
+    <p class="lsay">할 일에 붙이면 그날 하루 떠 있고 ▶를 누르면 재는 줄 밑에 뜹니다. 목표에 붙이면 그 목표의 일을 ▶할 때마다 뜹니다.</p></div>`; }
+let memoCal = false, calMon = null, memoDay = null, memoHit = null, rHide = null;   // 감정 달력을 폈나 · 보는 달 · 고른 날 · 찾기에서 온 메모 · 「다시 안 보기」를 편 메모
+function memoPage(){
+  const all = DB.memos(), up = DB.shownMemos();
+  let h = (gotLink ? gotPanel() : '') + (linkOn ? linkPanel() : '') + (wallOn ? wallPanel() : '');
+  if (up.length) h += `<div class="box mup"><h2>지금 떠 있는 메모 · ${up.length}</h2><ul>${up.map(m => mrow(m, true)).join('')}</ul></div>`;
+  h += recallBox();
+  if (!all.length) return h + `<div class="box"><div class="empty">떠오른 생각을 위에 적어 보세요. 기분만 눌러도 됩니다.<br>띄우기에서 때를 고르면 그때 여기 「지금 떠 있는 메모」에 뜨고, 때가 지나면 스스로 내려옵니다.</div></div>`;
+  const list = memoDay ? DB.memosOn(memoDay) : all;
+  return h + `<div class="box mlistb"><h2 class="mlh"><span>${memoDay ? `${dOnly(memoDay)} 메모 · ${list.length}` : `메모 · ${all.length}`}</span>
+      ${memoDay ? '<button class="mlv" data-mday="">모두 보기</button>' : ''}<button class="mlv" data-mcal aria-expanded="${memoCal}">${memoCal ? '달력 닫기' : '감정 달력'}</button></h2>
+    ${memoCal ? moodCal() : ''}
+    ${list.length ? `<ul>${list.slice(0, memoMore).map(m => mrow(m, false)).join('')}</ul>` : '<div class="empty">이날 적은 메모가 없습니다</div>'}
+    ${list.length > memoMore ? `<button class="addrow" data-memomore>더 보기 · 남은 것 ${list.length - memoMore}</button>` : ''}</div>`;
+}
+const monShift = (mon, k) => { const [y, m] = mon.split('-').map(Number), d = new Date(y, m - 1 + k, 1); return d.getFullYear() + '-' + pad2(d.getMonth() + 1); };
+const monthText = mon => `${+mon.slice(0, 4)}년 ${+mon.slice(5, 7)}월`;
+const heartOf = m => [m.mood ? DB.MOODS[m.mood - 1] : '', ...m.feel.map(f => (DB.FEELS[f] || [f])[0])].filter(Boolean).join(' · ');
+function moodCal(){                             // 감정 달력 — 점 하나가 메모 하나(색은 기분). 누르면 그날 메모만. 세기만 하고 풀이하지 않는다(규칙 7)
+  const T = DB.today(), mon = calMon || T.slice(0, 7), [y, mo] = mon.split('-').map(Number), by = DB.moodMonth(mon);
+  const n = new Date(y, mo, 0).getDate(), lead = (new Date(y, mo - 1, 1).getDay() + 6) % 7;
+  let cells = '<span></span>'.repeat(lead);
+  for (let i = 1; i <= n; i++){ const d = `${mon}-${pad2(i)}`, ms = (by[d] || []).slice().reverse();
+    cells += `<button class="mcd ${d === memoDay ? 'on' : ''} ${d === T ? 'td' : ''}" data-mday="${d}" ${ms.length ? '' : 'disabled'} aria-label="${mo}월 ${i}일 — 메모 ${ms.length}${ms.some(m => m.mood) ? ' · ' + ms.filter(m => m.mood).map(m => DB.MOODS[m.mood - 1]).join(', ') : ''}">
+      <b>${i}</b><span>${ms.slice(0, 4).map(m => `<i class="${m.mood ? 'mo' + m.mood : 'mo0'}"></i>`).join('')}</span></button>`; }
+  const cnt = [1, 2, 3, 4, 5].map(k => [k, Object.values(by).flat().filter(m => m.mood === k).length]).filter(x => x[1]);
+  return `<div class="mcal"><div class="mcn"><button data-cmon="-1" aria-label="지난달">‹</button><b>${monthText(mon)}</b><button data-cmon="1" aria-label="다음 달">›</button></div>
+    <div class="mcg">${'월화수목금토일'.split('').map(w => `<span class="mcw">${w}</span>`).join('')}${cells}</div>
+    <p class="mcs">${cnt.length ? '이달 기분 — ' + cnt.map(([k, c]) => `<span class="mdot mo${k}"></span>${DB.MOODS[k - 1]} ${c}`).join(' · ') : '이달에는 기분을 고른 메모가 없습니다'}</p></div>`;
+}
+function recallBox(){                           // 지난 오늘 — 힘든 날의 메모는 빼 두고, 뺐다고 말한다(규칙 4 · 7). 안 볼 달 · 사람은 사람이 고른다
+  const { groups, hardOut } = DB.recallMemos(), r = DB.recallSet();
+  if (!groups.length && !hardOut && !r.months.length && !r.names.length && !r.hard) return '';   // 힘든 메모를 켜 두었으면(r.hard) 볼 것이 없어도 끄는 단추를 남긴다(규칙 4 · 7)
+  const chips = [...r.months.map(x => `<button class="rchip" data-rc="unmonth" data-v="${x}" title="누르면 다시 봅니다">${monthText(x)} ×</button>`),
+                 ...r.names.map(x => `<button class="rchip" data-rc="unname" data-v="${esc(x)}" title="누르면 다시 봅니다">${esc(x)}님 ×</button>`)].join('');
+  return `<div class="box recall"><h2>지난 오늘</h2>
+    ${groups.map(g => `<div class="rgl">${g.label} · ${dOnly(g.day)}</div><ul>${g.list.map(rrow).join('')}</ul>`).join('') || '<div class="rnone">오늘 다시 볼 메모는 없습니다</div>'}
+    ${hardOut || r.hard || chips ? `<div class="rset">${hardOut ? `<span>힘든 날의 메모 ${hardOut}개는 빼 두었습니다</span><button data-rc="hard1">넣어 보기</button>`
+        : r.hard ? '<button data-rc="hard0">힘든 날의 메모는 빼기</button>' : ''}${chips ? `<span>안 보는 것</span>${chips}` : ''}</div>` : ''}</div>`;
+}
+function rrow(m){
+  const hide = m.clue && !clueOpen.has(m.id), on = rHide === m.id, mon = (DB.madeDay(m) || '').slice(0, 7);
+  return `<li class="row mrow rrow" data-m="${esc(m.id)}">${m.mood && !hide ? `<span class="mdot mo${m.mood}" title="기분 — ${DB.MOODS[m.mood - 1]}"></span>` : ''}
+    <span class="mtx ${hide ? 'clue' : ''}" ${hide ? 'data-mdo="clue" role="button" tabindex="0" title="누르면 펼칩니다 — 떠올려 본 뒤에"' : ''}>${m.text
+      ? esc(hide ? clueOf(m.text) : m.text) + (hide ? '<span class="mclue">…</span>' : '') : `<span class="mnone">${hide ? '감정 기록' : esc(heartOf(m)) || '빈 메모'}</span>`}${hide ? '' : afterHTML(m)}</span>
+    <span class="meta"><button class="mdown" data-mdo="after" title="그다음 어떻게 됐는지 한 줄">그다음</button>
+      <button class="more" data-rdo="tools" aria-label="다시 안 보기" aria-expanded="${on}">⋯</button></span>
+    ${on ? `<div class="mtools"><button data-rdo="month">${monthText(mon)}은 다시 안 보기</button>${m.from ? `<button data-rdo="name">${esc(m.from.n)}님 메모는 다시 안 보기</button>` : ''}</div>` : ''}</li>`;
+}
+const afterHTML = m => (m.after || []).length ? `<span class="maft">${m.after.map(a => `<span><b>그다음${a.at ? ' · ' + dOnly(DB.ymd(new Date(a.at))) : ''}</b> ${esc(a.text)}</span>`).join('')}</span>` : '';
+function afterEdit(li, m){                      // 그다음 어떻게 됐는지 — 한 줄. Enter 저장 · Shift+Enter 줄 바꿈 · Esc 그만
+  if (mTools){ const box = li.closest('.recall') ? '.recall' : li.closest('.mup') ? '.mup' : '.mlistb';
+    mTools = null; render(); li = $(`${box} li[data-m="${m.id}"]`); if (!li) return; }
+  const ta = document.createElement('textarea'); ta.className = 'medit maft-in'; ta.rows = 1; ta.placeholder = '그다음 어떻게 됐나요'; ta.setAttribute('aria-label', '그다음 어떻게 됐는지');
+  li.appendChild(ta); fitNote(ta); ta.focus();
+  let done = false;
+  const fin = ok => { if (done) return; done = true; const v = ta.value.trim();
+    if (ok && v){ const was = DB.addAfter(m.id, v); toast('그다음을 적었습니다', () => DB.unedit(m.id, was)); }
+    render(); };
+  ta.addEventListener('input', () => fitNote(ta));
+  ta.addEventListener('keydown', e => { if (e.isComposing || e.keyCode === 229) return;
+    if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); fin(true); } else if (e.key === 'Escape'){ e.preventDefault(); fin(false); } });
+  ta.addEventListener('blur', () => fin(true));
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-mcal]')){ memoCal = !memoCal; if (!memoCal) memoDay = null; return render(); }
+  const md = e.target.closest('[data-mday]'); if (md){ memoDay = md.dataset.mday || null; memoMore = 50; return render(); }
+  const cm = e.target.closest('[data-cmon]'); if (cm){ calMon = monShift(calMon || DB.today().slice(0, 7), +cm.dataset.cmon); return render(); }
+  const rc = e.target.closest('[data-rc]');
+  if (rc){ const r = DB.recallSet(), a = rc.dataset.rc, v = rc.dataset.v; let was, msg;
+    if (a === 'hard1'){ was = DB.setRecall({ hard:true }); msg = '힘든 날의 메모도 지난 오늘에 넣습니다'; }
+    if (a === 'hard0'){ was = DB.setRecall({ hard:false }); msg = '힘든 날의 메모는 지난 오늘에서 뺍니다'; }
+    if (a === 'unmonth'){ was = DB.setRecall({ months:r.months.filter(x => x !== v) }); msg = `${monthText(v)}을 다시 봅니다`; }
+    if (a === 'unname'){ was = DB.setRecall({ names:r.names.filter(x => x !== v) }); msg = `${v}님 메모를 다시 봅니다`; }
+    toast(msg, () => DB.unsetRecall(was)); return render(); }
+  const rd = e.target.closest('[data-rdo]'); if (!rd) return;
+  const li = rd.closest('li[data-m]'), m = li && DB.memo(li.dataset.m); if (!m) return;
+  if (rd.dataset.rdo === 'tools'){ rHide = rHide === m.id ? null : m.id; return render(); }
+  const r = DB.recallSet(); rHide = null;
+  if (rd.dataset.rdo === 'month'){ const mon = DB.madeDay(m).slice(0, 7), was = DB.setRecall({ months:[...r.months, mon] });
+    toast(`${monthText(mon)}은 지난 오늘에 안 띄웁니다`, () => DB.unsetRecall(was)); }
+  if (rd.dataset.rdo === 'name' && m.from){ const was = DB.setRecall({ names:[...r.names, m.from.n] });
+    toast(`${m.from.n}님 메모는 지난 오늘에 안 띄웁니다`, () => DB.unsetRecall(was)); }
+  render();
+});
+function mrow(m, up){
+  const hide = up && m.clue && !clueOpen.has(m.id);   // 떠 있을 때 실마리만 — 떠올려 본 뒤 누르면 펼친다
+  const heart = [m.mood ? DB.MOODS[m.mood - 1] : '', ...m.feel.map(f => (DB.FEELS[f] || [f])[0])].filter(Boolean).join(' · ');
+  const body = m.text ? esc(hide ? clueOf(m.text) : m.text) + (hide ? '<span class="mclue">…</span>' : '')
+                      : `<span class="mnone">${hide ? '감정 기록' : esc(heart) || '빈 메모'}</span>`;
+  const who = !m.from ? '' : m.from.k === 'clip' ? '출처 ' + m.from.n : m.from.n + (m.from.re ? '님의 답' : '님이 보냄');
+  const meta = [hide || !m.text ? '' : heart, who, up ? '' : madeText(m), showText(m), linkLabel(m)].filter(Boolean).join(' · ');
+  const tOn = mTools === m.id && !up;
+  return `<li class="row mrow ${tOn ? 'tools-on' : ''} ${!up && memoHit === m.id ? 'hit' : ''}" data-m="${esc(m.id)}">
+    ${m.mood && !hide ? `<span class="mdot mo${m.mood}" title="기분 — ${DB.MOODS[m.mood - 1]}"></span>` : ''}
+    <span class="mtx ${hide ? 'clue' : ''}" ${hide ? `data-mdo="clue" role="button" tabindex="0" title="누르면 펼칩니다 — 떠올려 본 뒤에"` : ''}>${body}${hide ? '' : afterHTML(m)}</span>
+    <span class="meta"><span class="d">${esc(meta)}</span>
+      ${up ? `<button class="mdown" data-mdo="down" title="지금 내리기 — 메모는 남습니다">내리기</button>`
+           : `<button class="more" data-mdo="tools" aria-label="도구 — 기분 · 띄우기 · 글 고치기 · 지우기" aria-expanded="${tOn}">⋯</button>`}</span>
+    ${tOn ? mtools(m) : ''}</li>`;
+}
+function mtools(m){
+  const k = kindOf(m), at = k === 'at' ? m.show.at : '', lead = k === 'at' ? m.show.lead : 30;
+  return `<div class="mtools">
+    <span class="moods" role="group" aria-label="기분">${moodBtns(m.mood, 'mmood2')}</span>
+    <label>띄우기 <select data-mshow2 aria-label="띄우기">${SHOW_OPTS.map(([v, n]) => `<option value="${v}" ${k === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+    ${k === 'at' ? `<span class="mat"><input type="datetime-local" data-mat2 value="${esc(at)}" aria-label="띄울 시각"><select data-mlead2 aria-label="몇 분 전부터">${DB.LEADS.map(l => `<option value="${l}" ${lead === l ? 'selected' : ''}>${leadText(l)}</option>`).join('')}</select></span>` : ''}
+    ${k === 'at' && DB.midDay(m) ? `<button data-mdo="mid" title="7일 넘게 남은 메모는 그 사이에 하루 먼저 뜹니다 — 알림 없이">${m.show.mid === false ? '중간에 한 번 켜기' : '중간에 한 번 끄기'}</button>` : ''}
+    <button data-mdo="clue2" title="떠 있을 때 첫마디만 보이게 — 떠올려 본 뒤 펼칩니다">${m.clue ? '다 보이게' : '실마리만'}</button>
+    <button data-mdo="edit">글 고치기</button>
+    ${m.link ? '<button data-mdo="unlink" title="할 일 · 목표에서 떼기 — 메모는 남습니다">떼기</button>' : ''}<button data-mdo="link" aria-expanded="${linkPick === m.id}" title="할 일 · 목표에 붙이면 그 계획의 때에 뜹니다">${m.link ? '다른 곳에 붙이기' : '할 일 · 목표에 붙이기'}</button>
+    <button data-mdo="after" title="그다음 어떻게 됐는지 한 줄 — 지난 걱정이 어떻게 풀렸는지 남는다">그다음</button>
+    ${m.text ? '<button data-mdo="send" title="이 글을 친구에게 한마디로 — 링크 하나로">친구에게 보내기</button>' : ''}
+    <button class="del" data-mdo="del">지우기</button>
+    ${linkPick === m.id ? pickPanel(m) : ''}
+    ${feelPanel(m.feel, 'mf2')}</div>`;
+}
+function editMemoText(li, m){                   // 글 고치기 — 여러 줄 그대로. Enter 저장 · Shift+Enter 줄 바꿈 · Esc 그만
+  const el = li.querySelector('.mtx'), ta = document.createElement('textarea');
+  ta.className = 'medit'; ta.value = m.text; ta.rows = 1; ta.setAttribute('aria-label', '메모 고치기');
+  el.replaceWith(ta); fitNote(ta); ta.focus();
+  let done = false;
+  const fin = ok => { if (done) return; done = true; const v = ta.value.trim();
+    if (ok && v !== m.text && (v || m.mood || m.feel.length)){ const was = DB.editMemo(m.id, { text:v }); toast('고쳤습니다', () => DB.unedit(m.id, was)); }
+    mTools = null; render(); };
+  ta.addEventListener('input', () => fitNote(ta));
+  ta.addEventListener('keydown', e => { if (e.isComposing || e.keyCode === 229) return;
+    if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); fin(true); } else if (e.key === 'Escape'){ e.preventDefault(); fin(false); } });
+  ta.addEventListener('blur', () => fin(true));
+}
+let mexI = 0;
+function offerNotifyMemo(){                      // 정한 시각을 처음 고를 때 한 번만 묻는다 — 되돌리기 알림이 지나간 뒤에
+  if (askedNotify || !('Notification' in window) || Notification.permission !== 'default') return;
+  askedNotify = true;
+  setTimeout(() => toast('그 시각에 알려 드릴까요? 이 탭이 열려 있을 때 옵니다', () => Notification.requestPermission(), 12000, '알림 켜기'), 6300);
+}
+function addMemoEntry(){
+  const i = $('#memoIn'), d = mDraft, show = showOf(d.show, d.at, d.lead);
+  if (show === false || pastAt(show)){ toast(show ? '지난 시각입니다 — 띄울 시각을 다시 고르세요' : '띄울 시각을 고르세요'); const a = $('[data-mat]'); if (a) a.focus(); return; }
+  const m = DB.addMemo(i.value, { mood:d.mood, feel:d.feel, show, link:d.link });
+  if (!m){ toast('글을 적거나 기분을 고르세요'); i.focus(); return; }
+  i.value = ''; fitMemoIn(); mDraft = { mood:null, feel:[], show:'none', at:'', lead:d.lead, link:null }; feelOpen = false; feelMore = false;
+  if (memoDay && memoDay !== DB.today()) memoDay = null;   // 감정 달력에서 다른 날을 보던 중이면 — 방금 적은 것이 목록에 보이게
+  render(); if (!phone()) i.focus();
+  toast(m.show ? `적었습니다 — ${showText(m)} ${DB.timeShowing(m) ? '떠 있습니다' : '뜹니다'}` : m.link ? `적었습니다 — ${linkLabel(m)}에 붙였습니다` : '적었습니다', () => DB.removeMemo(m.id));
+  if (m.show && m.show.kind === 'at') offerNotifyMemo();
+}
+const pastAt = show => !!show && show.kind === 'at' && DB.shownWin({ show })[1] <= Date.now();   // 정한 시각이 이미 지나 한 번도 안 뜰 것(09-28)
+const fitMemoIn = () => { const i = $('#memoIn'); i.style.height = 'auto'; i.style.height = i.scrollHeight + 'px'; };
+$('#memoIn').addEventListener('input', fitMemoIn);
+$('#memoIn').addEventListener('keydown', e => {
+  if (e.isComposing || e.keyCode === 229) return;   // 한글을 조합하던 Enter 는 글자를 마치는 것이다
+  if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); addMemoEntry(); }
+});
+setInterval(() => { const i = $('#memoIn'); if (!i || i.value) return; mexI = (mexI + 1) % MEMO_EX.length; i.placeholder = MEMO_EX[mexI]; }, 5000);
+document.addEventListener('click', e => {
+  const rmb = e.target.closest('[data-rmemo]');   // 재는 줄 밑의 메모 — 메모 탭에서 그 메모로
+  if (rmb){ const id = rmb.dataset.rmemo, i = DB.memos().findIndex(m => m.id === id); open = null; page = 'memo'; memoDay = null; memoHit = id; memoMore = Math.max(memoMore, i + 1); clueOpen.add(id);
+    q = ''; $('#q').value = ''; $('#qx').classList.add('hide'); document.body.classList.remove('side-on'); render(); const li = $(`.mlistb li[data-m="${id}"]`); if (li) li.scrollIntoView({ block:'center' }); return; }
+  const lm = e.target.closest('[data-logmemo]');   // 기록 화면에서 — 메모 탭의 그날로
+  if (lm){ open = null; page = 'memo'; memoHit = null; memoDay = lm.dataset.logmemo; memoMore = 50; q = ''; $('#q').value = ''; $('#qx').classList.add('hide');
+    render(); const b = $('.mlistb'); if (b) b.scrollIntoView({ block:'start' }); return; }
+  if (e.target.closest('[data-view=memo]')){ open = null; page = 'memo'; memoHit = null; memoDay = null; q = ''; $('#q').value = ''; $('#qx').classList.add('hide');
+    render(); return phone() ? null : $('#memoIn').focus(); }
+  const um = e.target.closest('[data-unmemo]');
+  if (um){ const id = um.dataset.unmemo; DB.restoreMemo(id); toast('되살렸습니다 — 메모에 있습니다', () => DB.removeMemo(id)); return render(); }
+  const mm = e.target.closest('[data-mmood]');
+  if (mm){ const n = +mm.dataset.mmood; mDraft.mood = mDraft.mood === n ? null : n; return drawMopts(); }
+  if (e.target.closest('[data-mfeel]')){ feelOpen = !feelOpen; return drawMopts(); }
+  if (e.target.closest('[data-feelmore]')){ feelMore = true; return render(); }
+  const mf = e.target.closest('[data-mf]');
+  if (mf){ const nx = pickFeel(mDraft.feel, mf.dataset.mf); if (!nx) return toast('감정 이름은 셋까지 고릅니다'); mDraft.feel = nx; return drawMopts(); }
+  if (e.target.closest('[data-madd]')) return addMemoEntry();
+  if (e.target.closest('[data-mlinkx]')){ mDraft.link = null; return drawMopts(); }
+  const wl = e.target.closest('[data-wledit]');
+  if (wl){ const mon = DB.monday(DB.today()), w = DB.weekLine(mon);
+    return startEdit(wl, w.line, v => { const was = DB.setWeekLine(mon, v); toast('이번 주의 한 줄을 적었습니다', () => DB.unsetWeekLine(mon, was)); }); }
+  if (e.target.closest('[data-memomore]')){ memoMore += 50; return render(); }
+  const li = e.target.closest('li[data-m]'); if (!li) return;
+  const id = li.dataset.m, m = DB.memo(id); if (!m) return;
+  const m2 = e.target.closest('[data-mmood2]');
+  if (m2){ const n = +m2.dataset.mmood2, was = DB.editMemo(id, { mood: m.mood === n ? null : n }); toast('기분을 고쳤습니다', () => DB.unedit(id, was)); return render(); }
+  const f2 = e.target.closest('[data-mf2]');
+  if (f2){ const nx = pickFeel(m.feel, f2.dataset.mf2); if (!nx) return toast('감정 이름은 셋까지 고릅니다');
+    const was = DB.editMemo(id, { feel:nx }); toast('감정 이름을 고쳤습니다', () => DB.unedit(id, was)); return render(); }
+  const lt = e.target.closest('[data-lto]');     // 붙일 곳을 골랐다
+  if (lt){ const [k, ...rest] = lt.dataset.lto.split(':'), to = rest.join(':'), was = DB.editMemo(id, { link:{ k, id:to } }); linkPick = null; mTools = null;
+    const nm = k === 't' ? (DB.todo(to) || {}).text : (DB.listOf(to) || {}).name;
+    toast(k === 't' ? `할 일 「${nm}」에 붙였습니다 — 그날 뜨고, ▶하면 재는 줄 밑에 뜹니다` : `목표 「${nm}」에 붙였습니다 — 그 목표의 일을 ▶할 때 뜹니다`, () => DB.unedit(id, was), 8000); return render(); }
+  const b = e.target.closest('[data-mdo]'); if (!b) return;
+  const act = b.dataset.mdo;
+  if (act === 'tools'){ mTools = mTools === id ? null : id; return render(); }
+  if (act === 'clue'){ clueOpen.add(id); return render(); }
+  if (act === 'down' && m.show && m.show.kind === 'again'){   // 잊을 만하면 다시 — 오늘만 내리고 다음 차례는 남긴다
+    const was = DB.editMemo(id, { show:{ ...m.show, seen:DB.today() } }), w = DB.shownWin(DB.memo(id)), nx = w[1] > Date.now() ? DB.ymd(new Date(w[0])) : '';
+    toast(nx ? `오늘은 내렸습니다 — 다음은 ${dOnly(nx)}` : '내렸습니다 — 다음 차례가 없습니다', () => DB.unedit(id, was)); return render(); }
+  if (act === 'down' && m.show && m.show.kind === 'at' && midOn(m) === DB.today()){   // 중간에 한 번 — 오늘만 내리고 정한 시각은 남긴다
+    const was = DB.editMemo(id, { show:{ ...m.show, seen:DB.today() } }); toast(`오늘은 내렸습니다 — ${showText(DB.memo(id))}에 다시 뜹니다`, () => DB.unedit(id, was)); return render(); }
+  if (act === 'down' && m.link && !DB.timeShowing(m)){   // 할 일 · 목표에 붙어 떠 있으면 — 그날만 내린다
+    const was = DB.editMemo(id, { link:{ ...m.link, seen:DB.today() } }); toast('오늘은 내렸습니다 — 붙인 곳은 그대로입니다', () => DB.unedit(id, was)); return render(); }
+  if (act === 'down'){ const was = DB.editMemo(id, { show:null }); toast('내렸습니다 — 메모는 남아 있습니다', () => DB.unedit(id, was)); return render(); }
+  if (act === 'link'){ linkPick = linkPick === id ? null : id; linkQ = ''; render(); const i = $(`li[data-m="${id}"] [data-lq]`); if (i && !phone()) i.focus(); return; }
+  if (act === 'unlink'){ const was = DB.editMemo(id, { link:null }); linkPick = null; toast('뗐습니다 — 메모는 남아 있습니다', () => DB.unedit(id, was)); return render(); }
+  if (act === 'mid'){ const was = DB.editMemo(id, { show:{ ...m.show, mid: m.show.mid === false ? undefined : false } });
+    toast(m.show.mid === false ? `중간에 한 번 띄웁니다 — ${dOnly(DB.midDay(m))}` : '중간에 한 번은 안 띄웁니다 — 정한 시각에만', () => DB.unedit(id, was)); return render(); }
+  if (act === 'after') return afterEdit(li, m);
+  if (act === 'clue2'){ const was = DB.editMemo(id, { clue:!m.clue }); toast(m.clue ? '떠 있을 때 다 보입니다' : '떠 있을 때 실마리만 보입니다', () => DB.unedit(id, was)); return render(); }
+  if (act === 'edit') return editMemoText(li, m);
+  if (act === 'send'){ openLink(m.text); mTools = null; render(); const n = $('[data-lname]'); if (n){ n.scrollIntoView({ block:'center' }); if (!phone()) n.focus(); } return; }
+  if (act === 'del'){ DB.removeMemo(id); mTools = null; toast('지웠습니다 — 휴지통에서 되살릴 수 있습니다', () => DB.restoreMemo(id)); return render(); }
+});
+document.addEventListener('input', e => { if (!e.target.matches || !e.target.matches('[data-lq]')) return;
+  linkQ = e.target.value; const ul = e.target.closest('.lpick').querySelector('.lcands'); if (ul) ul.innerHTML = candHTML(linkQ); });
+document.addEventListener('keydown', e => {      // 실마리 — 키보드로도 펼친다
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches && e.target.matches('.mtx.clue')){ e.preventDefault(); e.target.click(); }
+});
+document.addEventListener('change', e => {
+  const t = e.target; if (!t.matches) return;
+  if (t.matches('[data-mshow]')){ mDraft.show = t.value; if (t.value === 'at' && !mDraft.at) mDraft.at = nextHour(); drawMopts();
+    if (t.value === 'at'){ const a = $('[data-mat]'); if (a) a.focus(); } return; }
+  if (t.matches('[data-mat]')){ mDraft.at = t.value; return; }
+  if (t.matches('[data-mlead]')){ mDraft.lead = +t.value; return; }
+  const li = t.closest('li[data-m]'); if (!li) return; const id = li.dataset.m; if (!DB.memo(id)) return;
+  if (t.matches('[data-mshow2]')){ const show = showOf(t.value, nextHour(), 30), was = DB.editMemo(id, { show });
+    toast(show ? `띄웁니다 — ${showText(DB.memo(id))}` : '안 띄웁니다', () => DB.unedit(id, was)); render();
+    if (show && show.kind === 'at') offerNotifyMemo(); return; }
+  if (t.matches('[data-mat2], [data-mlead2]')){ const box = t.closest('.mat'), show = showOf('at', box.querySelector('[data-mat2]').value, box.querySelector('[data-mlead2]').value);
+    if (!show) return; if (pastAt(show)){ toast('지난 시각입니다 — 띄울 시각을 다시 고르세요'); return; }
+    const old = DB.memo(id).show; if (old && old.kind === 'at' && old.mid === false) show.mid = false;
+    const was = DB.editMemo(id, { show }); toast(`띄울 때를 바꿨습니다 — ${showText(DB.memo(id))}`, () => DB.unedit(id, was)); return render(); }
+});
+
+/* ── 바탕화면 그림(5단계) ── 폰 잠금 화면 · 컴퓨터 바탕화면에 걸 그림 한 장. 웹은 바탕화면을 바꾸지 못해서 그림을 만들고 사람이 건다 — 저절로 안 바뀐다고 말한다(규칙 4).
+   고른 것만 넣는다(규칙 2). 잠금 화면은 남도 본다 — 감정이 붙은 메모는 처음엔 빠져 있고, 첫마디만인 메모는 그림에도 첫마디만(규칙 7) */
+let wallOn = false, wallShape = null, wallDark = true, wallWeek = true, wallPick = new Set(), wallCache = { k:'' };
+const WALL = { phone:{ W:1170, H:2532 }, desk:{ W:2560, H:1440 } };
+const emoMemo = m => !!(m.mood || m.feel.length);
+const wallCands = () => { const up = DB.shownMemos().filter(m => m.text), ids = new Set(up.map(m => m.id));   // 떠 있는 것 먼저, 그다음 새것부터
+  return [...up, ...DB.memos().filter(m => m.text && !ids.has(m.id))].slice(0, 30); };
+const wallLine = m => m.clue ? clueOf(m.text) + '…' : m.text;
+function wallOpen(){ wallOn = true; wallShape = wallShape || (phone() ? 'phone' : 'desk');
+  wallPick = new Set(DB.shownMemos().filter(m => m.text && !emoMemo(m)).slice(0, 6).map(m => m.id)); }
+function wrapText(x, t, max, most){               // 폭에 맞춰 줄로 — 빈칸에서 먼저 끊고, 긴 말은 글자에서. 넘치면 끝에 …
+  const out = [];
+  for (const para of String(t).split('\n')){
+    let cur = '';
+    for (const w of para.split(/(\s+)/)){
+      if (x.measureText(cur + w).width <= max){ cur += w; continue; }
+      if (cur.trim()) out.push(cur.trimEnd()); cur = w.trimStart();
+      while (x.measureText(cur).width > max){ let i = cur.length; while (i > 1 && x.measureText(cur.slice(0, i)).width > max) i--; out.push(cur.slice(0, i)); cur = cur.slice(i); }
+    }
+    if (cur.trim()) out.push(cur.trimEnd());
+  }
+  if (out.length > most){ out.length = most; let l = out[most - 1]; while (l.length > 1 && x.measureText(l + '…').width > max) l = l.slice(0, -1); out[most - 1] = l + '…'; }
+  return out;
+}
+function makeWall(shape, dark, week, ids){
+  const { W, H } = WALL[shape], c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d'), F = '"Apple SD Gothic Neo","Pretendard","Noto Sans KR",-apple-system,sans-serif';
+  const P = dark ? { bg:'#1E1D1B', ink:'#F2EFEA', sub:'rgba(242,239,234,.55)', ac:'#8DB8E3' } : { bg:'#F6F4F1', ink:'#2E2C29', sub:'rgba(46,44,41,.6)', ac:'#2C5B88' };
+  const ph = shape === 'phone', L = ph ? 120 : 640, max = W - L * 2;   // 폰은 위쪽을 시계가 쓴다 · 컴퓨터는 가운데에(양옆 아이콘을 비킨다)
+  const top = ph ? Math.round(H * .42) : Math.round(H * .16), room = (ph ? Math.round(H * .84) : Math.round(H * .86)) - top;
+  const S = ph ? { lab:40, wk:68, wkL:94, mm:48, mmL:70, gap:46 } : { lab:40, wk:84, wkL:114, mm:54, mmL:80, gap:44 };
+  const font = (px, b) => { x.font = `${b ? 700 : 400} ${px}px ${F}`; };
+  const ops = []; let y = 0, used = 0, dropped = 0;
+  const line = (t, px, b, col, lh, X = L) => { ops.push({ t, px, b, col, X, y:y + Math.round((lh + px * .72) / 2) }); y += lh; };
+  const wl = week ? DB.weekLine(DB.monday(DB.today())).line : '';
+  if (wl){ line('이번 주의 한 줄', S.lab, true, P.ac, S.lab + 22); font(S.wk, true); wrapText(x, wl, max, 4).forEach(l => line(l, S.wk, true, P.ink, S.wkL)); }
+  const ms = ids.map(id => DB.memo(id)).filter(m => m && !m.deletedAt && m.text);
+  ms.forEach(m => {
+    font(S.mm, false); const ls = wrapText(x, wallLine(m), max - 44, 3), need = (y ? S.gap : 0) + ls.length * S.mmL;
+    if (dropped || y + need > room){ dropped++; return; }
+    if (y) y += S.gap; ops.push({ dot:true, y:y + Math.round(S.mmL / 2) });
+    ls.forEach(l => line(l, S.mm, false, P.ink, S.mmL, L + 44)); used++; });
+  x.fillStyle = P.bg; x.fillRect(0, 0, W, H);
+  const oy = ph ? top : top + Math.max(0, Math.round((room - y) / 2));
+  ops.forEach(o => { if (o.dot){ x.fillStyle = P.sub; x.beginPath(); x.arc(L + 10, oy + o.y, ph ? 9 : 8, 0, Math.PI * 2); x.fill(); return; }
+    font(o.px, o.b); x.fillStyle = o.col; x.textAlign = 'left'; x.fillText(o.t, o.X, oy + o.y); });
+  if (ops.length){ font(ph ? 30 : 26, false); x.fillStyle = P.sub; x.textAlign = ph ? 'center' : 'left'; x.fillText('오션아워', ph ? W / 2 : L, ph ? H - 190 : oy + y + 90); }
+  return { canvas:c, lines:ops.filter(o => o.t).map(o => o.t), used, dropped, empty:!ops.length };
+}
+const blobOf = url => { const b = atob(url.split(',')[1]), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new Blob([u], { type:'image/png' }); };   // 누른 그 자리에서 — 아이폰은 기다리면 보내기 창을 막는다
+function wallPanel(){
+  const cs = wallCands(), wl = DB.weekLine(DB.monday(DB.today())).line;
+  wallPick = new Set([...wallPick].filter(id => { const m = DB.memo(id); return m && !m.deletedAt && m.text; }));
+  const ids = cs.filter(m => wallPick.has(m.id)).map(m => m.id);
+  const k = JSON.stringify([wallShape, wallDark, wallWeek && wl, ids.map(id => wallLine(DB.memo(id)))]);
+  if (wallCache.k !== k){ const r = makeWall(wallShape, wallDark, wallWeek, ids); wallCache = { k, r, url:r.empty ? '' : r.canvas.toDataURL('image/png') }; }
+  const r = wallCache.r, seg = (key, v, n, on) => `<button data-${key}="${v}" class="${on ? 'on' : ''}" aria-pressed="${on}">${n}</button>`;
+  return `<div class="box wallp"><h2>바탕화면 그림</h2><div class="wp">
+    ${wallCache.url ? `<img class="wimg ${wallShape}" src="${wallCache.url}" alt="바탕화면 그림 — ${esc(r.lines.join(' / '))}">`
+                    : `<div class="wimg ${wallShape} none">이번 주의 한 줄이나 메모를 고르면 여기 그림이 됩니다</div>`}
+    <div class="wps">
+      <div class="wseg" role="group" aria-label="모양">${seg('wshape', 'phone', '폰 잠금 화면', wallShape === 'phone')}${seg('wshape', 'desk', '컴퓨터 바탕화면', wallShape === 'desk')}</div>
+      <div class="wseg" role="group" aria-label="색">${seg('wdark', '1', '어둡게', wallDark)}${seg('wdark', '0', '밝게', !wallDark)}</div>
+      <label class="wpi"><input type="checkbox" data-wweek ${wallWeek && wl ? 'checked' : ''} ${wl ? '' : 'disabled'}><span>이번 주의 한 줄${wl ? ` — ${esc(wl)}` : ' — 아직 안 적음'}</span></label>
+      ${cs.length ? `<div class="wph">넣을 메모 — 여섯까지</div><ul class="wpl">${cs.map(m => `<li><label class="wpi"><input type="checkbox" data-wm="${esc(m.id)}" ${wallPick.has(m.id) ? 'checked' : ''}>
+          <span>${esc(wallLine(m).split('\n')[0].slice(0, 60))}<i>${[DB.showing(m) ? '떠 있음' : '', emoMemo(m) ? '감정' : '', m.clue ? '첫마디만' : ''].filter(Boolean).join(' · ')}</i></span></label></li>`).join('')}</ul>`
+        : `<div class="wph">글이 있는 메모가 아직 없습니다</div>`}
+      ${r.dropped ? `<p class="wpw">자리가 모자라 ${r.dropped}개는 그림에 못 들어갔습니다</p>` : ''}
+      <div class="fbtn">${wallCache.url ? `<button data-wall="save">그림 저장</button>${canShareImg() ? '<button data-wall="share">보내기</button>' : ''}` : ''}<button data-wall="close">닫기</button></div>
+      <div class="rnote">그림은 저절로 바뀌지 않습니다. 메모를 바꾸면 다시 만들어 거세요.<br>잠금 화면은 남도 봅니다. 감정이 붙은 메모는 처음엔 빠져 있고, 첫마디만인 메모는 그림에도 첫마디만 나옵니다.<br>
+        거는 법 — 아이폰: 사진 앱에서 공유 → 배경화면으로 사용 · 안드로이드: 갤러리에서 배경화면으로 설정 · 컴퓨터: 저장한 그림을 바탕화면으로</div></div></div></div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-wall], [data-wshape], [data-wdark]'); if (!b) return;
+  if (b.dataset.wshape){ wallShape = b.dataset.wshape; return render(); }
+  if (b.dataset.wdark){ wallDark = b.dataset.wdark === '1'; return render(); }
+  const a = b.dataset.wall;
+  if (a === 'open' || a === 'close'){ if (a === 'open') wallOpen(); else wallOn = false; return render(); }
+  if (!wallCache.url) return;
+  const name = `오션아워-바탕화면-${DB.today()}.png`;
+  if (a === 'save'){ const l = document.createElement('a'); l.href = wallCache.url; l.download = name; l.click(); return; }
+  if (a === 'share') navigator.share({ files:[new File([blobOf(wallCache.url)], name, { type:'image/png' })] }).catch(() => {});
+});
+document.addEventListener('change', e => { const t = e.target; if (!t.matches) return;
+  if (t.matches('[data-wweek]')){ wallWeek = t.checked; render(); const f = $('[data-wweek]'); return f && f.focus(); }
+  if (!t.matches('[data-wm]')) return;
+  const id = t.dataset.wm;
+  if (t.checked && wallPick.size >= 6){ t.checked = false; return toast('메모는 여섯까지 넣습니다'); }
+  if (t.checked) wallPick.add(id); else wallPick.delete(id);
+  render(); const f = $(`[data-wm="${id}"]`); if (f) f.focus(); });
+
+/* ── 링크로 보내기(6단계) ── 한마디 선물 · 한마디 부탁 · 글 담기. 서버 없이 글을 링크 끝 #g= 에 담는다(# 뒤는 서버로 안 간다).
+   이름 없는 링크는 만들지도 받지도 않는다. 받은 사람이 「담기」를 누르기 전에는 아무것도 저장하지 않는다(규칙 2 · 7) */
+let linkOn = false, linkKind = 'gift', linkText = '', linkName = '', linkMade = '', gotLink = null, replyText = '', replyMade = '';
+const ME = 'oceanhour-me';                      // 링크에 적을 내 이름 — 이 기기에만
+const myName = () => { try{ return localStorage.getItem(ME) || ''; }catch(e){ return ''; } };
+const setMyName = n => { try{ localStorage.setItem(ME, n); }catch(e){} };
+const linkUrl = code => location.origin + location.pathname + '#g=' + code;
+const hashCode = h => { const m = String(h || '').match(/#g=([A-Za-z0-9_-]+)/); return m ? m[1] : null; };
+const clearHash = () => { if (location.hash) history.replaceState(null, '', location.pathname + location.search); };
+const copyText = (v, msg) => (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast(msg)).catch(() => prompt('이 링크를 복사하세요', v));
+const LINK_UI = {
+  gift:{ tab:'한마디 보내기', say:'친구에게 한마디를 보냅니다. 친구가 열면 메모로 담고, 정한 때에 띄울 수 있어요.', ph:'예: 면접 잘 봐. 너는 준비된 사람이야', who:'내 이름 — 받는 사람에게 보입니다',
+         msg:n => `${n}님이 한마디를 보냈어요. 열어서 메모로 담을 수 있어요.` },
+  ask:{ tab:'한마디 부탁', say:'친구에게 한마디를 부탁합니다. 친구는 앱 없이 답을 적어 링크로 돌려줍니다.', ph:'예: 내일 면접이야. 한마디 해 줄래?', who:'내 이름 — 받는 사람에게 보입니다',
+        msg:n => `${n}님이 한마디를 부탁했어요. 열어서 답을 적어 주세요.` },
+  clip:{ tab:'글 담기 링크', say:'인스타 · 블로그 글에 붙일 링크입니다. 누른 사람이 그 글을 메모로 담습니다.', ph:'담아 갈 한 줄 — 명언 · 다짐', who:'출처 — 계정 이름',
+         msg:() => '이 글을 메모로 담기' } };
+const linkOut = (url, msg) => `<div class="lout"><input readonly value="${esc(url)}" aria-label="만든 링크" data-lurl>
+  <div class="fbtn">${navigator.share ? `<button data-lsend="${esc(msg + '\n' + url)}">보내기</button>` : ''}<button data-lcopy>링크 복사</button></div></div>`;
+function linkPanel(){
+  const u = LINK_UI[linkKind], seg = v => `<button data-lkind="${v}" class="${linkKind === v ? 'on' : ''}" aria-pressed="${linkKind === v}">${LINK_UI[v].tab}</button>`;
+  const made = linkMade && DB.giftOf(hashCode(linkMade));
+  return `<div class="box linkp"><h2>친구에게</h2>
+    <div class="wseg" role="group" aria-label="무엇을">${Object.keys(LINK_UI).map(seg).join('')}</div>
+    <p class="lsay">${u.say}</p>
+    <textarea class="lin" data-ltext maxlength="500" rows="2" placeholder="${u.ph}" aria-label="보낼 글">${esc(linkText)}</textarea>
+    ${linkText.trim().length > 500 ? `<p class="wpw">링크에는 500자까지 담깁니다 — 뒤의 ${linkText.trim().length - 500}자는 빠집니다</p>` : ''}
+    <input class="lname" data-lname maxlength="20" value="${esc(linkName)}" placeholder="${u.who}" aria-label="${u.who}">
+    <div class="fbtn"><button data-link="make">링크 만들기</button><button data-link="close">닫기</button></div>
+    ${made ? linkOut(linkMade, u.msg(made.n)) : ''}
+    <div class="rnote">링크 안에 글이 들어 있습니다. 링크를 가진 사람은 누구나 열어 볼 수 있어요. 서버에는 아무것도 남지 않습니다.</div></div>`;
+}
+function gotPanel(){
+  const g = gotLink, ua = navigator.userAgent, alone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const head = g.k === 'ask' ? `${esc(g.n)}님의 부탁` : g.k === 'clip' ? `받은 글 — 출처 ${esc(g.n)}` : `${esc(g.n)}님이 보낸 한마디`;
+  if (g.k === 'ask') return `<div class="box gotp"><h2>${head}</h2><p class="gtx">${esc(g.t)}</p>
+    <textarea class="lin" data-rtext maxlength="500" rows="2" placeholder="내 한마디" aria-label="내 한마디">${esc(replyText)}</textarea>
+    <input class="lname" data-rname maxlength="20" value="${esc(myName())}" placeholder="내 이름 — ${esc(g.n)}님에게 보입니다" aria-label="내 이름">
+    <div class="fbtn"><button data-got="reply">답 링크 만들기</button><button data-got="no">닫기</button></div>
+    ${replyMade ? linkOut(replyMade, LINK_UI.gift.msg(DB.giftOf(hashCode(replyMade)).n)) : ''}
+    <div class="rnote">앱을 쓰지 않아도 됩니다. 만든 링크를 ${esc(g.n)}님에게 보내면 ${esc(g.n)}님이 열어 메모로 담습니다.</div></div>`;
+  const dup = DB.memos().find(m => m.from && m.from.k === g.k && m.from.n === g.n && m.text === g.t && (m.from.re || '') === (g.re || ''));   // 같은 링크를 다시 열었을 때 — 두 번 담지 않게. 부탁 내용(re)도 같아야 같은 링크다
+  if (dup) return `<div class="box gotp"><h2>${head}</h2><p class="gtx">${esc(g.t)}</p>
+    <p class="lsay">이미 담은 글입니다 — 메모에 있습니다(${madeText(dup)}).</p>
+    <div class="fbtn"><button data-got="see" data-id="${esc(dup.id)}">메모에서 보기</button><button data-got="no">닫기</button></div></div>`;
+  const where = /KAKAOTALK/i.test(ua) ? `<p class="lsay">카카오톡 안에서 담으면 카카오톡 안에만 남습니다. 밖에서 열어 담으세요.</p>
+        <a class="lext" href="kakaotalk://web/openExternal?url=${encodeURIComponent(location.href)}">카카오톡 밖에서 열기</a>`
+    : phoneRisk() === 'inapp' ? `<p class="lsay">앱 안 브라우저입니다. 여기서 담으면 이 앱 안에만 남습니다. 위 띠의 「주소 복사」로 사파리 · 크롬에서 여세요.</p>`
+    : /iPhone|iPad|iPod/.test(ua) && !alone ? `<p class="lsay">홈 화면에 둔 오션아워에 담으려면 링크를 복사해 그 앱의 메모 칸에 붙이세요. <button class="lk" data-lcopyhere>링크 복사</button></p>` : '';
+  return `<div class="box gotp"><h2>${head}</h2>${g.re ? `<p class="gre">내 부탁 — ${esc(g.re)}</p>` : ''}<p class="gtx">${esc(g.t)}</p>${where}
+    <label class="mshow gsel">띄우기 <select data-gshow aria-label="담으면 언제 띄울까">${SHOW_OPTS.filter(([v]) => v !== 'at').map(([v, n]) => `<option value="${v}" ${v === 'week' ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+    <div class="fbtn"><button data-got="keep">메모로 담기</button><button data-got="no">안 담기</button></div>
+    <div class="rnote">담기 전에는 아무것도 저장하지 않습니다.</div></div>`;
+}
+function takeGift(code){                         // 받은 링크를 연다 — 보여 주기만 하고, 담는 건 사람이 누른다
+  const g = DB.giftOf(code); if (!g){ toast('링크가 깨졌습니다 — 받은 링크를 다시 눌러 주세요'); return false; }
+  gotLink = g; replyText = ''; replyMade = ''; page = 'memo'; open = null; q = ''; $('#q').value = ''; $('#qx').classList.add('hide'); render(); return true; }
+window.addEventListener('hashchange', () => { const c = hashCode(location.hash); if (c) takeGift(c); });
+$('#memoIn').addEventListener('input', e => {    // 받은 링크를 메모 칸에 붙여도 연다 — 아이폰 홈 화면 앱은 사파리와 저장이 따로라서
+  const c = hashCode(e.target.value); if (!c || !DB.giftOf(c)) return;
+  e.target.value = e.target.value.replace(/\S*#g=[A-Za-z0-9_-]+\S*/, '').replace(/[ \t]{2,}/g, ' ').trim(); fitMemoIn(); takeGift(c); });
+document.addEventListener('input', e => { const t = e.target; if (!t.matches) return;
+  if (t.matches('[data-ltext]')) linkText = t.value; else if (t.matches('[data-lname]')) linkName = t.value; else if (t.matches('[data-rtext]')) replyText = t.value; });
+function openLink(text){ linkOn = true; linkKind = 'gift'; linkText = text || ''; linkName = myName(); linkMade = ''; }
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-link], [data-lkind], [data-lsend], [data-lcopy], [data-lcopyhere], [data-got]'); if (!b) return;
+  if (b.dataset.lkind){ linkKind = b.dataset.lkind; linkMade = ''; return render(); }
+  const a = b.dataset.link;
+  if (a === 'open'){ openLink(''); render(); const t = $('[data-ltext]'); return t && !phone() ? t.focus() : null; }
+  if (a === 'close'){ linkOn = false; linkMade = ''; linkText = ''; return render(); }
+  if (a === 'make'){ const n = $('[data-lname]').value.trim(); linkText = $('[data-ltext]').value; linkName = n;
+    if (!linkText.trim()){ toast('보낼 글을 적으세요'); return $('[data-ltext]').focus(); }
+    if (!n){ toast('이름을 적으세요 — 이름 없는 링크는 만들지 않습니다'); return $('[data-lname]').focus(); }
+    if (linkKind !== 'clip') setMyName(n);     // 출처는 내 이름이 아닐 수 있다
+    linkMade = linkUrl(DB.giftCode({ k:linkKind, t:linkText, n })); render(); const u = $('[data-lurl]'); if (u) u.select(); return; }
+  if (b.hasAttribute('data-lsend')) return navigator.share({ text:b.dataset.lsend }).catch(() => {});
+  if (b.hasAttribute('data-lcopy')) return copyText(b.closest('.lout').querySelector('[data-lurl]').value, '링크를 복사했습니다');
+  if (b.hasAttribute('data-lcopyhere')) return copyText(location.href, '링크를 복사했습니다 — 홈 화면 앱의 메모 칸에 붙이세요');
+  const g = b.dataset.got; if (!g || !gotLink) return;
+  if (g === 'no'){ gotLink = null; replyText = ''; replyMade = ''; clearHash(); return render(); }
+  if (g === 'see'){ const id = b.dataset.id, i = DB.memos().findIndex(m => m.id === id); gotLink = null; clearHash();
+    memoDay = null; memoHit = id; memoMore = Math.max(memoMore, i + 1); render(); const li = $(`.mlistb li[data-m="${id}"]`); if (li) li.scrollIntoView({ block:'center' }); return; }
+  if (g === 'keep'){ const x = gotLink, sel = $('[data-gshow]'), show = showOf(sel ? sel.value : 'none') || null;
+    const m = DB.addMemo(x.t, { show, from:{ k:x.k, n:x.n, re:x.re } }); gotLink = null; clearHash(); render();
+    return toast(show ? `담았습니다 — ${showText(m)} ${DB.showing(m) ? '떠 있습니다' : '뜹니다'}` : '담았습니다 — 메모에 있습니다', () => DB.removeMemo(m.id)); }
+  if (g === 'reply'){ const n = $('[data-rname]').value.trim(); replyText = $('[data-rtext]').value;
+    if (!replyText.trim()){ toast('한마디를 적으세요'); return $('[data-rtext]').focus(); }
+    if (!n){ toast('이름을 적으세요 — 이름 없는 답은 만들지 않습니다'); return $('[data-rname]').focus(); }
+    setMyName(n); replyMade = linkUrl(DB.giftCode({ k:'gift', t:replyText, n, re:gotLink.t })); render(); const u = $('.gotp [data-lurl]'); if (u) u.select(); }
+});
+
 /* ── 이렇게 쓸 수 있어요(규칙 3 — 숨기지 않는다) ── 사람이 누를 때만 연다(규칙 2). 적는 말 예시는 검사가 하나씩 알아듣는지 본다(규칙 6) */
 const HELP_TRY = [
   ['내일 치과 3시', '내일 오후 3시'], ['모레 병원 · 10/3 여행', '날짜'], ['오후 3시 30분 미팅', '시각'],
@@ -2740,17 +3615,31 @@ const ADD_EX = ['내일 치과 3시', '매주 수 회의', '물 하루 8잔', '2
 function helpPage(){
   const tries = HELP_TRY.map(([ex, what]) => `<tr><td>${ex.split(' · ').map(x => `<button class="try" data-try="${esc(x)}">${esc(x)}</button>`).join(' · ')}</td><td>${what}</td></tr>`).join('');
   const li = xs => `<ul>${xs.map(([a, b]) => `<li>${a}${b ? ` <span>— ${b}</span>` : ''}</li>`).join('')}</ul>`;
-  return `<div class="box help"><h2>적으면 알아듣는 말 — 누르면 입력칸에 넣어 봅니다</h2><table>${tries}</table></div>
+  return `<div class="box help"><h2>메모 — 맨 앞</h2>${li([['적는 칸', 'Enter로 적기 · Shift+Enter 줄 바꿈. 기분만 눌러도 적힌다'], ['기분 · 감정 이름', '기분 다섯 칸 · 이름은 셋까지(더 보기에 서른 개 남짓)'],
+      ['띄우기', '오늘 하루 · 일주일 · 정한 시각(몇 분 전부터) · 바꿀 때까지 — 뜨면 맨 위 「지금 떠 있는 메모」에, 때가 지나면 스스로 내려온다. 정한 시각에는 이 탭이 열려 있을 때 알림'],
+      ['잊을 만하면 다시', '적은 날에서 1 · 3 · 7 · 14 · 30 · 60일 뒤에 하루씩 뜬다. 「내리기」는 그날만 내린다'],
+      ['중간에 한 번', '정한 시각이 7일 넘게 남았으면 그 사이 20% 즈음에 하루 먼저 뜬다 — 알림 없이. 줄 끝 ⋯에서 끈다'],
+      ['실마리만', '감정이 붙은 메모는 뜰 때 첫마디만 — 떠올려 본 뒤 누르면 펼친다(줄 끝 ⋯에서 바꾼다)'], ['이번 주의 한 줄', '한 주를 사는 말 하나. 새 주에 안 바꾸면 그대로 이어진다'],
+      ['줄 끝 ⋯', '기분 · 감정 이름 · 띄우기 · 실마리 · 글 고치기 · 그다음 · 친구에게 보내기 · 지우기'],
+      ['그다음', '그 일이 그다음 어떻게 됐는지 한 줄 — 지난 걱정이 어떻게 풀렸는지 남는다. 찾기에도 걸린다'],
+      ['지난 오늘', '일주일 · 한 달 · 일 년 전 오늘 적은 메모. 힘든 날의 메모는 빼 두고 뺐다고 말한다 — 넣어 볼 수 있다. ⋯에서 그 달 · 그 사람은 다시 안 보기'],
+      ['감정 달력', '메모 모음 위 「감정 달력」 — 점 하나가 메모 하나, 색은 기분. 날을 누르면 그날 메모만'],
+      ['바탕화면 그림', '이번 주의 한 줄과 고른 메모를 폰 잠금 화면 · 컴퓨터 바탕화면 그림으로. 그림은 저절로 안 바뀐다 — 바꾸면 다시 만든다'],
+      ['친구에게', '한마디 보내기 · 한마디 부탁 · 글 담기 링크 — 가입 없이 링크 하나로. 링크 안에 글이 들어 있고, 서버에는 안 남는다. 받은 사람이 「담기」를 눌러야 저장된다'],
+      ['저녁 마무리', '마지막에 오늘 마음(기분 하나)과 내일 띄울 말 — 메모로 남는다'],
+      ['할 일 · 목표에 붙이기', '줄 끝 ⋯ → 할 일 · 목표에 붙이기. 할 일에 붙이면 그 날 하루 떠 있고 ▶하면 재는 줄 밑에, 목표에 붙이면 그 목표의 일을 ▶할 때마다. 옮기면 따라가고 끝내면 내려온다. 할 일 줄 ⋯ · 목표 화면에서도 붙인다'],
+      ['한 주 · 기록에서', '한 주 화면 맨 위에 그 주의 한 줄 · 기록 화면 날마다 그날 메모 수와 기분 점(누르면 메모 탭의 그날)']])}</div>
+    <div class="box help"><h2>적으면 알아듣는 말 — 누르면 입력칸에 넣어 봅니다</h2><table>${tries}</table></div>
     <div class="box help"><h2>할 일 줄</h2>${li([['줄 끝 ⋯', '반복 · 시각 · 기간 · 마감 · 메모 · 하위 할 일 · 복사 · 세기 · 건너뛰기 · 이번만 따로 · 지움'],
       ['▶', '목표의 일은 눌러서 시간을 잰다. 재는 줄에서 25분 · 50분 집중, 끝나면 5분 쉬기'], ['체크 칸', '끝내기. 폰은 오른쪽으로 밀면 끝, 왼쪽으로 밀면 내일로'],
       ['⋮⋮ 끌기', '순서 바꾸기(컴퓨터)'], ['고르기', '여러 개를 한꺼번에 옮기기 · 끝내기 · 지우기']])}</div>
     <div class="box help"><h2>하루</h2>${li([['계획', '아침에 밀린 일 · 날짜 없는 일에서 오늘 할 것 고르기'], ['마무리', '저녁에 한 것을 보고, 남은 것은 내일로, 한 줄 남기기'],
-      ['4칸', '그날 할 일을 중요 · 급함으로 나눠 보기. 할 일을 눌러 칸을 고른다(폰은 ⋯ 안)'], ['시간 띠', '그날을 시간 칸으로 — 잡은 시간 옆 오른쪽 줄에 ▶로 잰 시간'], ['오늘 메모', '날짜 화면 맨 아래'], ['지난 일 · 하나씩', '밀린 일을 한 장씩 정리']])}</div>
+      ['4칸', '그날 할 일을 중요 · 급함으로 나눠 보기. 할 일을 눌러 칸을 고른다(폰은 ⋯ 안)'], ['시간 띠', '그날을 시간 칸으로 — 잡은 시간 옆 오른쪽 줄에 ▶로 잰 시간'], ['오늘 한 줄', '날짜 화면 맨 아래 — 저녁 마무리의 한 줄과 같은 자리'], ['지난 일 · 하나씩', '밀린 일을 한 장씩 정리']])}</div>
     <div class="box help"><h2>목표</h2>${li([['+ 새 목표', '옆 칸(폰은 ☰ 안)'], ['단계 · 마감(D-) · 영역 · 메모', '목표 화면에서'], ['틀로 바로 시작', '처음 화면 · 받은 틀 링크로 목표 · 루틴을 한 번에']])}</div>
     <div class="box help"><h2>한 주 · 달력 · 기록</h2>${li([['한 주', '정한 곳 / 그 밖 · 목표별 시간 · 돌아보기 세 칸 · 그림으로(인스타에 올릴 한 장)'],
       ['달력', '월 · 주 · 시간표(끌어서 옮기기) · 공휴일 · 절기'], ['인쇄', '달력 · 한 주의 「인쇄」나 ⌘P — 옆 칸과 단추는 빼고 본문만 종이 · PDF로'], ['기록', '날마다 끝낸 것과 쓴 시간'], ['찾기', '할 일 · 메모 · 목표 메모까지']])}</div>
     <div class="box help"><h2>자료</h2>${li([['내보내기 · 가져오기', '파일 하나. 폰은 보내기 창으로 다른 기기에. 가져올 때 합치기(폰 · 컴퓨터를 같이 쓸 때) · 바꾸기(새 기기로 옮길 때)'], ['캘린더 파일(.ics)', '폰 캘린더와 주고받기 — 달력 화면'],
-      ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다'], ['색 바꾸기', '옆 칸 아래 — 다섯 벌. 이 기기에만 둔다'], ['개인정보', '모으지 않는다 — 적은 것은 이 기기 브라우저에만']])}<p class="pvl"><a href="https://kyeom531-sketch.github.io/oceanhour-planner/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></p></div>
+      ['휴지통 · 보관함', '지운 것은 되살리고, 30일 넘게 밀린 일은 보관함에'], ['앱으로 설치 · 어두운 화면', '어두운 화면은 기기 설정을 따른다'], ['색 바꾸기', '옆 칸 아래 — 다섯 벌. 이 기기에만 둔다'], ['개인정보', '적은 것은 모으지 않고 이 기기 브라우저에만 둔다. 다만 이번 주에 처음 왔는지 · 다시 왔는지만 앱과 다른 주소로 이름 없이 센다']])}<p class="pvl"><a href="https://kyeom531-sketch.github.io/oceanhour-planner/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></p></div>
     <div class="box help"><h2>키보드(컴퓨터)</h2>${li([['<kbd>/</kbd>', '찾기'], ['입력칸에서 <kbd>↓</kbd>', '목록으로'], ['<kbd>↑</kbd> <kbd>↓</kbd>', '줄 이동'],
       ['<kbd>스페이스</kbd>', '끝내기'], ['<kbd>Enter</kbd>', '고치기'], ['<kbd>Delete</kbd>', '지우기'], ['<kbd>Alt</kbd>+<kbd>↑</kbd><kbd>↓</kbd>', '순서'], ['<kbd>Esc</kbd>', '입력칸으로']])}</div>`;
 }
@@ -2764,7 +3653,7 @@ const exPh = ex => innerWidth <= 340 ? `예: ${ex}` : innerWidth <= 640 ? `할 �
 if ($('#add')) $('#add').placeholder = exPh(ADD_EX[0]);
 setInterval(() => { const i = $('#add'); if (!i || i.value) return; exI = (exI + 1) % ADD_EX.length; i.placeholder = exPh(ADD_EX[exI]); }, 5000);
 
-/* ── 날마다 메모 · 목표 메모(09-26) ── 할 일 메모와 같다. 적는 대로 0.4초 뒤에, 칸을 떠날 때 한 번 더 저장 */
+/* ── 하루 한 줄 · 목표 메모(09-26, 하루 한 줄은 09-28까지 「오늘 메모」) ── 할 일 메모와 같다. 적는 대로 0.4초 뒤에, 칸을 떠날 때 한 번 더 저장 */
 let memoT;
 const saveMemo = n => n.dataset.daymemo ? (DB.dayLine(n.dataset.daymemo) !== n.value && DB.setDayLine(n.dataset.daymemo, n.value))
   : (DB.listOf(n.dataset.goalmemo) && (DB.listOf(n.dataset.goalmemo).note || '') !== n.value && DB.setListNote(n.dataset.goalmemo, n.value));
@@ -2780,8 +3669,11 @@ document.addEventListener('focusout', e => {
 document.addEventListener('click', e => {
   const o = e.target.closest('[data-memoopen]');
   if (o){ memoOpen = o.dataset.memoopen; render(); const t = document.querySelector(`textarea[data-daymemo="${memoOpen}"]`); if (t) t.focus(); return; }
-  const h = e.target.closest('[data-memogoal], [data-memoday]'); if (!h) return;   // 찾기에서 메모를 누르면 그 자리로
+  const h = e.target.closest('[data-memogoal], [data-memoday], [data-memoid]'); if (!h) return;   // 찾기에서 메모를 누르면 그 자리로
   q = ''; $('#q').value = ''; $('#qx').classList.add('hide');
+  if (h.dataset.memoid){ const id = h.dataset.memoid, i = DB.memos().findIndex(m => m.id === id);
+    open = null; page = 'memo'; memoDay = null; memoHit = id; memoMore = Math.max(memoMore, i + 1); render();
+    const li = $(`.mlistb li[data-m="${id}"]`); if (li) li.scrollIntoView({ block:'center' }); return; }
   if (h.dataset.memogoal){ open = h.dataset.memogoal; } else { open = null; page = 'day'; dayMode = 'list'; day = h.dataset.memoday; }
   render();
 });
@@ -3109,6 +4001,7 @@ function backupDue(){
   let last = '', first = '';
   for (const t of DB.todos()){ if (t.updatedAt > last) last = t.updatedAt; if (t.made && (!first || t.made < first)) first = t.made; }
   for (const l of DB.lists()) if (l.updatedAt > last) last = l.updatedAt;
+  for (const m of DB.memos()){ if (m.updatedAt > last) last = m.updatedAt; const d = DB.madeDay(m); if (d && (!first || d < first)) first = d; }   // 메모만 적는 사람도 — 메모의 made 는 시각까지라 날짜로 바꿔 견준다
   if (!last || (b.at && b.at >= last)) return null;            // 내보낸 뒤로 바뀐 게 없다
   const since = b.at ? DB.ymd(new Date(b.at)) : first; if (!since) return null;
   const days = -ddays(since, T); return days >= BACKUP_DAYS ? { days, never:!b.at } : null;
@@ -3122,7 +4015,7 @@ const IN_APP = /Instagram|FBAN|FBAV|FB_IAB|KAKAOTALK|NAVER\(inapp|Line\/|DaumApp
 function phoneRisk(ua = navigator.userAgent, alone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true){
   if (IN_APP.test(ua)) return 'inapp';
   const iSafari = /iPhone|iPad|iPod/.test(ua) && /Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
-  if (iSafari && !alone && DB.todos().length && !((readBK().homeLater || '') > DB.today())) return 'home';
+  if (iSafari && !alone && (DB.todos().length || DB.memos().length) && !((readBK().homeLater || '') > DB.today())) return 'home';
   return null;
 }
 function riskHTML(k){
@@ -3140,7 +4033,7 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-risk
 
 let storeAsked = false;                          // 저장을 붙잡아 달라고(persist) — 적은 게 생긴 뒤 한 번. 파이어폭스는 묻는 창을 띄우므로 처음 열 때는 안 부른다
 function keepStore(){
-  if (storeAsked || !DB.todos().length || !(navigator.storage && navigator.storage.persist)) return;
+  if (storeAsked || !(DB.todos().length || DB.memos().length) || !(navigator.storage && navigator.storage.persist)) return;
   storeAsked = true;
   navigator.storage.persisted().then(p => p || navigator.storage.persist()).catch(() => {});
 }
@@ -3161,7 +4054,7 @@ let importAsk = null;                           // 가져온 파일 — 합칠�
 function importPanel(){
   const r = importAsk;
   return `<div class="box frame imp"><h2>가져온 파일</h2>
-    <p>이 기기 — 할 일 ${DB.todos().length} · 목표 ${DB.lists().length}　/　파일 — 할 일 ${r.todos} · 목표 ${r.lists}</p>
+    <p>이 기기 — 메모 ${DB.memos().length} · 할 일 ${DB.todos().length} · 목표 ${DB.lists().length}　/　파일 — 메모 ${r.memos} · 할 일 ${r.todos} · 목표 ${r.lists}</p>
     <p><b>합치기</b> — 두 기기에서 적은 것을 다 남깁니다. 같은 할 일은 더 나중에 고친 쪽으로, 지운 것은 지운 대로. 폰과 컴퓨터를 같이 쓸 때.<br>
       <b>바꾸기</b> — 이 기기 것을 파일 것으로 바꿉니다. 새 기기로 옮길 때.</p>
     <div class="fbtn"><button data-imp="merge">합치기</button><button data-imp="replace">바꾸기</button><button data-imp="no">그만</button></div></div>`;
@@ -3360,7 +4253,7 @@ $('#icsFile').addEventListener('change', e => {
 $('#out').addEventListener('click', () => {
   const body = DB.dump(), name = '오션아워-' + DB.today() + '.json';
   const done = how => { writeBK({ at:new Date().toISOString(), later:null }); render();
-    toast(`${how} · 할 일 ${DB.todos().length}개 — 다른 기기에서는 「가져오기」로 엽니다`); };
+    toast(`${how} · 메모 ${DB.memos().length} · 할 일 ${DB.todos().length} — 다른 기기에서는 「가져오기」로 엽니다`); };
   const download = () => { const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([body], { type:'application/json' })); a.download = name;
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); done('내보냈습니다'); };
@@ -3441,11 +4334,26 @@ function alarmTick(first){
     const k = t.id + '@' + T + ' ' + t.time; if (rung.has(k) || toMin(t.time) > cur) return;
     rung.add(k);
     if (first || cur - toMin(t.time) > 2) return;             // 열기 전에 지난 것은 조용히 넘긴다
-    const msg = `${fmtTime(t.time)} · ${t.text}`;
+    const lm = DB.memos().find(m => m.link && m.link.k === 't' && (DB.linkTodo(m) || {}).id === t.id);   // 붙은 메모 — 첫마디만(09-28)
+    const msg = `${fmtTime(t.time)} · ${t.text}${lm && lm.text ? ` · 메모 「${clueOf(lm.text)}…」` : ''}`;
     toast('지금 · ' + msg, null, 15000);
     if ('Notification' in window && Notification.permission === 'granted')
       try{ new Notification('오션아워', { body:msg, tag:k }); }catch(err){}
   });
+  const n = now.getTime();                       // 메모 — 정한 시각의 몇 분 전, 뜨기 시작할 때 한 번(09-27). 알림은 잠금화면에도 뜬다 — 실마리만인 메모는 실마리만(규칙 7)
+  DB.memos().forEach(m => { if (!m.show || m.show.kind !== 'at') return;
+    const w = DB.atWin(m), k = m.id + '@' + m.show.at + '-' + m.show.lead; if (rung.has(k) || w[0] > n) return;   // 중간에 한 번은 알림 없이 — 조용한 자리에만(규칙 3)
+    rung.add(k);
+    if (first || n - w[0] > 3 * 60e3 || n >= w[1]) return;   // 열기 전에 지난 것은 조용히 넘긴다
+    const txt = m.text ? (m.clue ? clueOf(m.text) + '…' : m.text) : '감정 기록';
+    const msg = `${fmtTime(m.show.at.slice(11))}${m.show.lead ? ` (${m.show.lead === 60 ? '1시간' : m.show.lead + '분'} 뒤)` : ''} · ${txt}`;
+    toast('메모 · ' + msg, null, 15000);
+    if ('Notification' in window && Notification.permission === 'granted')
+      try{ new Notification('오션아워', { body:msg, tag:k }); }catch(err){}
+  });
+  const key = DB.shownMemos().map(m => m.id).join(',');   // 때가 되면 뜨고, 지나면 내려온다 — 떠 있는 것이 바뀌면 다시 그린다
+  if (key !== upKey){ const a = document.activeElement, busy = editing() || (a && a.closest && a.closest('#mopts, .mtools, #wline'));
+    if (!first && !busy) render(); if (!busy) upKey = key; }
 }
 alarmTick(true); setInterval(() => alarmTick(false), 20000);
 
@@ -3469,11 +4377,47 @@ let awayAt = null;
 function noteAway(){ if (awayAt === null) awayAt = Date.now(); try{ localStorage.setItem(SEEN, String(Date.now())); }catch(e){} }
 function noteBack(){
   if (document.visibilityState !== 'visible') return;
-  if (awayAt !== null && Date.now() - awayAt >= AWAY){ DB.countOpen(); if (page === 'week' && !editing()) render(); }
+  if (awayAt !== null && Date.now() - awayAt >= AWAY){ pingWeek(); DB.countOpen(); if (page === 'week' && !editing()) render(); }
   awayAt = null;
 }
 addEventListener('blur', noteAway); addEventListener('pagehide', noteAway); addEventListener('focus', noteBack);
 document.addEventListener('visibilitychange', () => document.visibilityState === 'hidden' ? noteAway() : noteBack());
+
+/* ── 재는 길(규칙 8·9, C판) ── 이번 주 처음 온 기기인지 · 다시 온 기기인지만, 이름 없이 Cloudflare에 판정 결과를 알린다.
+   적은 내용(할 일 · 메모) · 체류 시간은 절대 안 보낸다 — 숨은 창(iframe)에 빈 페이지(Cloudflare 스니펫만)를 3초만 띄우고 지운다.
+   「진짜 첫 기기인가」는 DB.countOpen()으로 이번 열람이 opens에 더해지기 전에 판정한다 — 그 뒤엔 opens가 안 비어 있어 못 가른다.
+   D3 — navigator.onLine이 false면 판정 자체를 안 한다(가드도 안 남긴다). 다음 열람 때 다시 판정하면 되므로 자료 손실이 아니다.
+   창 격리(C판) — 다시 2회차 땐 핑 페이지가 앱과 같은 주소(app/back.html)라 sandbox="allow-scripts"(allow-same-origin 없음)로
+   오파크 출처를 만들어 막았는데, 그러면 Cloudflare 예비 요청(OPTIONS)의 origin이 'null'이 되어 등록된 도메인과 안 맞아
+   404로 막혀 배포해도 못 쟀다(검증 (라) 확인). 그래서 핑 페이지 자체를 앱과 다른 주소(oceanhour-ping.pages.dev)로 옮겼다 —
+   이제는 애초에 다른 출처라, sandbox 없이도 이 창의 부모(이 문서)도 이 창 안 스크립트도 서로의 localStorage · IndexedDB에
+   못 닿는다(같은 이유로 sw.js도 이 주소의 요청을 아예 안 본다 — origin이 달라 fetch 이벤트 자체가 안 걸린다).
+   그래도 sandbox="allow-scripts allow-same-origin"은 그대로 준다 — allow-same-origin은 이 창에 제 origin(oceanhour-ping.pages.dev)을
+   주는 것뿐이라 예비 요청은 그 도메인으로 나가 200이 되고(관리 curl 확인), 대신 allow-top-navigation·allow-popups를 안 줘서
+   Cloudflare 비콘 스크립트가 변조되더라도 이 창이 부모 페이지를 옮기거나 팝업을 띄우진 못한다(cso, 덤 방어). */
+const PING_KEY = DB.key + '.pingedWk';
+const PING_HOST = 'https://oceanhour-ping.pages.dev';                // 핑 페이지 전용 주소 — 앱과 다른 출처라 앱 storage에 못 닿는다
+const wkOpens = wk => [0, 1, 2, 3, 4, 5, 6].reduce((a, i) => a + DB.opensOn(DB.shift(wk, i)), 0);
+function pingFrame(src){
+  const f = document.createElement('iframe');
+  f.referrerPolicy = 'no-referrer';                                 // cso — 이거 없으면 앱 주소(쿼리 포함)가 핑 페이지의 document.referrer로 샌다
+  f.setAttribute('sandbox', 'allow-scripts allow-same-origin');      // C판 — 위 주석 참고. 저장소 격리는 다른 출처가 하고, sandbox는 top-navigation·팝업만 막는다
+  f.src = src; f.setAttribute('data-ping', '1'); f.setAttribute('aria-hidden', 'true');
+  f.style.cssText = 'position:absolute;width:1px;height:1px;left:-9999px;top:-9999px;border:0';
+  document.body.appendChild(f);
+  setTimeout(() => f.remove(), 3000);
+}
+function pingWeek(){
+  if (!navigator.onLine) return;                                    // D3 — 오프라인이면 안 쏜다
+  const wk = DB.monday(DB.today());
+  let last = ''; try{ last = localStorage.getItem(PING_KEY) || ''; }catch(e){}
+  if (last === wk) return;                                          // 이번 주엔 이미 판정했다(가드)
+  const had = DB.everOpened();                                      // 세기 전 상태 — 진짜 첫 기기인지
+  try{ localStorage.setItem(PING_KEY, wk); }catch(e){}
+  if (!had) return pingFrame(PING_HOST + '/new');
+  if (wkOpens(DB.shift(wk, -7)) > 0) return pingFrame(PING_HOST + '/back');
+  // 이번 주 첫 기기지만 지난주 기록이 없다 — 아무것도 안 쏜다
+}
 
 /* ── 다른 탭 ── 같은 앱을 탭 둘로 열어도 한쪽에서 적은 것이 지워지지 않게 */
 addEventListener('storage', e => {
@@ -3495,22 +4439,29 @@ $('#install').addEventListener('click', async () => { if (!installAsk) return;
 /* ── 앱 밖에서 들어오기(채점 15판 S18) ── 안드로이드에 설치한 웹 앱은 다른 앱의 「공유 → 오션아워」로 글이 오고(share_target),
    아이콘을 길게 누르면 바로가기(shortcuts — 할 일 적기 · 달력 · 한 주)로 온다. 공유받은 글은 입력칸에 넣어 두기만 한다 — Enter로 넣는다(모르는 새 줄을 저절로 만들지 않는다) */
 function takeLaunch(u){
+  const gc = hashCode([u.get('title'), u.get('text'), u.get('url')].join(' '));   // 공유받은 것이 받은 링크면 — 자르기 전에 본다(링크가 길다)
+  if (gc && DB.giftOf(gc)){ history.replaceState(null, '', location.pathname); return takeGift(gc); }
   const go = u.get('go'), txt = [u.get('title'), u.get('text'), u.get('url')].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim().slice(0, 300);
   if (!go && !txt) return false;
   history.replaceState(null, '', location.pathname);
   if (go === 'cal' || go === 'week'){ q = ''; open = null; const b = $(`aside [data-view=${go}]`); if (b) b.click(); return true; }   // 옆 칸 단추를 누른 것과 같게 — 달력은 처음 열 때 달을 잡는다
+  if (go === 'memo' || (txt && go !== 'add')){   // 공유받은 글 · 메모 바로가기는 메모 칸으로 — 적어 두기만 한다(09-27, 메모가 앞)
+    page = 'memo'; open = null; q = ''; render(); const m = $('#memoIn');
+    if (txt){ m.value = txt; fitMemoIn(); toast('공유받은 글을 메모 칸에 넣었습니다 — Enter로 적힙니다'); }
+    m.focus(); return true; }
   page = 'day'; day = DB.today(); dayMode = 'list'; open = null; q = ''; render();
   const i = $('#add'); if (txt){ i.value = txt; i.dispatchEvent(new Event('input', { bubbles:true })); toast('공유받은 글을 입력칸에 넣었습니다 — Enter로 할 일이 됩니다'); }
   i.focus(); return true;
 }
 
 render();
-$('#add').focus();
+focusEntry();                                   // 연 자리가 곧 적는 자리(규칙 2) — 메모 화면이면 메모 칸
 $('#fb').href = fbLink();
 takeLaunch(new URLSearchParams(location.search));
+{ const c = hashCode(location.hash); if (c) takeGift(c); }   // 받은 링크(#g=)로 열었으면
 loadFrame();
 { let s = 0; try{ s = +localStorage.getItem(SEEN) || 0; }catch(e){}   // 첫 화면을 그린 뒤에 센다 — 여는 빠르기(규칙 2)를 안 늦춘다
-  if (Date.now() - s >= AWAY) setTimeout(() => DB.countOpen(), 0); }
+  if (Date.now() - s >= AWAY) setTimeout(() => { pingWeek(); DB.countOpen(); }, 0); }
 </script>
 </body>
 </html>
