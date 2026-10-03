@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>오션아워 — 할 일 · 일정 · 목표를 한 곳에 모은 플래너</title>
-<meta name="description" content="흩어진 할 일 · 일정 · 목표를 한 곳에. 하루를 정한 곳에 썼는지까지 보여 줍니다. 나무도, 순위도, 연속 기록도 없이.">
+<title>오션아워 — 내 의지가 부족한 게 아니라, 시스템이 없었던 거예요</title>
+<meta name="description" content="내 의지가 부족한 게 아니라, 시스템이 없었던 거예요. 적어 둔 한 줄이 필요한 때에 먼저 뜬다">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="오션아워">
-<meta property="og:title" content="오션아워 — 할 일 · 일정 · 목표를 한 곳에 모은 플래너">
-<meta property="og:description" content="흩어진 할 일 · 일정 · 목표를 한 곳에. 하루를 정한 곳에 썼는지까지 보여 줍니다. 나무도, 순위도, 연속 기록도 없이.">
+<meta property="og:title" content="오션아워 — 내 의지가 부족한 게 아니라, 시스템이 없었던 거예요">
+<meta property="og:description" content="내 의지가 부족한 게 아니라, 시스템이 없었던 거예요. 적어 둔 한 줄이 필요한 때에 먼저 뜬다">
 <meta property="og:url" content="https://kyeom531-sketch.github.io/oceanhour-planner/">
 <meta property="og:image" content="https://kyeom531-sketch.github.io/oceanhour-planner/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="오션아워 — 흩어진 할 일 · 일정 · 목표를 한 곳에 모은 플래너. 오른쪽은 실제 폰 화면">
+<meta property="og:image:alt" content="오션아워 — 내 의지가 부족한 게 아니라, 시스템이 없었던 거예요. 적어 둔 한 줄이 필요한 때에 먼저 뜬다. 오른쪽은 실제 폰 화면">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="today-phone.webp" type="image/webp" media="(max-width:640px)">
 <meta name="theme-color" content="#F6F4F1">
@@ -58,6 +58,7 @@ p{margin:0 0 12px}
 .feats div{background:var(--card);border-radius:var(--r);padding:14px 16px}
 .feats h3{font-size:14px;margin:0 0 6px}
 .feats p{font-size:13.5px;color:var(--d70);margin:0;line-height:1.6}
+.feats.m{grid-template-columns:1fr 1fr}
 .inapp{background:#FAF0DC;color:#8E6524;font-size:13.5px;line-height:1.6;padding:10px 16px}
 .inapp button{font:inherit;font-size:12.5px;color:#8E6524;border:1px solid rgba(142,101,36,.35);border-radius:6px;padding:1px 8px;background:transparent;cursor:pointer}
 .cardrow{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:24px;align-items:start}
@@ -103,7 +104,7 @@ footer a{color:var(--d70)}
   .sub{font-size:17px}
   .hero{padding:32px 0 28px}
   section{padding:34px 0}
-  .two,.steps,.cardrow,.cards,.feats{grid-template-columns:1fr}
+  .two,.steps,.cardrow,.cards,.feats,.feats.m{grid-template-columns:1fr}
   /* 11판 — 폰에서 첫 사진은 폰 화면으로. 컴퓨터 화면을 390px로 줄이면 글자를 못 읽는다(1위 앱 스토어 첫 사진은 폰 화면). 폰 카드가 바로 올라온다 */
   .hero + .shot{display:none}
   /* 누르는 자리 44px — 머리 단추는 누르는 자리만 넓히고, 끝 링크는 줄 높이로 */
@@ -136,9 +137,9 @@ footer a{color:var(--d70)}
 </header>
 
 <div class="hero">
-  <p class="lbl">Planner</p>
-  <h1>흩어진 할 일 · 일정 · 목표를<br>한 곳에 모은 플래너</h1>
-  <p class="sub">하루를 정한 곳에 썼는지까지 보여 줍니다.<br>나무도, 순위도, 연속 기록도 없이.</p>
+  <p class="lbl">Memo</p>
+  <h1>내 의지가 부족한 게 아니라,<br>시스템이 없었던 거예요</h1>
+  <p class="sub">적어 둔 한 줄이 필요한 때에 먼저 뜬다</p>
   <div class="cta">
     <a class="go" href="./app/">지금 웹에서 쓰기</a>
     <span class="note">컴퓨터에서도 폰에서도 무료 · 광고 없음 · 가입 없음</span>
@@ -147,12 +148,28 @@ footer a{color:var(--d70)}
 
 <figure class="shot">
   <picture><source media="(max-width:640px)" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><source type="image/webp" srcset="shot-today.webp"><img src="shot-today.png" width="1600" height="900" alt="오션아워 오늘 화면. 맨 위가 바로 적는 칸이고, 할 일이 목표별로 묶여 있고(목표 색), 날짜 줄에 계획 · 마무리 · 시간 띠, 맨 아래에 오늘 쓴 시간이 정한 곳과 그 밖으로 나뉘어 있다"></picture>
-  <figcaption>실제 앱 화면입니다. 할 일과 시간은 예시로 넣었습니다.</figcaption>
+  <figcaption>실제 앱 안의 플래너 화면입니다. 할 일과 시간은 예시로 넣었습니다.</figcaption>
 </figure>
 
 <section>
+  <p class="lbl">Memo</p>
+  <h2>메모</h2>
+  <p>떠오른 생각 · 감정을 그 자리에서 적고, 정한 때에 앱 맨 위에 띄워요.</p>
+  <div class="feats m">
+    <div><h3>적기</h3><p>앱을 열면 맨 위가 적는 칸이에요. 떠오른 생각 · 감정을 날아가기 전에 적어요. 기분은 한 번 누르면 되고, 글 없이 기분만 적어도 돼요.</p></div>
+    <div><h3>띄울 때 고르기</h3><p>오늘 하루 · 일주일 · 정한 시각 · 바꿀 때까지 중에 골라요. 그때가 되면 앱 첫 화면 맨 위 「지금 떠 있는 메모」에 뜨고, 때가 지나면 스스로 내려와요.</p></div>
+    <div><h3>실마리만 띄우기</h3><p>감정이 붙은 메모는 뜰 때 첫마디만 보여요. 떠올려 본 뒤 누르면 펼쳐져요.</p></div>
+    <div><h3>바탕화면 그림</h3><p>이번 주의 한 줄과 고른 메모를 폰 잠금 화면 · 컴퓨터 바탕화면 그림으로 저장해요. 웹은 배경을 바꾸지 못해서, 저장한 그림을 직접 걸어요. 저절로 안 바뀌어요.</p></div>
+    <div><h3>잊을 만하면 다시</h3><p>고른 날부터 1 · 3 · 7 · 14 · 30 · 60일 뒤에 하루씩 떠요. 「내리기」는 그날만 내려요.</p></div>
+    <div><h3>친구에게</h3><p>한마디 보내기 · 한마디 부탁을 링크 하나로, 가입 없이 해요. 글은 링크 안에 들어 있고 서버에는 안 남아요. 받은 사람이 「메모로 담기」를 눌러야 저장돼요.</p></div>
+    <div><h3>글 담기 링크</h3><p>인스타 · 블로그 글에 붙일 링크예요. 누른 사람이 그 글을 메모로 담아요.</p></div>
+    <div><h3>웹에서 안 되는 것</h3><p>잠금 화면에 저절로 올리기 · 위젯 · 앱을 닫은 뒤 알림은 웹으로 못 해요. 정한 시각 알림은 앱을 열어 둔 동안에만 와요.</p></div>
+  </div>
+</section>
+
+<section>
   <p class="lbl">Phone</p>
-  <h2>폰에서 이렇게 씁니다</h2>
+  <h2>그 안의 플래너, 폰에서 이렇게 씁니다</h2>
   <div class="cards">
     <figure class="pcard"><h3>열면 바로 적는다</h3><picture><source type="image/webp" srcset="today-phone.webp"><img src="today-phone.png" width="600" height="1200" alt="폰 오늘 화면 — 목표별 할 일, ▶, 오늘 쓴 시간"></picture><figcaption>「내일 치과 3시」처럼 적으면 날짜 · 시각까지 알아듣습니다</figcaption></figure>
     <figure class="pcard"><h3>한 주가 둘로 나뉜다</h3><picture><source type="image/webp" srcset="week-phone.webp"><img src="week-phone.png" width="600" height="1200" alt="폰 한 주 화면 — 정한 곳과 그 밖이 큰 숫자와 막대 하나로" loading="lazy"></picture><figcaption>정한 곳 / 그 밖 — 점수 없이 쓴 시간과 막대 하나로</figcaption></figure>
@@ -164,7 +181,7 @@ footer a{color:var(--d70)}
 
 <section>
   <p class="lbl">What</p>
-  <h2>보여 주는 건 두 가지입니다</h2>
+  <h2>그 안의 플래너가 보여 주는 건 두 가지입니다</h2>
   <div class="two">
     <div class="card"><span class="chip blue">정한 곳</span><p>목표에 이어 둔 일에 쓴 시간.</p></div>
     <div class="card"><span class="chip gray">그 밖</span><p>그 밖의 일에 쓴 시간.</p></div>
@@ -175,7 +192,7 @@ footer a{color:var(--d70)}
 
 <section>
   <p class="lbl">How</p>
-  <h2>쓰는 법</h2>
+  <h2>그 안의 플래너 쓰는 법</h2>
   <ol class="steps">
     <li><h3>목표를 정합니다</h3><p>목표 하나에 단계 몇 개. 할 일은 목표에 이어 둡니다. 처음 화면이나 받은 틀 링크로 목표 · 루틴을 한 번에 넣을 수도 있습니다.</p></li>
     <li><h3>아침에 고릅니다</h3><p>밀린 일과 날짜 없는 일에서 오늘 할 것을 고릅니다. 평소보다 한참 많으면 한 줄로 알려 줍니다.</p></li>
@@ -190,12 +207,12 @@ footer a{color:var(--d70)}
 
 <section>
   <p class="lbl">Features</p>
-  <h2>할 수 있는 것</h2>
+  <h2>그 안의 플래너로 할 수 있는 것</h2>
   <div class="feats">
     <div><h3>적는 말</h3><p>날짜 · 시각 · 길이 · 여러 날 · 마감 · 반복(매일 · 평일 · 매주 · 격주 · 매달 · 매년 · 며칠마다 · 주 N회) · 하루 N번 세기</p></div>
     <div><h3>할 일</h3><p>메모 · 하위 할 일 · 중요 · 급함 4칸 · 복사 · 여러 개 한꺼번에 · 끌어서 순서 · 이번만 따로 · 건너뛰기 · 휴지통</p></div>
     <div><h3>시간</h3><p>▶로 재기 · 25분 · 50분 집중과 5분 쉬기 · 시간표(끌어서 옮기기) · 잡은 시간 옆에 실제로 쓴 시간 · 하루 시간 띠 · 계획이 넘치면 한 줄</p></div>
-    <div><h3>하루 · 한 주</h3><p>아침 계획 · 저녁 마무리 · 오늘 메모 · 한 주를 읽어 주는 문장 · 돌아보기 세 칸 · 한 주 그림</p></div>
+    <div><h3>하루 · 한 주</h3><p>아침 계획 · 저녁 마무리 · 오늘 한 줄 · 한 주를 읽어 주는 문장 · 돌아보기 세 칸 · 한 주 그림</p></div>
     <div><h3>목표</h3><p>단계 · 마감(D-) · 영역 · 목표 메모 · 틀로 한 번에</p></div>
     <div><h3>달력 · 자료</h3><p>월 · 주 달력(목표 색 칩) · 공휴일 · 절기 · 캘린더 파일(.ics) · 내보내기 · 가져오기 · 폰과 컴퓨터 것 합치기 · 메모까지 찾기 · 색 다섯 벌 · 어두운 화면 · 앱으로 설치</p></div>
   </div>
