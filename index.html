@@ -17,21 +17,31 @@
 <meta property="og:image:alt" content="오션아워 — 내 의지가 부족한 게 아니라, 시스템이 없었던 거예요. 적어 둔 한 줄이 필요한 때에 먼저 뜬다. 오른쪽은 실제 폰 화면">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="start-phone.webp" type="image/webp" media="(max-width:640px)">
-<meta name="theme-color" content="#F6F4F1">
+<meta name="theme-color" content="#EDF2F5">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="app/icons/icon-192.png">
 <link rel="apple-touch-icon" href="app/icons/apple-180.png">
 <style>
-/* 파는 페이지 — 디자인-기준.md: 아주 연한 바탕 · 색은 칩과 면으로만 · 글자는 검정 하나 · 굵기 둘(400 · 700). 밝은 판 하나 */
+/* 파는 페이지 — 디자인-기준.md(10-04 첫 화면 테마): 안개 하늘빛 바탕 · 비치는 흰 카드 · 파랑은 한 점(누르는 단추) · 글자는 하나 · 굵기 둘(400 · 700). 밝은 판 하나.
+   색 값은 앱(오션아워.html 「첫 화면 테마」 밝은 판)과 같다 */
 :root{
-  --bg:#F6F4F1; --card:#FFF; --line:rgba(40,38,35,.09);
-  --ink:#2E2C29; --d70:rgba(46,44,41,.7);
-  --blue:#2C5B88; --blue-bg:#E6EFF7; --gray:#6B6762; --gray-bg:#EFEDEB;
-  --pink:#A8415A; --pink-bg:#FBE9EC; --r:10px;
+  --bg:#E9EFF3; --card:rgba(255,255,255,.66); --line:rgba(28,58,88,.12);
+  --ink:#1B2631; --d70:rgba(27,38,49,.74);
+  --blue:#2D63A3; --blue-bg:#DCE8F4; --gray:#4F5C68; --gray-bg:#DAE3EB;
+  --pink:#A8415A; --pink-bg:#FBE9EC; --r:16px;
+  --glass-edge:rgba(255,255,255,.7); --glass-shadow:0 14px 34px -16px rgba(28,64,104,.26);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--ink);
+/* 바탕 — 위 오른쪽에 하늘빛, 왼쪽에 흰 안개, 맨 아래 오른쪽에 바다빛이 번진다. 쪽 맨 위(머리글 자리)는 평평한 안개빛.
+   길이가 px라서 쪽이 길어도 번짐이 늘어나지 않고, fixed가 아니라 폰(아이폰 사파리)에서도 그대로다 */
+html{background-color:#E4ECF1;background-repeat:no-repeat;
+  background-image:
+    radial-gradient(820px 460px at 100% 380px,rgba(150,196,234,.55),transparent 70%),
+    radial-gradient(760px 420px at 0% 760px,rgba(255,255,255,.9),transparent 70%),
+    radial-gradient(900px 480px at 100% 100%,rgba(128,180,220,.42),transparent 70%),
+    linear-gradient(180deg,#EDF2F5 0,#E4ECF1 900px)}
+body{background:transparent;color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Segoe UI",sans-serif;
   font-size:16px;line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;
   word-break:keep-all;overflow-wrap:anywhere}
@@ -45,32 +55,36 @@ h2{font-size:26px;line-height:1.35;letter-spacing:-.02em;font-weight:700;margin:
 h3{font-size:16px;font-weight:700;margin:0 0 4px}
 p{margin:0 0 12px}
 .sub{font-size:19px;color:var(--d70);margin:0 0 28px}
-.go{display:inline-block;background:var(--ink);color:#FFF;text-decoration:none;font-weight:700;
-  padding:12px 20px;border-radius:var(--r);font-size:15px}
-.go:hover{background:#000}
-.go.sm{padding:7px 13px;font-size:13.5px}
+/* 누르는 것 — 파랑 알약(앱의 「적기」 단추와 같다). 파랑은 이 단추와 아래 칩에만 쓴다 */
+.go{display:inline-block;background:var(--blue);color:#FFF;text-decoration:none;font-weight:700;
+  padding:12px 22px;border-radius:999px;font-size:15px;box-shadow:0 8px 16px -8px rgba(45,99,163,.6)}
+.go:hover{background:#24558E}
+.go.sm{padding:7px 16px;font-size:13.5px}
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,300px));gap:12px;margin:0 0 10px}
-.pcard{margin:0;background:var(--card);border-radius:14px;padding:16px 14px 12px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+/* 비치는 카드 — 앱의 카드와 같은 결: 흰빛 .66 + 흐림 + 흰 윗선 + 가는 흰 테두리 + 푸른 그림자 */
+.pcard,.feats div,.card{background:var(--card);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 0 0 1px var(--glass-edge),var(--glass-shadow)}
+.pcard{margin:0;border-radius:20px;padding:16px 14px 12px}
 .pcard h3{font-size:17px;margin:0 0 10px;letter-spacing:-.02em}
-.pcard img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
+.pcard img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
 .pcard figcaption{font-size:12.5px;color:var(--d70);padding:8px 2px 0;line-height:1.5}
 .feats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.feats div{background:var(--card);border-radius:var(--r);padding:14px 16px}
+.feats div{border-radius:var(--r);padding:14px 16px}
 .feats h3{font-size:14px;margin:0 0 6px}
 .feats p{font-size:13.5px;color:var(--d70);margin:0;line-height:1.6}
 .feats.m{grid-template-columns:1fr 1fr}
-.inapp{background:#FAF0DC;color:#8E6524;font-size:13.5px;line-height:1.6;padding:10px 16px}
-.inapp button{font:inherit;font-size:12.5px;color:#8E6524;border:1px solid rgba(142,101,36,.35);border-radius:6px;padding:1px 8px;background:transparent;cursor:pointer}
+.inapp{background:#F6EEDC;color:#7E5A1E;font-size:13.5px;line-height:1.6;padding:10px 16px}
+.inapp button{font:inherit;font-size:12.5px;color:#7E5A1E;border:1px solid rgba(126,90,30,.4);border-radius:6px;padding:1px 8px;background:transparent;cursor:pointer}
 .cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .note{font-size:13.5px;color:var(--d70)}
 .hero{padding:56px 0 36px}
 section{padding:44px 0;border-top:1px solid var(--line)}
 figure{margin:0}
-.shot img{display:block;width:100%;height:auto;border-radius:var(--r);border:1px solid var(--line);
-  box-shadow:0 1px 2px rgba(40,38,35,.04),0 12px 32px rgba(40,38,35,.06);background:var(--card)}
+.shot img{display:block;width:100%;height:auto;border-radius:20px;border:1px solid var(--line);
+  box-shadow:0 1px 2px rgba(28,64,104,.05),0 18px 44px -16px rgba(28,64,104,.3);background:#EDF2F5}
 .shot figcaption{font-size:13px;color:var(--d70);padding:10px 2px 0}
 .hero + .shot{margin-bottom:44px}
-.card{background:var(--card);border-radius:var(--r);padding:18px 18px 16px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+.card{border-radius:18px;padding:18px 18px 16px}
 .card p:last-child{margin:0}
 .chip{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;margin:0 0 10px}
 .chip.blue{background:var(--blue-bg);color:var(--blue)}
@@ -87,6 +101,11 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-size:13px;color
 footer a{color:var(--d70)}
 .fnote{font-size:12px}
 @media (max-width:640px){
+  html{background-image:
+    radial-gradient(480px 320px at 100% 330px,rgba(150,196,234,.55),transparent 70%),
+    radial-gradient(440px 300px at 0% 640px,rgba(255,255,255,.9),transparent 70%),
+    radial-gradient(520px 340px at 100% 100%,rgba(128,180,220,.42),transparent 70%),
+    linear-gradient(180deg,#EDF2F5 0,#E4ECF1 700px)}
   h1{font-size:31px}
   h2{font-size:22px}
   .sub{font-size:17px}

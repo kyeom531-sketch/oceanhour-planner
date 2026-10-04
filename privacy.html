@@ -18,16 +18,29 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="app/icons/icon-192.png">
 <style>
-:root{--bg:#F6F4F1;--card:#FFF;--ink:#2E2C29;--d70:rgba(46,44,41,.7);--line:rgba(40,38,35,.09);--c4:#2C5B88;color-scheme:light}
+/* 바탕 · 면 · 색은 파는 페이지(index.html)와 같다 — 안개 하늘빛 + 비치는 흰 카드 + 파랑 한 점(링크) */
+:root{--bg:#E9EFF3;--card:rgba(255,255,255,.66);--ink:#1B2631;--d70:rgba(27,38,49,.74);--line:rgba(28,58,88,.12);--c4:#2D63A3;color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;line-height:1.7;word-break:keep-all}
+html{background-color:#E4ECF1;background-repeat:no-repeat;
+  background-image:
+    radial-gradient(760px 420px at 100% 220px,rgba(150,196,234,.55),transparent 70%),
+    radial-gradient(700px 400px at 0% 560px,rgba(255,255,255,.9),transparent 70%),
+    radial-gradient(860px 440px at 100% 100%,rgba(128,180,220,.42),transparent 70%),
+    linear-gradient(180deg,#EDF2F5 0,#E4ECF1 800px)}
+@media(max-width:640px){html{background-image:
+    radial-gradient(440px 300px at 100% 200px,rgba(150,196,234,.55),transparent 70%),
+    radial-gradient(420px 280px at 0% 520px,rgba(255,255,255,.9),transparent 70%),
+    radial-gradient(500px 320px at 100% 100%,rgba(128,180,220,.42),transparent 70%),
+    linear-gradient(180deg,#EDF2F5 0,#E4ECF1 700px)}}
+body{margin:0;background:transparent;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif;line-height:1.7;word-break:keep-all}
 main{max-width:720px;margin:0 auto;padding:32px 20px 64px}
 a{color:var(--c4)}
 .top{display:flex;align-items:center;min-height:44px;margin-bottom:12px}
 .top a{text-decoration:none;font-weight:700;color:var(--ink);display:inline-flex;align-items:center;min-height:44px}
 h1{font-size:26px;letter-spacing:-.02em;margin:8px 0 4px}
 .day{color:var(--d70);font-size:14px;margin:0 0 24px}
-section{background:var(--card);border-radius:12px;padding:18px 20px;margin:0 0 12px;box-shadow:0 1px 2px rgba(40,38,35,.04)}
+section{background:var(--card);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);border-radius:18px;padding:18px 20px;margin:0 0 12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 0 0 1px rgba(255,255,255,.7),0 14px 34px -16px rgba(28,64,104,.26)}
 h2{font-size:16px;margin:0 0 6px}
 p,li{font-size:15px;margin:0}
 ul{margin:0;padding-left:20px}
