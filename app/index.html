@@ -18,8 +18,8 @@
 <meta property="og:image:alt" content="오션아워 — 내 의지가 부족한 게 아니라, 시스템이 없었던 거예요. 적어 둔 한 줄이 필요한 때에 먼저 뜬다. 오른쪽은 실제 폰 화면">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#F6F4F1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1B1A18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#ECF1F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101214" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-180.png">
 <meta name="apple-mobile-web-app-title" content="오션아워">
@@ -346,6 +346,228 @@ li.row.hit{background:color-mix(in srgb,var(--c4) 8%,transparent);border-radius:
   .entry input,.find input{min-height:44px;margin:-10px 0}
   .morep button,.morep a{min-height:44px;display:flex;align-items:center}
   .tools button{min-width:44px}
+}
+
+/* ───────────── 첫 화면 테마(10-04 대표님 — 밝음 시안 A · 어두움 시안 B 색 + A 포인트, 작업/2026-10-04-첫화면-시안/) ─────────────
+   앞 규칙을 덮어쓴다(같은 이름의 변수 · 규칙만). 바깥 글꼴 · 그림 파일 없음 — 무늬 · 안개 · 물결은 전부 그라데이션 · 그림자다.
+   밝은 판은 A, 어두운 판은 색이 B · 포인트가 A. 배치는 밝은 판 규칙을 어두운 판이 그대로 쓴다. */
+
+/* ───────────── 밝은 판 (A 그대로) ───────────── */
+:root{
+  --bg:#E9EFF3; --card:#FFFFFF; --side:#E2EAF0;
+  --line:rgba(28,58,88,.11);
+  --ink:#1B2631; --d70:rgba(27,38,49,.74); --d32:rgba(27,38,49,.68); --hov:rgba(28,58,88,.06);
+  --c1:#A8415A; --c2:#8E6524; --c3:#2F7567; --c4:#2D63A3; --c5:#5F6A74;
+  --red:#C23A30;
+  --r:18px;
+  --warn-bg:#F6EEDC; --warn-ink:#7E5A1E;
+  /* 이 시안만 쓰는 이름 */
+  --glass:rgba(255,255,255,.62);
+  --glass-edge:rgba(255,255,255,.62);
+  --glass-shadow:0 14px 34px -16px rgba(28,64,104,.26);
+  --sea1:#2C66A6; --sea2:#1E4A7C; --sea3:#163862;
+}
+
+/* 바탕 — 위 오른쪽에 하늘빛, 왼쪽 가운데에 흰 안개, 아래 오른쪽에 바다빛이 번진다 */
+body{
+  background:
+    radial-gradient(75% 34% at 108% 30%, rgba(150,196,234,.58), transparent 70%),   /* 위 오른쪽 하늘빛은 머리줄 아래로 — 머리줄 자리(맨 위 64px)는 평평한 안개빛이라 불투명 머리줄과 이음매가 안 보인다 */
+    radial-gradient(85% 32% at -14% 46%, rgba(255,255,255,.9), transparent 70%),
+    radial-gradient(95% 38% at 100% 106%, rgba(128,180,220,.46), transparent 70%),
+    linear-gradient(180deg,#EDF2F5 0%,#E4ECF1 100%);
+}
+
+/* 옆 칸(컴퓨터) */
+aside{background:rgba(255,255,255,.42);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,.7)}
+.brand{font-size:15px;padding:18px 18px 12px;letter-spacing:-.02em}
+.li{border-radius:12px}
+.li.on{background:rgba(255,255,255,.8);color:var(--ink);box-shadow:0 6px 16px -10px rgba(28,64,104,.4),0 0 0 1px rgba(255,255,255,.7)}
+.li.on .ico{color:var(--c4)}
+
+/* 작은 구슬 하나 — 이름 앞에 붙은 물방울(그림 파일 아님) */
+.brand::before,.topbar .tb-t::before{
+  content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px;
+  background:radial-gradient(circle at 34% 30%,#fff 0 17%,transparent 19%),var(--c4)}
+
+/* 머리줄 — 큰 제목. 라벨(MEMO · TODAY)과 제목 옆 작은 숫자는 그대로 */
+.daybar.heads h1{font-size:34px;letter-spacing:-.035em;line-height:1.15}
+.daybar h1 .n{font-size:15px;letter-spacing:0;margin-left:4px}
+.daybar .lab{letter-spacing:.18em;font-size:11px}
+.daybar .moreb{letter-spacing:.08em}
+
+/* 이번 주의 한 줄 — 카드를 벗고 글만. 안개 위에 크게 */
+.wline{background:transparent;box-shadow:none;border-radius:0;padding:4px 2px 12px;margin-bottom:6px}
+.wl-h{font-size:11px;letter-spacing:.14em}
+.wl-t{font-size:21px;line-height:1.4;letter-spacing:-.03em;padding-top:5px}
+.wline input.edit{font-size:21px}
+
+/* 비치는 카드 */
+.box,.entry,.mentry,.morep{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(22px) saturate(1.35);backdrop-filter:blur(22px) saturate(1.35);
+  border-radius:var(--r);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 0 0 1px var(--glass-edge),var(--glass-shadow)}
+.box{padding:2px 16px 6px;margin-bottom:14px}
+.box h2{font-size:12.5px;padding:13px 0 6px;letter-spacing:.01em}
+.entry{padding:9px 16px;margin-bottom:14px}
+.entry .p{color:var(--c4);font-size:21px;font-weight:400}
+.mentry{padding:14px 16px 10px;margin-bottom:14px}
+.mopts{border-top-color:var(--line)}
+.morep{padding:8px}
+li.row{border-top-color:var(--line)}
+.fold{border-top:0;padding-left:4px;color:var(--d70)}
+.addrow{padding-left:0}
+
+/* 누르는 것 — 파랑 한 점. 적기 단추는 파랑 알약, 기분 단추는 가는 테두리 */
+.madd{background:var(--c4);color:#fff;border-radius:999px;padding:7px 20px;font-weight:700;box-shadow:0 8px 16px -8px rgba(45,99,163,.6)}
+.mopen{background:transparent;border-radius:999px;padding:4px 14px}
+.mtools button,.mtools label,.tools button,.mat input,.mat select{border-radius:999px;background:rgba(255,255,255,.7)}
+.mat input,.mat select{border-radius:10px}
+
+/* 체크 칸 — 둥글게(Tiimo). 끝내면 바다빛 초록 */
+.ck{width:20px;height:20px;border-radius:50%;margin-top:1px;border-width:1.5px}
+.ck.on::after{width:5px;height:9.5px;transform:rotate(43deg) translate(-.5px,-1px)}
+
+/* 기분 구슬 — 얼굴 대신 반짝이는 작은 구슬(How We Feel의 색 동그라미) */
+.mdot{width:10px;height:10px;margin-top:8px;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.85) 0 16%,transparent 18%),var(--mc)}
+.mood i{width:16px;height:16px;background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.85) 0 16%,transparent 18%),var(--mc)}
+
+/* ───── 이 화면의 주인공 — 지금 떠 있는 메모. 구름 위 깊은 파랑 ───── */
+.box.mup{
+  position:relative;overflow:hidden;isolation:isolate;
+  padding:18px 22px 58px;border:0;
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+  background:
+    radial-gradient(150px 90px at calc(100% - 20px) 8px, rgba(112,168,226,.34), transparent 72%),
+    linear-gradient(168deg,var(--sea1) 0%,var(--sea2) 52%,var(--sea3) 100%);
+  color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 22px 40px -18px rgba(22,56,98,.62)}
+/* 물결 — 오른쪽 위 한 점에서 번지는 가는 동그라미. 가장자리로 갈수록 옅다 */
+.mup::before{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(circle at calc(100% - 34px) 34px,#fff 0 2.5px,rgba(255,255,255,.34) 3.5px,transparent 20px),
+    repeating-radial-gradient(circle at calc(100% - 34px) 34px,transparent 0 24px,rgba(255,255,255,.2) 24px 25px);
+  -webkit-mask-image:radial-gradient(circle at calc(100% - 34px) 34px,#000 0,rgba(0,0,0,.55) 90px,transparent 230px);
+  mask-image:radial-gradient(circle at calc(100% - 34px) 34px,#000 0,rgba(0,0,0,.55) 90px,transparent 230px)}
+/* 구름 — 맨 아래 띠에만. 글은 이 띠 위에 있어서 대비를 깎지 않는다 */
+.mup::after{
+  content:'';position:absolute;left:-12px;right:-12px;bottom:-1px;height:58px;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(86px 30px at 10% 100%,rgba(255,255,255,.62),transparent 74%),
+    radial-gradient(110px 38px at 34% 112%,rgba(255,255,255,.7),transparent 74%),
+    radial-gradient(72px 26px at 56% 100%,rgba(255,255,255,.46),transparent 74%),
+    radial-gradient(120px 40px at 82% 108%,rgba(255,255,255,.7),transparent 74%),
+    radial-gradient(60px 22px at 100% 98%,rgba(255,255,255,.5),transparent 74%),
+    linear-gradient(180deg,transparent,rgba(255,255,255,.16))}
+.mup h2{color:rgba(255,255,255,.92);font-size:12px;letter-spacing:.02em;padding:0 0 8px}
+.mup li.row{border-top-color:rgba(255,255,255,.2);padding:14px 0 10px}
+.mup li.row:first-child{padding-top:6px}
+.mup .mtx{font-size:21px;line-height:1.38;letter-spacing:-.03em;color:#fff;flex:1 1 100%;padding:0}
+.mup .mtx.clue{color:rgba(255,255,255,.88)}
+.mup .mtx .mclue{color:#fff}
+.mup .mnone{color:rgba(255,255,255,.92)}   /* 글 없이 기분만 띄운 메모 — 앱의 어두운 글자색(.mnone)이 파란 카드 위에 남지 않게 */
+/* 작은 글 — 글 밑 한 줄에 뜨는 때 · 내리기 */
+.mup .mrow .meta{flex:1 1 100%;margin-left:0;max-width:none;order:2;justify-content:space-between;align-items:center;padding-top:4px}
+.mup .mrow .meta .d{color:rgba(255,255,255,.86);text-align:left;white-space:normal;font-size:12px}
+.mup .mdown{color:#fff;font-size:12.5px;background:rgba(255,255,255,.16);border-radius:999px;padding:3px 12px;flex:none}
+.mup .mdown:hover{background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.92);text-decoration:underline}   /* 올려도 바탕을 안 밝힌다 — 테두리 · 밑줄로 강조 */
+.mup .mdot{margin-top:11px;margin-right:2px;box-shadow:0 0 0 2px rgba(255,255,255,.35)}
+.mup li.row:focus-visible{background:transparent;box-shadow:inset 3px 0 0 #fff}
+
+/* 빈칸 안내(placeholder) — 앱은 --d32를 입력칸 두 곳에만 썼고 찾기 · 친구에게 · 내 이름 칸은 브라우저 기본색(어두운 판에서 3.7)이었다. 모두 --d32로(4.5 이상) */
+input::placeholder,textarea::placeholder{color:var(--d32);opacity:1}
+
+/* 메모 모음 — 글 15px, 곁글은 작게 */
+.mlistb h2{padding-top:14px}
+.mlv{border-radius:999px}
+.mrow .meta .d{font-size:11.5px}
+
+/* 폰 — 위 줄은 비치고, 아래 탭은 안 비친다 */
+@media(max-width:640px){
+  /* 위 줄 — 불투명(스크롤하면 뒤 글자가 머리글과 겹치지 않는다). 바탕 맨 위와 같은 안개빛이라 이음매가 없다 */
+  .topbar{background:#ECF1F5}
+  .topbar .tb-t{font-size:15px}
+  /* 고친 것 — 탭 뒤로 목록 글자가 비쳤다. 안개빛 불투명 바탕(위는 거의 흰빛, 아래는 안개빛)에 흰 윗선. 글자는 안 비친다 */
+  .tabs{background:linear-gradient(180deg,#F6F9FB 0%,#E9F0F4 100%);
+    border-top:1px solid #fff;box-shadow:0 -10px 26px -14px rgba(28,64,104,.26)}
+  .tabs button.on{color:var(--c4);box-shadow:none}
+  .wrap{padding-left:14px;padding-right:14px}
+}
+@media (pointer:coarse){ .fold{display:flex;align-items:center} }
+
+/* 투명 효과를 못 쓰거나 줄여 달라고 한 기기 — 카드를 거의 불투명하게(탭 · 위 줄은 늘 불투명 · 안개빛) */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  :root{--glass:rgba(255,255,255,.92)}
+  aside{background:rgba(255,255,255,.7)}
+}
+@media (prefers-reduced-transparency:reduce){
+  :root{--glass:rgba(255,255,255,.94)}
+  .box,.entry,.mentry,.morep,aside{-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+
+/* ───────────── 어두운 판 — 색은 B(바탕 · 카드 면 · 테두리 · 글자 · 흐린 글자 · 흰 테두리 단추), 포인트는 A(물결 · 빛나는 점 · 파란 점 · 파란 테두리) ─────────────
+   모양 · 간격 · 둥근 정도 · 체크 모양은 위 밝은 판 규칙 그대로다 — 여기서는 색만 바꾼다(밝은 ↔ 어두운 바꿔도 자리가 안 움직인다) */
+@media (prefers-color-scheme:dark){
+  :root{
+    /* B 어두운 판 */
+    --bg:#101214; --card:#191C1F; --side:#131619;
+    --line:#3B434A;
+    --ink:#F0F3F5; --d70:#B7C2C9; --d32:#B7C2C9; --hov:#292E32;
+    --c1:#E0A4AE; --c2:#D8BD86; --c3:#A4C5B0; --c5:#B7C2C9; --red:#F0ABA8;
+    --warn-bg:#302A20; --warn-ink:#E2C893;
+    --b-fog:#1B2024; --b-up:#171B1F; --b-cloud:#2C3339; --b-up-sub:#C1CCD4; --b-up-line:#60717E;
+    /* A 어두운 판 — 누르는 것의 파랑 한 점 */
+    --c4:#8DB6E8;
+  }
+  body{background:radial-gradient(90% 30% at 100% 36%,var(--b-fog),transparent 100%),var(--bg)}   /* B의 안개 색 — 오른쪽 가운데로 내려 머리줄 자리는 평평한 바탕 */
+  aside{background:var(--side);-webkit-backdrop-filter:none;backdrop-filter:none;border-right-color:var(--line)}
+  .li.on{background:var(--hov);box-shadow:none}
+  .li.on .ico{color:var(--ink)}
+  .brand::before,.topbar .tb-t::before{background:radial-gradient(circle at 34% 30%,#fff 0 17%,transparent 19%),var(--c4)}
+
+  /* 카드 면 — B의 면 · 테두리 색, 모양은 A */
+  .box,.entry,.mentry,.morep{
+    background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none;
+    box-shadow:inset 0 0 0 1px var(--line)}
+  .madd{background:var(--ink);color:var(--bg);box-shadow:none}
+  .mopen{border-color:var(--d70)}
+  .mtools button,.mtools label,.tools button,.mat input,.mat select{background:transparent}
+  .mdot,.mood i{background:radial-gradient(circle at 34% 30%,rgba(255,255,255,.7) 0 16%,transparent 18%),var(--mc)}
+  #toast button{opacity:1}
+
+  /* 지금 떠 있는 메모 — B의 면 · 테두리 위에 A의 물결 동그라미와 빛나는 점 */
+  .box.mup{
+    background:radial-gradient(ellipse at 100% 100%,var(--b-cloud),var(--b-up) 78%);
+    box-shadow:inset 0 0 0 1px var(--b-up-line)}
+  .mup::before{
+    background:
+      radial-gradient(circle at calc(100% - 34px) 34px,#fff 0 2.5px,rgba(255,255,255,.3) 3.5px,transparent 22px),
+      repeating-radial-gradient(circle at calc(100% - 34px) 34px,transparent 0 24px,rgba(255,255,255,.2) 24px 25px)}
+  /* 구름 띠 — 밝은 판과 높이를 같게 두고, 어두운 판에서는 아주 옅은 안개 */
+  .mup::after{
+    background:
+      radial-gradient(86px 30px at 10% 100%,rgba(255,255,255,.1),transparent 74%),
+      radial-gradient(110px 38px at 34% 112%,rgba(255,255,255,.12),transparent 74%),
+      radial-gradient(72px 26px at 56% 100%,rgba(255,255,255,.08),transparent 74%),
+      radial-gradient(120px 40px at 82% 108%,rgba(255,255,255,.12),transparent 74%),
+      linear-gradient(180deg,transparent,rgba(255,255,255,.04))}
+  .mup h2{color:var(--b-up-sub)}
+  .mup li.row{border-top-color:var(--b-up-line)}
+  .mup .mtx{color:var(--ink)}
+  .mup .mtx.clue{color:var(--b-up-sub)}
+  .mup .mtx .mclue{color:var(--c4)}
+  .mup .mnone{color:var(--b-up-sub)}
+  .mup .mrow .meta .d{color:var(--b-up-sub)}
+  .mup .mdown{color:var(--c4);background:transparent;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c4) 70%,transparent)}
+  .mup .mdown:hover{background:transparent;box-shadow:inset 0 0 0 1.5px var(--c4);text-decoration:underline}
+  .mup .mdot{box-shadow:0 0 0 2px rgba(255,255,255,.3)}
+  .mup li.row:focus-visible{background:transparent;box-shadow:inset 3px 0 0 var(--c4)}
+
+  /* 폰 위 줄 · 아래 탭 — 탭은 불투명(글자가 안 비친다) */
+  .topbar{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}   /* 불투명 — 스크롤해도 뒤 글자가 안 비친다 */
+  .tabs{background:var(--card);border-top:1px solid var(--line);box-shadow:none}
+  .tabs button.on{color:var(--ink);box-shadow:none}
 }
 </style>
 </head>
